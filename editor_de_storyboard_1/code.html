@@ -3,38 +3,251 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yopfaby App</title>
+  <title>Yopfaby App - Flux AI</title>
   <style>
-    body { margin:0; display:flex; height:100vh; font-family:Arial; background:#111; overflow:hidden;}
-    #menu { width:200px; background:#111; color:white; padding:10px; display:flex; flex-direction:column; border-right: 1px solid #333;}
-    #menu h2 { font-size:18px; margin-bottom:20px; color: #fff; }
-    #menu button { width:100%; margin:5px 0; padding:12px; background:#222; color:white; border:none; border-radius:4px; cursor:pointer; text-align:left;}
-    #menu button:hover { background:#333; }
-    #content { flex:1; display:flex; flex-direction:column; background: white;}
-    iframe { width:100%; height:100%; border:none;}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0a0e27;
+      color: #e0e0e0;
+    }
+
+    #menu {
+      width: 200px;
+      background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+      color: white;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      border-right: 2px solid #2a3f5f;
+      overflow-y: auto;
+      transition: width 0.3s ease;
+    }
+
+    #menu h2 {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #00d4ff;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+      text-align: center;
+    }
+
+    #menu nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    #menu button {
+      width: 100%;
+      padding: 12px;
+      background: #2a3f5f;
+      color: white;
+      border: 1px solid #3a5f7f;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    #menu button:hover {
+      background: #3a5f7f;
+      border-color: #00d4ff;
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+      transform: translateX(5px);
+    }
+
+    #menu button.active {
+      background: #00d4ff;
+      color: #0a0e27;
+      border-color: #00d4ff;
+      box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+    }
+
+    #content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      overflow: hidden;
+    }
+
+    #content header {
+      padding: 15px 20px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #content h1 {
+      font-size: 20px;
+      color: #333;
+    }
+
+    #loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #00d4ff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      #menu {
+        width: 80px;
+        padding: 10px 5px;
+      }
+
+      #menu h2 {
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+
+      #menu button {
+        padding: 10px;
+        font-size: 12px;
+      }
+
+      #content h1 {
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
 <body>
 
 <div id="menu">
   <h2>🚀 Flux AI</h2>
-  <button onclick="load('bienvenido_a_flux_ai_1/code.html')">Inicio</button>
-  <button onclick="load('registro_de_usuario_1/code.html')">Registro</button>
-  <button onclick="load('dashboard_de_proyectos_1/code.html')">Dashboard</button>
-  <button onclick="load('editor_de_storyboard_1/code.html')">Editor</button>
-  <button onclick="load('visualizador_de_renderizado_1/code.html')">Render</button>
+  <nav>
+    <button class="nav-btn active" onclick="load(this, 'bienvenido_a_flux_ai_1/code.html')">
+      🏠 Inicio
+    </button>
+    <button class="nav-btn" onclick="load(this, 'registro_de_usuario_1/code.html')">
+      👤 Registro
+    </button>
+    <button class="nav-btn" onclick="load(this, 'dashboard_de_proyectos_1/code.html')">
+      📊 Dashboard
+    </button>
+    <button class="nav-btn" onclick="load(this, 'editor_de_storyboard_1/code.html')">
+      ✏️ Editor
+    </button>
+    <button class="nav-btn" onclick="load(this, 'visualizador_de_renderizado_1/code.html')">
+      🎨 Render
+    </button>
+  </nav>
 </div>
 
 <div id="content">
-  <iframe id="frame" title="Contenido"></iframe>
+  <header>
+    <h1 id="page-title">Bienvenido a Flux AI</h1>
+  </header>
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>Cargando...</p>
+  </div>
+  <iframe id="frame" title="Contenido principal"></iframe>
 </div>
 
 <script>
-function load(page){
-  document.getElementById("frame").src = page;
-}
-// Carga la bienvenida por defecto
-load('bienvenido_a_flux_ai_1/code.html');
+  // Mapeo de páginas a títulos
+  const pageMap = {
+    'bienvenido_a_flux_ai_1/code.html': '🏠 Inicio',
+    'registro_de_usuario_1/code.html': '👤 Registro',
+    'dashboard_de_proyectos_1/code.html': '📊 Dashboard',
+    'editor_de_storyboard_1/code.html': '✏️ Editor',
+    'visualizador_de_renderizado_1/code.html': '🎨 Render'
+  };
+
+  // Variables globales
+  let currentPage = 'bienvenido_a_flux_ai_1/code.html';
+
+  // Función mejorada de carga
+  function load(buttonElement, page) {
+    // Validar que la página exista en el mapeo
+    if (!pageMap[page]) {
+      console.error('Página no encontrada:', page);
+      return;
+    }
+
+    // Actualizar botón activo
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    if (buttonElement) {
+      buttonElement.classList.add('active');
+    }
+
+    // Mostrar spinner
+    document.getElementById('loading').style.display = 'block';
+
+    // Actualizar título
+    document.getElementById('page-title').textContent = pageMap[page];
+
+    // Cargar página
+    const frame = document.getElementById('frame');
+    frame.onload = function() {
+      document.getElementById('loading').style.display = 'none';
+    };
+    frame.onerror = function() {
+      console.error('Error al cargar la página:', page);
+      document.getElementById('loading').style.display = 'none';
+    };
+    frame.src = page;
+    currentPage = page;
+  }
+
+  // Cargar página inicial
+  window.addEventListener('load', () => {
+    load(document.querySelector('.nav-btn.active'), currentPage);
+  });
+
+  // Soporte para navegación con teclado (opcional)
+  document.addEventListener('keydown', (e) => {
+    const buttons = document.querySelectorAll('.nav-btn');
+    if (e.altKey) {
+      if (e.key === '1') buttons[0].click();
+      else if (e.key === '2') buttons[1].click();
+      else if (e.key === '3') buttons[2].click();
+      else if (e.key === '4') buttons[3].click();
+      else if (e.key === '5') buttons[4].click();
+    }
+  });
 </script>
 
 </body>
