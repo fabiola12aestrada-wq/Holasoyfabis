@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta charset="UTF-8">
+  <title>Flux AI App</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    #menu {
+      width: 250px;
+      background: #111;
+      color: white;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    #menu h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    #menu button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      border: none;
+      background: #222;
+      color: white;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    #menu button:hover {
+      background: #444;
+    }
+
+    /* Contenido */
+    #content {
+      flex: 1;
+      background: #f0f0f0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="menu">
+    <h2>🚀 Flux AI</h2>
+
+    <button onclick="loadScreen('bienvenido_a_flux_ai_1/code.html')">Bienvenida</button>
+    <button onclick="loadScreen('registro_de_usuario_1/code.html')">Registro</button>
+    <button onclick="loadScreen('dashboard_de_proyectos_1/code.html')">Dashboard</button>
+    <button onclick="loadScreen('editor_de_storyboard_1/code.html')">Editor</button>
+    <button onclick="loadScreen('visualizador_de_renderizado_1/code.html')">Render</button>
+
+  </div>
+
+  <div id="content">
+    <iframe<div style="position:fixed; bottom:20px; left:20px; right:20px; background:white; padding:10px;">
+  <input id="prompt" placeholder="Describe tu video..." style="width:70%;">
+  <button onclick="generarVideo()">Generar</button>
+</div> id="frame" src=""></iframe>
+  </div>
+
+  <script>
+    function loadScreen(path) {
+      document.getElementById("frame").src = path;
+    }
+
+    // Pantalla inicial
+    loadScreen('bienvenido_a_flux_ai_1/code.html');
+  </script><script>
+async function generarVideo() {
+  const prompt = document.getElementById("prompt").value;
+
+  const res = await fetch("https://api.replicate.com/v1/predictions", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer TU_API_KEY",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      version: "db21e45b...AQUI VA MODELO...",
+      input: {
+        prompt: prompt
+      }
+    })
+  });
+
+  const data = await res.json();
+  alert("Video en proceso 🚀");
+  console.log(data);
+}
+</script<script>
+async function generarVideo() {
+  const prompt = document.getElementById("prompt").value;
+
+  const res = await fetch("https://api.replicate.com/v1/predictions", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer TU_API_KEY",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      version: "db21e45b...AQUI VA MODELO...",
+      input: {
+        prompt: prompt
+      }
+    })
+  });
+
+  const data = await res.json();
+  alert("Video en proceso 🚀");
+  console.log(data);
+}
+</script>>
+
+</body>
+</html>
