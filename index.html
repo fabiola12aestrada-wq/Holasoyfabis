@@ -23,9 +23,11 @@
     <nav id="sidebar">
         <h2>Mi App</h2>
         <ul>
-            <li onclick="<button onclick="go('bienvenido_a_flux_ai_1/code.html')"></li>
-            <li onclick="loadPage('registro_de_usuario_1/code.html')">👤 Registro</li>
-            </ul>
+            <button onclick="go('bienvenido_a_flux_ai_1/code.html')">Inicio</button>
+<button onclick="go('registro_de_usuario_1/code.html')">Registro</button>
+<button onclick="go('dashboard_de_proyectos_1/code.html')">Dashboard</button>
+<button onclick="go('editor_de_storyboard_1/code.html')">Editor</button>
+<button onclick="go('visualizador_de_renderizado_1/code.html')">Render</button>>
     </nav>
 
     <iframe id="<script>
@@ -41,10 +43,13 @@ const base = "/Holasoyfabis/";
 
 function load(page){
   document.getElementById("frame").src = base + page;
+<script>
+const base = "/Holasoyfabis/";
+
+function go(page){
+  window.location.href = base + page;
 }
-</script>         function loadPage            document.getElementById('content-area'
-        }
-    </script>
+</script>
 
 </body>
 </html>
