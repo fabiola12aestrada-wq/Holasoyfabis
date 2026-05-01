@@ -2,34 +2,189 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Yopfaby App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador de Renderizado</title>
   <style>
-    body { margin:0; display:flex; height:100vh; font-family:Arial;}
-    #menu { width:200px; background:#111; color:white; padding:10px;}
-    #menu button { width:100%; margin:5px 0; padding:10px; background:#222; color:white; border:none;}
-    #content { flex:1;}
-    iframe { width:100%; height:100%; border:none;}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: white;
+      color: #333;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #00d4ff;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .render-controls {
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    label {
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input[type="range"],
+    input[type="number"],
+    select {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background: #00d4ff;
+      color: #0a0e27;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      grid-column: 1 / -1;
+    }
+
+    button:hover {
+      background: #00a8cc;
+      box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+    }
+
+    .render-preview {
+      background: #f5f5f5;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+    }
+
+    .render-info {
+      background: #e8f8ff;
+      border-left: 4px solid #00d4ff;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .render-info strong {
+      color: #00d4ff;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #00d4ff;
+      width: 0%;
+      animation: progress 2s ease-in-out;
+    }
+
+    @keyframes progress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
   </style>
 </head>
 <body>
 
-<div id="menu">
-  <button onclick="load('bienvenido_a_flux_ai_1/code.html')">Inicio</button>
-  <button onclick="load('registro_de_usuario_1/code.html')">Registro</button>
-  <button onclick="load('dashboard_de_proyectos_1/code.html')">Dashboard</button>
-  <button onclick="load('editor_de_storyboard_1/code.html')">Editor</button>
-  <button onclick="load('visualizador_de_renderizado_1/code.html')">Render</button>
-</div>
+<div class="container">
+  <h1>🎨 Visualizador de Renderizado</h1>
+  
+  <div class="render-controls">
+    <div class="control-group">
+      <label for="quality">Calidad</label>
+      <select id="quality">
+        <option value="low">Baja</option>
+        <option value="medium" selected>Media</option>
+        <option value="high">Alta</option>
+        <option value="ultra">Ultra</option>
+      </select>
+    </div>
 
-<div id="content">
-  <iframe id="frame"></iframe>
+    <div class="control-group">
+      <label for="resolution">Resolución</label>
+      <select id="resolution">
+        <option value="720">720p</option>
+        <option value="1080" selected>1080p</option>
+        <option value="4k">4K</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="fps">FPS</label>
+      <input type="number" id="fps" value="30" min="1" max="120">
+    </div>
+
+    <div class="control-group">
+      <label for="duration">Duración (segundos)</label>
+      <input type="number" id="duration" value="10" min="1" max="300">
+    </div>
+
+    <button onclick="startRender()">🎬 Iniciar Renderizado</button>
+  </div>
+
+  <div class="render-preview">
+    🖼️
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill"></div>
+  </div>
+
+  <div class="render-info">
+    <strong>Información de Renderizado:</strong><br>
+    Calidad: Media | Resolución: 1080p | FPS: 30<br>
+    Duración: 10 segundos | Tamaño estimado: 125 MB<br>
+    Tiempo estimado: 2-3 minutos
+  </div>
 </div>
 
 <script>
-function load(page){
-  document.getElementById("frame").src = page;
-}
-load('bienvenido_a_flux_ai_1/code.html');
+  function startRender() {
+    alert('Renderizado iniciado. Esto es una demostración.');
+  }
 </script>
 
 </body>
