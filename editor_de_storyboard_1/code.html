@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yopfaby App - Flux AI</title>
+  <title>Editor de Storyboard</title>
   <style>
     * {
       margin: 0;
@@ -12,243 +12,249 @@
     }
 
     body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: white;
+      color: #333;
+      overflow: hidden;
+    }
+
+    .editor-container {
       display: flex;
       height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0a0e27;
-      color: #e0e0e0;
+      gap: 0;
     }
 
-    #menu {
-      width: 200px;
-      background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
-      color: white;
-      padding: 20px 10px;
-      display: flex;
-      flex-direction: column;
-      border-right: 2px solid #2a3f5f;
+    .toolbar {
+      width: 250px;
+      background: #f5f5f5;
+      border-right: 1px solid #ddd;
+      padding: 20px;
       overflow-y: auto;
-      transition: width 0.3s ease;
     }
 
-    #menu h2 {
-      font-size: 18px;
-      margin-bottom: 30px;
+    .toolbar h3 {
       color: #00d4ff;
-      text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-      text-align: center;
+      margin: 20px 0 15px;
+      font-size: 14px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
     }
 
-    #menu nav {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      flex: 1;
-    }
-
-    #menu button {
+    .tool-button {
       width: 100%;
-      padding: 12px;
-      background: #2a3f5f;
-      color: white;
-      border: 1px solid #3a5f7f;
-      border-radius: 6px;
+      padding: 10px;
+      margin: 5px 0;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
       cursor: pointer;
-      text-align: left;
+      font-size: 14px;
       transition: all 0.3s ease;
+    }
+
+    .tool-button:hover {
+      border-color: #00d4ff;
+      background: #f0f8ff;
+      color: #00d4ff;
+    }
+
+    .canvas-area {
+      flex: 1;
+      background: #fafafa;
+      border: 2px dashed #ddd;
+      margin: 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #999;
+    }
+
+    .properties-panel {
+      width: 250px;
+      background: #f5f5f5;
+      border-left: 1px solid #ddd;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .property-group {
+      margin-bottom: 20px;
+    }
+
+    .property-label {
+      font-weight: 500;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    input[type="text"],
+    input[type="range"],
+    input[type="color"],
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    input[type="color"] {
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .color-palette {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .color-swatch {
+      width: 100%;
+      height: 30px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .color-swatch:hover {
+      border-color: #333;
+      transform: scale(1.05);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: white;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .header-buttons button {
+      padding: 8px 16px;
+      background: #00d4ff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
       font-size: 14px;
       font-weight: 500;
     }
 
-    #menu button:hover {
-      background: #3a5f7f;
-      border-color: #00d4ff;
-      box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
-      transform: translateX(5px);
+    .header-buttons button:hover {
+      background: #00a8cc;
     }
 
-    #menu button.active {
-      background: #00d4ff;
-      color: #0a0e27;
-      border-color: #00d4ff;
-      box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
-    }
-
-    #content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: white;
-      overflow: hidden;
-    }
-
-    #content header {
-      padding: 15px 20px;
-      background: #f5f5f5;
-      border-bottom: 1px solid #e0e0e0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    #content h1 {
-      font-size: 20px;
-      color: #333;
-    }
-
-    #loading {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: none;
-      text-align: center;
-      z-index: 1000;
-    }
-
-    .spinner {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #00d4ff;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 10px;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      flex: 1;
-    }
-
-    @media (max-width: 768px) {
-      #menu {
-        width: 80px;
-        padding: 10px 5px;
+    @media (max-width: 1024px) {
+      .properties-panel {
+        display: none;
       }
-
-      #menu h2 {
-        font-size: 14px;
-        margin-bottom: 15px;
-      }
-
-      #menu button {
-        padding: 10px;
-        font-size: 12px;
-      }
-
-      #content h1 {
-        font-size: 16px;
+      .toolbar {
+        width: 150px;
       }
     }
   </style>
 </head>
 <body>
 
-<div id="menu">
-  <h2>🚀 Flux AI</h2>
-  <nav>
-    <button class="nav-btn active" onclick="load(this, 'bienvenido_a_flux_ai_1/code.html')">
-      🏠 Inicio
-    </button>
-    <button class="nav-btn" onclick="load(this, 'registro_de_usuario_1/code.html')">
-      👤 Registro
-    </button>
-    <button class="nav-btn" onclick="load(this, 'dashboard_de_proyectos_1/code.html')">
-      📊 Dashboard
-    </button>
-    <button class="nav-btn" onclick="load(this, 'editor_de_storyboard_1/code.html')">
-      ✏️ Editor
-    </button>
-    <button class="nav-btn" onclick="load(this, 'visualizador_de_renderizado_1/code.html')">
-      🎨 Render
-    </button>
-  </nav>
-</div>
-
-<div id="content">
-  <header>
-    <h1 id="page-title">Bienvenido a Flux AI</h1>
-  </header>
-  <div id="loading">
-    <div class="spinner"></div>
-    <p>Cargando...</p>
+<div class="header">
+  <h2>✏️ Editor de Storyboard</h2>
+  <div class="header-buttons">
+    <button>💾 Guardar</button>
+    <button>📤 Exportar</button>
   </div>
-  <iframe id="frame" title="Contenido principal"></iframe>
 </div>
 
-<script>
-  // Mapeo de páginas a títulos
-  const pageMap = {
-    'bienvenido_a_flux_ai_1/code.html': '🏠 Inicio',
-    'registro_de_usuario_1/code.html': '👤 Registro',
-    'dashboard_de_proyectos_1/code.html': '📊 Dashboard',
-    'editor_de_storyboard_1/code.html': '✏️ Editor',
-    'visualizador_de_renderizado_1/code.html': '🎨 Render'
-  };
+<div class="editor-container">
+  <div class="toolbar">
+    <h3>Herramientas</h3>
+    <button class="tool-button">✏️ Dibujar</button>
+    <button class="tool-button">📝 Texto</button>
+    <button class="tool-button">🔲 Formas</button>
+    <button class="tool-button">🖼️ Imágenes</button>
+    <button class="tool-button">🎬 Video</button>
+    <button class="tool-button">🎵 Audio</button>
 
-  // Variables globales
-  let currentPage = 'bienvenido_a_flux_ai_1/code.html';
+    <h3>Transiciones</h3>
+    <button class="tool-button">➡️ Deslizar</button>
+    <button class="tool-button">🌀 Desvanecerse</button>
+    <button class="tool-button">📊 Zoom</button>
+    <button class="tool-button">💫 Explosión</button>
 
-  // Función mejorada de carga
-  function load(buttonElement, page) {
-    // Validar que la página exista en el mapeo
-    if (!pageMap[page]) {
-      console.error('Página no encontrada:', page);
-      return;
-    }
+    <h3>Acciones</h3>
+    <button class="tool-button">↶ Deshacer</button>
+    <button class="tool-button">↷ Rehacer</button>
+    <button class="tool-button">🗑️ Limpiar Todo</button>
+  </div>
 
-    // Actualizar botón activo
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.classList.remove('active');
-    });
-    if (buttonElement) {
-      buttonElement.classList.add('active');
-    }
+  <div class="canvas-area">
+    <div style="text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 10px;">🎬</div>
+      <div>Arrastra aquí para comenzar a editar</div>
+    </div>
+  </div>
 
-    // Mostrar spinner
-    document.getElementById('loading').style.display = 'block';
+  <div class="properties-panel">
+    <h3>Propiedades</h3>
 
-    // Actualizar título
-    document.getElementById('page-title').textContent = pageMap[page];
+    <div class="property-group">
+      <div class="property-label">Nombre</div>
+      <input type="text" placeholder="Mi Storyboard" value="Mi Storyboard">
+    </div>
 
-    // Cargar página
-    const frame = document.getElementById('frame');
-    frame.onload = function() {
-      document.getElementById('loading').style.display = 'none';
-    };
-    frame.onerror = function() {
-      console.error('Error al cargar la página:', page);
-      document.getElementById('loading').style.display = 'none';
-    };
-    frame.src = page;
-    currentPage = page;
-  }
+    <div class="property-group">
+      <div class="property-label">Duración (segundos)</div>
+      <input type="number" value="30" min="1">
+    </div>
 
-  // Cargar página inicial
-  window.addEventListener('load', () => {
-    load(document.querySelector('.nav-btn.active'), currentPage);
-  });
+    <div class="property-group">
+      <div class="property-label">FPS</div>
+      <select>
+        <option value="24">24 FPS</option>
+        <option value="30" selected>30 FPS</option>
+        <option value="60">60 FPS</option>
+      </select>
+    </div>
 
-  // Soporte para navegación con teclado (opcional)
-  document.addEventListener('keydown', (e) => {
-    const buttons = document.querySelectorAll('.nav-btn');
-    if (e.altKey) {
-      if (e.key === '1') buttons[0].click();
-      else if (e.key === '2') buttons[1].click();
-      else if (e.key === '3') buttons[2].click();
-      else if (e.key === '4') buttons[3].click();
-      else if (e.key === '5') buttons[4].click();
-    }
-  });
-</script>
+    <div class="property-group">
+      <div class="property-label">Color de Fondo</div>
+      <input type="color" value="#ffffff">
+    </div>
+
+    <div class="property-group">
+      <div class="property-label">Paleta Rápida</div>
+      <div class="color-palette">
+        <div class="color-swatch" style="background: #FF6B6B;"></div>
+        <div class="color-swatch" style="background: #4ECDC4;"></div>
+        <div class="color-swatch" style="background: #45B7D1;"></div>
+        <div class="color-swatch" style="background: #FFA07A;"></div>
+        <div class="color-swatch" style="background: #98D8C8;"></div>
+        <div class="color-swatch" style="background: #F7DC6F;"></div>
+        <div class="color-swatch" style="background: #BB8FCE;"></div>
+        <div class="color-swatch" style="background: #85C1E2;"></div>
+      </div>
+    </div>
+
+    <div class="property-group">
+      <div class="property-label">Zoom</div>
+      <input type="range" min="25" max="200" value="100">
+      <span style="font-size: 12px; color: #666;">100%</span>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
