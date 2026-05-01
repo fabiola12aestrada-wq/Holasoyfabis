@@ -2,8 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <base href="/Holasoyfabis/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holasoyfabis - App</title>
+    <title>Yopfaby App</title>
 
     <style>
         body {
@@ -13,49 +14,72 @@
             height: 100vh;
             background: #121212;
             color: white;
+            overflow: hidden;
         }
 
-        /* Menú */
         #sidebar {
-            width: 250px;
+            width: 200px;
             background: #1e1e1e;
-            padding: 20px;
+            border-right: 1px solid #333;
+            padding: 15px;
         }
 
-        #sidebar button {
-            width: 100%;
+        #sidebar h2 {
+            font-size: 1rem;
+            color: #bb86fc;
+            margin-bottom: 20px;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar li {
             margin: 10px 0;
+        }
+
+        #sidebar a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
             padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        #sidebar a:hover {
             background: #333;
             color: white;
-            border: none;
-            border-radius: 5px;
         }
 
-        #sidebar button:hover {
-            background: #555;
+        #contenedor_principal {
+            flex-grow: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
+
 <body>
 
 <nav id="sidebar">
-    <h2>Mi App</h2>
-
-    <button onclick="go('bienvenido_a_flux_ai_1/code.html')">Inicio</button>
-    <button onclick="go('registro_de_usuario_1/code.html')">Registro</button>
-    <button onclick="go('dashboard_de_proyectos_1/code.html')">Dashboard</button>
-    <button onclick="go('editor_de_storyboard_1/code.html')">Editor</button>
-    <button onclick="go('visualizador_de_renderizado_1/code.html')">Render</button>
+    <h2>Yopfaby App</h2>
+    <ul>
+        <li><a href="bienvenido_a_flux_ai_1/code.html" target="pantalla_principal">🏠 Inicio</a></li>
+        <li><a href="registro_de_usuario_1/code.html" target="pantalla_principal">👤 Registro</a></li>
+        <li><a href="generador_de_imagenes_1/code.html" target="pantalla_principal">🎨 Generador</a></li>
+        <li><a href="chat_con_ia_1/code.html" target="pantalla_principal">💬 Chat IA</a></li>
+        <li><a href="perfil_de_usuario_1/code.html" target="pantalla_principal">⚙️ Perfil</a></li>
+    </ul>
 </nav>
 
-<script>
-const base = "/Holasoyfabis/";
-
-function go(page){
-    window.location.href = base + page;
-}
-</script>
+<iframe 
+    name="pantalla_principal" 
+    id="contenedor_principal" 
+    src="bienvenido_a_flux_ai_1/code.html">
+</iframe>
 
 </body>
 </html>
