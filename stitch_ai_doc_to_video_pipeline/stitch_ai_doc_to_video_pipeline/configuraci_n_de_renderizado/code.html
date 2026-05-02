@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#690005",
+                    "surface-dim": "#131314",
+                    "on-background": "#e5e2e3",
+                    "primary-fixed": "#f8d8ff",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#c8c6c7",
+                    "outline": "#9d8ba0",
+                    "surface-container-highest": "#353436",
+                    "inverse-on-surface": "#313031",
+                    "surface-container": "#201f20",
+                    "on-surface-variant": "#d4c0d7",
+                    "on-primary-fixed": "#320047",
+                    "error-container": "#93000a",
+                    "surface-container-lowest": "#0e0e0f",
+                    "surface-container-low": "#1c1b1c",
+                    "primary-container": "#bc13fe",
+                    "on-tertiary": "#303031",
+                    "tertiary-container": "#777677",
+                    "on-surface": "#e5e2e3",
+                    "tertiary": "#c8c6c7",
+                    "on-secondary-fixed-variant": "#004f53",
+                    "inverse-primary": "#9800d0",
+                    "secondary-container": "#00f4fe",
+                    "inverse-surface": "#e5e2e3",
+                    "on-primary": "#520072",
+                    "on-tertiary-fixed-variant": "#474647",
+                    "on-tertiary-container": "#ffffff",
+                    "secondary": "#e6feff",
+                    "on-primary-container": "#ffffff",
+                    "surface-variant": "#353436",
+                    "surface": "#131314",
+                    "secondary-fixed-dim": "#00dce5",
+                    "on-tertiary-fixed": "#1b1b1c",
+                    "on-secondary-container": "#006c71",
+                    "surface-container-high": "#2a2a2b",
+                    "outline-variant": "#504254",
+                    "on-secondary": "#003739",
+                    "on-primary-fixed-variant": "#74009f",
+                    "surface-tint": "#ebb2ff",
+                    "primary-fixed-dim": "#ebb2ff",
+                    "on-secondary-fixed": "#002021",
+                    "tertiary-fixed": "#e5e2e3",
+                    "primary": "#ebb2ff",
+                    "surface-bright": "#3a393a",
+                    "secondary-fixed": "#63f7ff",
+                    "error": "#ffb4ab",
+                    "background": "#131314"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "stack-md": "16px",
+                    "margin-mobile": "20px",
+                    "gutter": "16px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-caps": ["Space Grotesk"],
+                    "headline-md": ["Space Grotesk"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Space Grotesk"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(26, 26, 27, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 1px 1px 0px 0px rgba(255, 255, 255, 0.05);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
+        }
+        .neon-glow-cyan {
+            box-shadow: 0 0 10px rgba(0, 244, 254, 0.2);
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: #201f20;
+            height: 4px;
+            border-radius: 2px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #00f4fe;
+            margin-top: -6px;
+            box-shadow: 0 0 10px rgba(0, 244, 254, 0.8);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#050505] text-on-surface font-body-sm min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 border-b border-white/10 bg-[#050505]/80 backdrop-blur-xl flex items-center justify-between px-5 h-16">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-[#BC13FE]" data-icon="memory">memory</span>
+<h1 class="text-xl font-bold tracking-tighter text-[#BC13FE] drop-shadow-[0_0_10px_rgba(188,19,254,0.4)] font-headline-md">FLUX_AI</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-zinc-400 font-label-caps text-[10px] tracking-widest hidden md:block">SYSTEM_READY</span>
+<div class="w-8 h-8 rounded-full border border-white/20 overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A professional high-tech user profile avatar in a minimalist digital art style. The character has short dark hair and is wearing a sleek obsidian-colored futuristic jacket with subtle glowing purple lining. The background is a soft-focus laboratory setting with atmospheric cyan lighting and faint data streams visible in the depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf9mC9iPybV0dWNTQrXYDE1Di--KRfSr_UPt8uS9TnttZ02I8gGVOXp6iqx-KbG8oES9p2C6ErVmIaiO2RGlN9ylfc6Y0Hr9UVt8uGqB3oQZaTAiw6CUzgK8sEMlOPcacpVPwncnol_K2H61CfAOEmB-bkvKCTnjPwEbFJZy6NMzd1p8x6uDvUeP7pn_QOlXrHgn-NLD2nlvhD5IX28fDEQalVAYh2PkPL1fPult4jy4AiP-Eo-ykvU52oyfmDp57TN3zyTui8eQ04"/>
+</div>
+</div>
+</header>
+<main class="mt-20 px-margin-mobile max-w-4xl mx-auto space-y-stack-lg">
+<!-- Header Section -->
+<section class="space-y-unit">
+<h2 class="font-headline-md text-headline-md text-on-surface uppercase tracking-tight">Configuración de Salida</h2>
+<div class="flex items-center gap-stack-sm">
+<div class="w-2 h-2 rounded-full bg-secondary-container animate-pulse shadow-[0_0_8px_#00f4fe]"></div>
+<p class="font-label-caps text-secondary-container opacity-80 text-[10px]">PREPARANDO NODO DE RENDERIZADO</p>
+</div>
+</section>
+<!-- Preview Card (Visual Context) -->
+<div class="glass-card rounded-xl overflow-hidden relative group">
+<img alt="Preview" class="w-full h-48 object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500" data-alt="A cinematic, high-detail digital render of flowing iridescent liquid metal in deep obsidian and vibrant violet tones. The surface is highly reflective, showing complex refractions and neon cyan light streaks. The composition is abstract and futuristic, emphasizing fluid movement and extreme computational rendering power with deep shadows and brilliant highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdsgWFDhQb1-Ky5eJOHy7xbchqogCBaFEoUtkXpqLO7E2BVL49DLFzQeRl2OARPGT05QF0UdH8DdpQ7heypRT_QyUeOvDKHeBq2JNrEXxBXosa3l5c51uwZ_K90cuiyhtciWc9N-HUg49gX7Fgf0BtMb_lgcKpGxun40WZowczClodVFWDGysnSiRt2AfC-GW3c1wCYz_fbn3JqCXG7dJp4EWYK2CkgTb49FlNU0-ODObIinzJDK8wRAej0qyuc3XlqigxhIF9akJY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-sm" data-icon="videocam">videocam</span>
+<span class="font-label-caps text-xs text-white/70">PROYECTO_NEURAL_01.MP4</span>
+</div>
+</div>
+<!-- Quality & Resolution -->
+<section class="space-y-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-lg" data-icon="hd">hd</span>
+<h3 class="font-label-caps text-on-surface-variant">Calidad y Resolución</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<button class="glass-card p-stack-md rounded-lg flex flex-col items-start gap-1 border-primary-container/40 ring-1 ring-primary-container/20 group hover:bg-white/5 transition-all">
+<span class="text-primary-container font-headline-md text-lg">4K</span>
+<span class="text-zinc-500 text-body-sm">3840x2160</span>
+<div class="mt-2 w-full h-1 bg-primary-container rounded-full neon-glow-purple"></div>
+</button>
+<button class="glass-card p-stack-md rounded-lg flex flex-col items-start gap-1 border-white/5 group hover:border-white/20 transition-all">
+<span class="text-zinc-300 font-headline-md text-lg">1080p</span>
+<span class="text-zinc-500 text-body-sm">Full HD</span>
+<div class="mt-2 w-full h-1 bg-zinc-800 rounded-full"></div>
+</button>
+<button class="glass-card p-stack-md rounded-lg flex flex-col items-start gap-1 border-white/5 group hover:border-white/20 transition-all">
+<span class="text-zinc-300 font-headline-md text-lg">720p</span>
+<span class="text-zinc-500 text-body-sm">HD Standard</span>
+<div class="mt-2 w-full h-1 bg-zinc-800 rounded-full"></div>
+</button>
+</div>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-lg">
+<!-- Frame Rate -->
+<section class="space-y-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-lg" data-icon="slow_motion_video">slow_motion_video</span>
+<h3 class="font-label-caps text-on-surface-variant">Frame Rate (FPS)</h3>
+</div>
+<div class="glass-card p-stack-md rounded-lg space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-secondary-container font-headline-md text-2xl">60 <span class="text-xs text-zinc-500 font-body-sm">FPS</span></span>
+<span class="text-xs text-zinc-400 font-label-caps">PRO_MOTION</span>
+</div>
+<input class="w-full cursor-pointer" max="120" min="24" type="range" value="60"/>
+<div class="flex justify-between text-[10px] text-zinc-600 font-label-caps">
+<span>24</span>
+<span>30</span>
+<span>60</span>
+<span>120</span>
+</div>
+</div>
+</section>
+<!-- Bitrate Control -->
+<section class="space-y-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-lg" data-icon="network_check">network_check</span>
+<h3 class="font-label-caps text-on-surface-variant">Control de Bitrate</h3>
+</div>
+<div class="glass-card p-stack-md rounded-lg space-y-4">
+<div class="flex justify-between items-end">
+<span class="text-on-surface font-headline-md text-2xl">High</span>
+<span class="text-xs text-zinc-400 font-label-caps">50 MBPS</span>
+</div>
+<input class="w-full cursor-pointer" max="3" min="1" type="range" value="2"/>
+<div class="flex justify-between text-[10px] text-zinc-600 font-label-caps">
+<span>STANDARD</span>
+<span>HIGH</span>
+<span>MAXIMUM</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Export Format -->
+<section class="space-y-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-lg" data-icon="description">description</span>
+<h3 class="font-label-caps text-on-surface-variant">Formato de Exportación</h3>
+</div>
+<div class="flex flex-wrap gap-gutter">
+<button class="glass-card px-stack-lg py-stack-md rounded-lg flex items-center gap-3 border-secondary-container/40 ring-1 ring-secondary-container/20">
+<div class="w-2 h-2 rounded-full bg-secondary-container shadow-[0_0_8px_#00f4fe]"></div>
+<div class="flex flex-col items-start">
+<span class="text-secondary-container font-bold text-sm">.MP4</span>
+<span class="text-[10px] text-zinc-500 font-label-caps">H.264 / AVC</span>
+</div>
+</button>
+<button class="glass-card px-stack-lg py-stack-md rounded-lg flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
+<div class="w-2 h-2 rounded-full bg-zinc-700"></div>
+<div class="flex flex-col items-start">
+<span class="text-on-surface font-bold text-sm">.MOV</span>
+<span class="text-[10px] text-zinc-500 font-label-caps">PRORES 422</span>
+</div>
+</button>
+<button class="glass-card px-stack-lg py-stack-md rounded-lg flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
+<div class="w-2 h-2 rounded-full bg-zinc-700"></div>
+<div class="flex flex-col items-start">
+<span class="text-on-surface font-bold text-sm">.WEBM</span>
+<span class="text-[10px] text-zinc-500 font-label-caps">VP9 CODEC</span>
+</div>
+</button>
+</div>
+</section>
+<!-- Audio Settings -->
+<section class="space-y-stack-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-lg" data-icon="graphic_eq">graphic_eq</span>
+<h3 class="font-label-caps text-on-surface-variant">Configuración de Audio</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="glass-card p-stack-md rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-zinc-400" data-icon="high_quality">high_quality</span>
+<span class="font-body-sm">High Fidelity Audio</span>
+</div>
+<button class="w-10 h-5 bg-primary-container rounded-full relative flex items-center px-1 transition-colors">
+<div class="w-3 h-3 bg-white rounded-full translate-x-5"></div>
+</button>
+</div>
+<div class="glass-card p-stack-md rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-zinc-400" data-icon="spatial_audio">spatial_audio</span>
+<span class="font-body-sm">Spatial Sound Mixing</span>
+</div>
+<button class="w-10 h-5 bg-zinc-800 rounded-full relative flex items-center px-1 transition-colors">
+<div class="w-3 h-3 bg-zinc-600 rounded-full"></div>
+</button>
+</div>
+</div>
+</section>
+<!-- Action Button -->
+<section class="pt-stack-lg">
+<button class="w-full bg-primary-container py-stack-lg rounded-xl flex flex-col items-center justify-center gap-1 group active:scale-[0.98] transition-transform shadow-[0_0_30px_rgba(188,19,254,0.3)] hover:shadow-[0_0_50px_rgba(188,19,254,0.5)]">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-white text-2xl group-hover:animate-pulse" data-icon="rocket_launch">rocket_launch</span>
+<span class="font-headline-md text-white text-xl tracking-widest">INICIAR EXPORTACIÓN</span>
+</div>
+<span class="text-[10px] text-white/60 font-label-caps tracking-[0.2em]">TIEMPO EST_ 04:22 MIN</span>
+</button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-safe bg-[#050505]/90 backdrop-blur-2xl border-t border-white/10 z-50">
+<div class="flex flex-col items-center justify-center text-zinc-500 py-1 font-['Space_Grotesk'] text-[10px] font-medium tracking-tight hover:bg-white/5 transition-colors active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span>Neural</span>
+</div>
+<div class="flex flex-col items-center justify-center text-cyan-400 drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] py-1 font-['Space_Grotesk'] text-[10px] font-medium tracking-tight active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="movie_filter" style="font-variation-settings: 'FILL' 1;">movie_filter</span>
+<span>Generate</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-500 py-1 font-['Space_Grotesk'] text-[10px] font-medium tracking-tight hover:bg-white/5 transition-colors active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="folder_special">folder_special</span>
+<span>Assets</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-500 py-1 font-['Space_Grotesk'] text-[10px] font-medium tracking-tight hover:bg-white/5 transition-colors active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span>Profile</span>
+</div>
+</nav>
+</body></html>
