@@ -286,4 +286,46 @@
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
 </div>
 </nav>
-</body></html>
+</body></html><script>
+// 1. Tu llave de Hugging Face
+const API_TOKEN = "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"; 
+
+// 2. La función que conecta con la IA
+async function queryIA(promptText) {
+    const response = await fetch(
+        "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5",
+        {
+            headers: { Authorization: `Bearer ${API_TOKEN}` },
+            method: "POST",
+            body: JSON.stringify({ inputs: promptText }),
+        }
+    );
+    const result = await response.blob();
+    return URL.createObjectURL(result);
+}
+
+// 3. Conexión con tus botones (Ajusta los nombres si es necesario)
+// He visto que tu código es avanzado, así que busca los IDs de tu botón e input
+document.addEventListener("DOMContentLoaded", () => {
+    const boton = document.querySelector("#btn-generar"); // Cambia si tu botón tiene otro ID
+    const input = document.querySelector("#prompt-input"); // Cambia si tu input tiene otro ID
+    const imagen = document.querySelector("#resultado-ia"); // Donde se verá el arte
+
+    if(boton) {
+        boton.addEventListener("click", async () => {
+            const texto = input.value;
+            if(!texto) return alert("Escribe una idea, Fabi ✨");
+
+            boton.innerText = "Creando... 🎨";
+            try {
+                const urlFinal = await queryIA(texto);
+                imagen.src = urlFinal;
+                boton.innerText = "¡Listo! Generar otro";
+            } catch (e) {
+                alert("La IA está ocupada. ¡Intenta de nuevo!");
+                boton.innerText = "Generar";
+            }
+        });
+    }
+});
+</script>
