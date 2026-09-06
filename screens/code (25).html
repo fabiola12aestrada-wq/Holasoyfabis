@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#f8d8ff",
+                    "surface-container": "#201f20",
+                    "surface-container-high": "#2a2a2b",
+                    "on-secondary-fixed-variant": "#004f53",
+                    "inverse-surface": "#e5e2e3",
+                    "error": "#ffb4ab",
+                    "outline": "#9d8ba0",
+                    "surface-container-low": "#1c1b1c",
+                    "secondary-fixed-dim": "#00dce5",
+                    "on-tertiary-fixed-variant": "#474647",
+                    "background": "#131314",
+                    "on-background": "#e5e2e3",
+                    "tertiary-container": "#777677",
+                    "tertiary": "#c8c6c7",
+                    "primary-container": "#bc13fe",
+                    "on-secondary-fixed": "#002021",
+                    "on-error": "#690005",
+                    "surface-container-highest": "#353436",
+                    "primary": "#ebb2ff",
+                    "secondary": "#e6feff",
+                    "surface": "#131314",
+                    "on-primary-container": "#ffffff",
+                    "on-secondary": "#003739",
+                    "on-primary-fixed": "#320047",
+                    "on-tertiary-fixed": "#1b1b1c",
+                    "surface-dim": "#131314",
+                    "on-tertiary": "#303031",
+                    "inverse-primary": "#9800d0",
+                    "secondary-fixed": "#63f7ff",
+                    "inverse-on-surface": "#313031",
+                    "on-surface": "#e5e2e3",
+                    "primary-fixed-dim": "#ebb2ff",
+                    "on-error-container": "#ffdad6",
+                    "on-primary": "#520072",
+                    "error-container": "#93000a",
+                    "on-surface-variant": "#d4c0d7",
+                    "on-tertiary-container": "#ffffff",
+                    "secondary-container": "#00f4fe",
+                    "surface-variant": "#353436",
+                    "tertiary-fixed": "#e5e2e3",
+                    "on-secondary-container": "#006c71",
+                    "surface-bright": "#3a393a",
+                    "on-primary-fixed-variant": "#74009f",
+                    "tertiary-fixed-dim": "#c8c6c7",
+                    "surface-tint": "#ebb2ff",
+                    "surface-container-lowest": "#0e0e0f",
+                    "outline-variant": "#504254"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "stack-md": "16px",
+                    "gutter": "16px",
+                    "margin-mobile": "20px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Space Grotesk"],
+                    "display-lg": ["Space Grotesk"],
+                    "label-caps": ["Space Grotesk"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(26, 26, 27, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-pulse {
+            box-shadow: 0 0 15px rgba(0, 244, 254, 0.4);
+        }
+        .radial-progress-bg {
+            background: conic-gradient(from 0deg, #bc13fe 0%, #00f4fe 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-dim text-on-surface font-body-lg min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.1)]">
+<div class="flex items-center gap-stack-md">
+<span class="text-xl font-bold bg-gradient-to-r from-[#BC13FE] to-cyan-400 bg-clip-text text-transparent font-headline-md tracking-tighter">FLUX_AI</span>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="text-white/70 hover:text-cyan-400 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full border border-primary-container overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCekMBp4Gk6y50TJZq4Xcjp36R_wEYt4J0VPUylXv3sl3TM222qI58_tt5pw9u3ctK4eZLroPXvbRlm4DzltOzylCPza03k0WBdk0HVUzjjX1jKr7WiUpfhCIx_88qGFOVN6u4SCxA_AkjtdWXQ1m_Za_hSIfuoGUw86kJxwxtD9ZQIjPCV0uukAqy0Ol2hW11R0cyg6TlabMsFUDnnKAOujt_aJORS85E7VHznVNek2jYq0WKGqWgTKLPUKERRuzSRNQwio8G_m7Op"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 mt-16 mb-20 px-margin-mobile pt-stack-lg max-w-4xl mx-auto w-full">
+<!-- Video Player Section (Render Preview) -->
+<section class="mb-stack-lg">
+<div class="relative aspect-video glass-panel rounded-xl overflow-hidden shadow-2xl flex items-center justify-center group">
+<img class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity" data-alt="A cinematic, futuristic computer screen displaying a complex neural network visualization in neon purples and electric cyans. The room is dark, obsidian-like, with subtle glass reflections on the surfaces. The atmosphere is highly technological, sleek, and high-performance, featuring blurred light trails and professional cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr7whRKuBgMw9_h2LGqPU1z5fMDVG4m9Q47mYMYE7AHTXPQmoNA-G0feJ-LCt2plRsLigLbkT2dQcOMWult3P61H5Gwg4ox2PjJ9C6xr_-w8XnZ86BVhesiFI6uzbCTPACtyhbXodCblLfRyZkVJjaos0f7UdGDbHh3VM4JuA0nIAN-PqhW6efE-q3SHF4lKc2XVe6hNgxumgqv18BLqhkIR0xXfVzBorPKT5ahywlbrcyBtPbKnVD65GF9AmSd4-b9F_OqkfjrDqu"/>
+<!-- Loading Loop Overlay -->
+<div class="relative z-10 flex flex-col items-center gap-stack-md">
+<div class="relative w-24 h-24">
+<div class="absolute inset-0 rounded-full border-4 border-primary-container/20"></div>
+<div class="absolute inset-0 rounded-full border-4 border-t-secondary-container border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+<div class="absolute inset-2 rounded-full border-2 border-primary/10 border-t-primary animate-[spin_2s_linear_infinite]"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-secondary-container font-headline-md text-headline-md">74%</span>
+</div>
+</div>
+<p class="text-label-caps font-label-caps text-secondary-fixed tracking-widest animate-pulse">RENDERIZANDO VIDEO FINAL...</p>
+</div>
+<!-- Bottom Player Controls (Disabled during render) -->
+<div class="absolute bottom-0 w-full p-stack-md flex items-center gap-stack-md bg-gradient-to-t from-black/80 to-transparent opacity-50">
+<span class="material-symbols-outlined text-white/40">play_arrow</span>
+<div class="h-1 flex-1 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-[74%] bg-gradient-to-r from-primary-container to-secondary-container"></div>
+</div>
+<span class="text-body-sm font-body-sm text-white/40">01:42 / 02:15</span>
+</div>
+</div>
+</section>
+<!-- Progress Steps -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-stack-md mb-stack-lg">
+<!-- Analysis Step -->
+<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 border-secondary-container">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h3 class="font-headline-md text-body-lg text-white">Análisis</h3>
+<p class="font-body-sm text-body-sm text-white/40">Estructura semántica completada</p>
+</div>
+</div>
+<span class="text-secondary-container text-xs font-label-caps">100%</span>
+</div>
+<!-- Script Step -->
+<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 border-secondary-container">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h3 class="font-headline-md text-body-lg text-white">Guion</h3>
+<p class="font-body-sm text-body-sm text-white/40">Narrativa generada por IA</p>
+</div>
+</div>
+<span class="text-secondary-container text-xs font-label-caps">100%</span>
+</div>
+<!-- Generation Step -->
+<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 border-primary-container relative overflow-hidden">
+<div class="absolute inset-0 bg-primary-container/5 animate-pulse"></div>
+<div class="flex items-center gap-stack-md relative z-10">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined animate-spin">sync</span>
+</div>
+<div>
+<h3 class="font-headline-md text-body-lg text-white">Generación de Imágenes</h3>
+<p class="font-body-sm text-body-sm text-white/60">Procesando fotogramas clave...</p>
+</div>
+</div>
+<span class="text-primary-container text-xs font-label-caps relative z-10">62%</span>
+</div>
+<!-- Audio Composition -->
+<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 border-white/10 opacity-50">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
+<span class="material-symbols-outlined">music_note</span>
+</div>
+<div>
+<h3 class="font-headline-md text-body-lg text-white">Composición de Audio</h3>
+<p class="font-body-sm text-body-sm text-white/40">En espera de visuales</p>
+</div>
+</div>
+<span class="text-white/40 text-xs font-label-caps">Pautado</span>
+</div>
+</section>
+<!-- Actions -->
+<section class="flex flex-col sm:flex-row gap-stack-md">
+<button class="flex-1 py-4 px-stack-lg rounded-xl bg-primary-container text-on-primary-container font-headline-md flex items-center justify-center gap-stack-sm opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined">download</span>
+<span>Descargar Video</span>
+</button>
+<button class="flex-1 py-4 px-stack-lg rounded-xl glass-panel border border-secondary-container/50 text-secondary-container font-headline-md flex items-center justify-center gap-stack-sm hover:bg-secondary-container/10 transition-all">
+<span class="material-symbols-outlined">share</span>
+<span>Compartir</span>
+</button>
+</section>
+<!-- Detail Bento Grid -->
+<section class="mt-stack-lg grid grid-cols-1 md:grid-cols-3 gap-stack-md">
+<div class="md:col-span-2 glass-panel p-stack-lg rounded-xl flex flex-col justify-center">
+<h4 class="text-label-caps font-label-caps text-white/40 mb-stack-sm">DETALLES DE RENDERIZADO</h4>
+<div class="flex justify-between items-end">
+<div>
+<span class="text-display-lg font-display-lg text-white">4K</span>
+<span class="text-body-lg text-white/60 ml-2">60fps</span>
+</div>
+<div class="text-right">
+<p class="text-body-sm text-white/40">Tiempo estimado restante</p>
+<p class="text-headline-md text-secondary-container">04:12</p>
+</div>
+</div>
+</div>
+<div class="glass-panel p-stack-lg rounded-xl flex flex-col items-center justify-center text-center">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container mb-stack-sm">
+<span class="material-symbols-outlined">memory</span>
+</div>
+<p class="text-label-caps font-label-caps text-white/40">Uso de GPU V100</p>
+<p class="text-body-lg text-white font-medium">89.4% carga</p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="#">
+<span class="material-symbols-outlined">video_library</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#BC13FE] drop-shadow-[0_0_8px_rgba(188,19,254,0.5)]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="#">
+<span class="material-symbols-outlined">folder_copy</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Assets</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

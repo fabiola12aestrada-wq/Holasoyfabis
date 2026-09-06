@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #050505;
+            color: #e5e2e3;
+        }
+        .glass-panel {
+            background: rgba(26, 26, 27, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+        }
+        .glow-purple {
+            box-shadow: 0 0 20px rgba(188, 19, 254, 0.4);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#690005",
+                      "surface-container": "#201f20",
+                      "on-secondary": "#003739",
+                      "tertiary-fixed": "#e5e2e3",
+                      "surface-container-highest": "#353436",
+                      "on-tertiary-fixed-variant": "#474647",
+                      "on-primary-fixed-variant": "#74009f",
+                      "primary-fixed": "#f8d8ff",
+                      "surface-container-high": "#2a2a2b",
+                      "surface": "#131314",
+                      "on-primary": "#520072",
+                      "secondary": "#e6feff",
+                      "on-primary-container": "#ffffff",
+                      "inverse-primary": "#9800d0",
+                      "on-tertiary-container": "#ffffff",
+                      "outline-variant": "#504254",
+                      "on-secondary-fixed-variant": "#004f53",
+                      "primary": "#ebb2ff",
+                      "on-secondary-fixed": "#002021",
+                      "on-tertiary": "#303031",
+                      "on-error-container": "#ffdad6",
+                      "on-background": "#e5e2e3",
+                      "outline": "#9d8ba0",
+                      "surface-tint": "#ebb2ff",
+                      "surface-container-lowest": "#0e0e0f",
+                      "background": "#131314",
+                      "on-primary-fixed": "#320047",
+                      "tertiary": "#c8c6c7",
+                      "on-surface": "#e5e2e3",
+                      "primary-fixed-dim": "#ebb2ff",
+                      "tertiary-container": "#777677",
+                      "error-container": "#93000a",
+                      "secondary-fixed": "#63f7ff",
+                      "on-tertiary-fixed": "#1b1b1c",
+                      "error": "#ffb4ab",
+                      "secondary-container": "#00f4fe",
+                      "primary-container": "#bc13fe",
+                      "inverse-surface": "#e5e2e3",
+                      "secondary-fixed-dim": "#00dce5",
+                      "inverse-on-surface": "#313031",
+                      "on-secondary-container": "#006c71",
+                      "surface-container-low": "#1c1b1c",
+                      "surface-bright": "#3a393a",
+                      "on-surface-variant": "#d4c0d7",
+                      "tertiary-fixed-dim": "#c8c6c7",
+                      "surface-variant": "#353436",
+                      "surface-dim": "#131314"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "stack-lg": "32px",
+                      "stack-sm": "8px",
+                      "gutter": "16px",
+                      "margin-mobile": "20px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Space Grotesk"],
+                      "body-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Space Grotesk"],
+                      "display-lg": ["Space Grotesk"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen flex flex-col font-body-lg text-on-background selection:bg-primary-container selection:text-white">
+<!-- Top AppBar (Simplified for Linear Journey) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-[20px] border-b border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]">
+<div class="flex items-center gap-stack-sm">
+<span class="text-xl font-headline-md font-bold tracking-widest text-white drop-shadow-[0_0_10px_rgba(188,19,254,0.8)]">FLUX_AI</span>
+</div>
+<div class="flex items-center gap-gutter">
+<span class="material-symbols-outlined text-zinc-500 hover:text-cyan-400 transition-colors cursor-pointer">help_outline</span>
+</div>
+</header>
+<main class="flex-grow flex items-center justify-center px-margin-mobile pt-16 pb-8 relative overflow-hidden">
+<!-- Background Ambient Glows -->
+<div class="absolute top-1/4 -left-20 w-80 h-80 bg-primary-container/10 blur-[100px] rounded-full"></div>
+<div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-secondary-container/10 blur-[100px] rounded-full"></div>
+<section class="w-full max-w-[480px] z-10">
+<!-- Glass Form Card -->
+<div class="glass-panel p-stack-lg rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+<div class="mb-stack-lg">
+<h1 class="font-headline-md text-display-lg text-white mb-unit">Create Your Neural Link</h1>
+<p class="font-body-sm text-zinc-400">Initialize your access to the generative neural core.</p>
+</div>
+<form class="space-y-stack-md" onsubmit="return false;">
+<!-- Full Name -->
+<div class="group">
+<label class="font-label-caps text-label-caps text-zinc-500 block mb-unit uppercase tracking-widest">Full Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-[20px]">person</span>
+<input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-3 pl-11 pr-4 focus:outline-none focus:border-secondary-container focus:ring-1 focus:ring-secondary-container/30 transition-all font-body-sm placeholder:text-zinc-700" placeholder="Identity Label" type="text"/>
+</div>
+</div>
+<!-- Email -->
+<div class="group">
+<label class="font-label-caps text-label-caps text-zinc-500 block mb-unit uppercase tracking-widest">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-[20px]">alternate_email</span>
+<input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-3 pl-11 pr-4 focus:outline-none focus:border-secondary-container focus:ring-1 focus:ring-secondary-container/30 transition-all font-body-sm placeholder:text-zinc-700" placeholder="neural@flux.ai" type="email"/>
+</div>
+</div>
+<!-- Password -->
+<div class="group">
+<label class="font-label-caps text-label-caps text-zinc-500 block mb-unit uppercase tracking-widest">Neural Key</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 text-[20px]">lock_open</span>
+<input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-3 pl-11 pr-4 focus:outline-none focus:border-secondary-container focus:ring-1 focus:ring-secondary-container/30 transition-all font-body-sm placeholder:text-zinc-700" placeholder="••••••••••••" type="password"/>
+</div>
+<!-- Strength Meter -->
+<div class="mt-stack-sm">
+<div class="flex justify-between items-center mb-unit">
+<span class="text-[10px] font-label-caps text-zinc-600 uppercase">Entropy Strength</span>
+<span class="text-[10px] font-label-caps text-secondary-container uppercase">Processing...</span>
+</div>
+<div class="h-[2px] w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full w-[65%] bg-gradient-to-r from-primary-container via-secondary-container to-secondary-container relative">
+<div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+</div>
+</div>
+<p class="text-[10px] font-body-sm text-zinc-500 mt-unit italic">Recommendation: Include non-alphanumeric nodes.</p>
+</div>
+</div>
+<!-- Terms Checkbox -->
+<div class="flex items-start gap-stack-sm pt-unit">
+<div class="relative flex items-center mt-1">
+<input class="peer h-4 w-4 rounded border-white/10 bg-[#0e0e0f] text-primary-container focus:ring-primary-container/50 transition-all cursor-pointer appearance-none checked:bg-primary-container checked:border-primary-container" id="terms" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-[12px] text-white opacity-0 peer-checked:opacity-100 pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">check</span>
+</div>
+<label class="text-[12px] font-body-sm text-zinc-400 cursor-pointer leading-tight select-none" for="terms">
+                            I agree to the <span class="text-secondary-container hover:underline transition-all">Neural Processing Terms</span> and metadata harvesting protocols.
+                        </label>
+</div>
+<!-- Action Button -->
+<div class="pt-stack-sm">
+<button class="w-full group relative overflow-hidden bg-primary-container text-white py-4 rounded-lg font-label-caps text-label-caps uppercase tracking-[0.2em] transition-all hover:scale-[1.02] active:scale-[0.98] glow-purple">
+<span class="relative z-10">Initialize Account</span>
+<!-- Shine effect -->
+<div class="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:left-full transition-all duration-700 ease-in-out"></div>
+</button>
+</div>
+</form>
+<!-- Footer Link -->
+<div class="mt-stack-lg pt-stack-md border-t border-white/5 text-center">
+<p class="font-body-sm text-zinc-500">
+                        Already linked to the system? 
+                        <a class="text-secondary-container font-medium hover:text-cyan-300 transition-colors ml-unit" href="#">Sign In</a>
+</p>
+</div>
+</div>
+<!-- Decorative Visual Element -->
+<div class="mt-stack-lg grid grid-cols-3 gap-gutter">
+<div class="h-24 rounded-lg overflow-hidden glass-panel relative group cursor-crosshair">
+<img class="w-full h-full object-cover opacity-40 group-hover:opacity-80 transition-opacity" data-alt="A macro close-up of a high-tech circuit board with liquid-coolant tubes running through it, illuminated by a pulsating violet neon light. The style is futuristic minimalism with sharp geometric lines and a cinematic dark atmosphere. Deep blacks are offset by vibrant electric purple accents, creating a sense of powerful computational energy and advanced AI infrastructure." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnLmlX-k1C91hq1P1cJ4T7fuMwGI1_C9aab_xKuw0p9n2gescB671B5jMiu1WV-i4h6iPk1jIZ3jA27CV1Y-k1WECLEHHkv-ta5XmNfQtiQcaUS3nVzivGH_272mISNrZL3ld2UHhssZ_XXMF_4-mJonFo3SIHw69G-DEXR8AIu2_ZPwr7UPAIhWnlY0EvYPfJOnNq1nN4OU_R2IHclNDOkGMq6AT9e41H9C5l0YJofebqKDXn1TxbL0Y2W8ooA2FOUNrNAXbjOgMB"/>
+<div class="absolute bottom-1 left-2 text-[8px] font-label-caps text-white/40">CORE_01</div>
+</div>
+<div class="h-24 rounded-lg overflow-hidden glass-panel relative group cursor-crosshair">
+<img class="w-full h-full object-cover opacity-40 group-hover:opacity-80 transition-opacity" data-alt="Abstract 3D rendered waves of data particles flowing in a dark digital space, glowing with a soft cyan and electric purple light. The aesthetic is smooth glassmorphism with heavy backdrop blurs and a sense of infinite depth. The composition is clean and focused on the fluid motion of light, representing the creative neural flow of an advanced AI system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoQvZAtrjrhOW2zuHDwDFGScJz3L8KPS7Fu58F4IZI-Nl1So8b8dEkGkG8j3R6gCAnrva7jNHSesV7Cl24MMTApHshn0sL84wBuUousMLGfE3-vmZxFnqC2PSAwn9FBo_YRPY1s-TTx2izkxGWnjOYiosLj-NjKvEfiB0y64kHZrTnCc_YkvvZ_clS9efsUQ5s7aMAiaRLgbq102rBfRSZtDaNu_NrIGkPEdfpTBefhsnmQoS9yjF9OKQnj4tOyy3pEpDnagzq_qfP"/>
+<div class="absolute bottom-1 left-2 text-[8px] font-label-caps text-white/40">CORE_02</div>
+</div>
+<div class="h-24 rounded-lg overflow-hidden glass-panel relative group cursor-crosshair">
+<img class="w-full h-full object-cover opacity-40 group-hover:opacity-80 transition-opacity" data-alt="A high-resolution satellite-style view of a digital neural network spanning across a dark globe, with bright interconnected nodes and glowing threads of light in neon cyan. The lighting is dramatic, highlighting the intricate connections between processing hubs. The overall mood is sophisticated and global, conveying a sense of immense connectivity and computational power." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOo1nja43icZciD7wcLuzisThzht9pHj4aNWzYuKRbkbC3LXu5qwMy20dEUhxMEevRjBfSpCm8_oM61u6J1ZmxqFaO7R60z12WjgGR1ubznAPVbZULLPziRzzvbYYAP5x7hnK6glYXdm62FS3EMilvlbRU4w0br2FQi4jIFACd8WVjJqnWB9qh404c_py5dTYh03fRqCVOiVoJQsJlljB4ZS4ObyPVMsrfRxEyrp1IZ5xgcF-7uJ7CRMsWxuNeffTCplp6wII_SPJ_"/>
+<div class="absolute bottom-1 left-2 text-[8px] font-label-caps text-white/40">CORE_03</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Background Decoration -->
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-0 left-0 w-full h-full opacity-20" style="background-image: radial-gradient(#1a1a1b 1px, transparent 1px); background-size: 40px 40px;"></div>
+</div>
+</body></html>

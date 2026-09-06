@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FLUX_AI | Transform Reality</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .neural-grid {
+            background-image: 
+                linear-gradient(to right, rgba(188, 19, 254, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .glow-cyan {
+            filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.4));
+        }
+        .glow-purple {
+            filter: drop-shadow(0 0 15px rgba(188, 19, 254, 0.6));
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#690005",
+                      "surface-container": "#201f20",
+                      "on-secondary": "#003739",
+                      "tertiary-fixed": "#e5e2e3",
+                      "surface-container-highest": "#353436",
+                      "on-tertiary-fixed-variant": "#474647",
+                      "on-primary-fixed-variant": "#74009f",
+                      "primary-fixed": "#f8d8ff",
+                      "surface-container-high": "#2a2a2b",
+                      "surface": "#131314",
+                      "on-primary": "#520072",
+                      "secondary": "#e6feff",
+                      "on-primary-container": "#ffffff",
+                      "inverse-primary": "#9800d0",
+                      "on-tertiary-container": "#ffffff",
+                      "outline-variant": "#504254",
+                      "on-secondary-fixed-variant": "#004f53",
+                      "primary": "#ebb2ff",
+                      "on-secondary-fixed": "#002021",
+                      "on-tertiary": "#303031",
+                      "on-error-container": "#ffdad6",
+                      "on-background": "#e5e2e3",
+                      "outline": "#9d8ba0",
+                      "surface-tint": "#ebb2ff",
+                      "surface-container-lowest": "#0e0e0f",
+                      "background": "#131314",
+                      "on-primary-fixed": "#320047",
+                      "tertiary": "#c8c6c7",
+                      "on-surface": "#e5e2e3",
+                      "primary-fixed-dim": "#ebb2ff",
+                      "tertiary-container": "#777677",
+                      "error-container": "#93000a",
+                      "secondary-fixed": "#63f7ff",
+                      "on-tertiary-fixed": "#1b1b1c",
+                      "error": "#ffb4ab",
+                      "secondary-container": "#00f4fe",
+                      "primary-container": "#bc13fe",
+                      "inverse-surface": "#e5e2e3",
+                      "secondary-fixed-dim": "#00dce5",
+                      "inverse-on-surface": "#313031",
+                      "on-secondary-container": "#006c71",
+                      "surface-container-low": "#1c1b1c",
+                      "surface-bright": "#3a393a",
+                      "on-surface-variant": "#d4c0d7",
+                      "tertiary-fixed-dim": "#c8c6c7",
+                      "surface-variant": "#353436",
+                      "surface-dim": "#131314"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "stack-lg": "32px",
+                      "stack-sm": "8px",
+                      "gutter": "16px",
+                      "margin-mobile": "20px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "label-caps": ["Space Grotesk"],
+                      "body-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Space Grotesk"],
+                      "display-lg": ["Space Grotesk"]
+              },
+              "fontSize": {
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-lowest text-on-surface selection:bg-primary-container selection:text-white min-h-screen overflow-hidden font-body-lg">
+<!-- Top Navigation Bar (Shared Component Logic - Suppressed per Shell Visibility Rule) -->
+<!-- The user is on a Splash Screen, which is Transactional/Linear. Navigation is suppressed. -->
+<!-- Background Layer -->
+<div class="fixed inset-0 z-0 overflow-hidden">
+<div class="absolute inset-0 neural-grid opacity-30"></div>
+<div class="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-primary-container/20 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-secondary-container/10 rounded-full blur-[100px]"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/80 to-background"></div>
+<!-- Background Hero Image -->
+<div class="absolute inset-0 z-[-1] opacity-40">
+<img class="w-full h-full object-cover" data-alt="A cinematic and futuristic visualization of a neural network suspended in deep space. Glowing purple and cyan filaments of light pulse with data, connecting complex geometric nodes that resemble high-tech architecture. The overall mood is cold, sophisticated, and technologically advanced, with a heavy emphasis on glass-like transparency and vibrant neon light-trails cutting through the obsidian darkness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoGXA7OpgL1_1Pl3LlE13TvyLLny5i-UgP8dmrSRHDi3VGHRm3KDNAowczIieixzs3GHJXj1ZnJEotbyFlxxdMj4-CzaS07j5k7CcQ66fC7KtqGSiqgAcTB0tEVqN1x3fkLLRkfczNDVRV4dldl8Rf__1r9xzQj0nMDl-dH1xpbJ3plEF64qg03gTrlYGOYtW7ixVeigKO7F1cemOrvRXKVTh3arT70cHXcZ3GMLtieql19HkwBG9CZIkX0Z1Bz0nYd8sAmK-L1LOC"/>
+</div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 flex flex-col items-center justify-center min-h-screen px-margin-mobile text-center">
+<!-- Brand Logo Cluster -->
+<div class="mb-stack-lg flex flex-col items-center">
+<div class="relative mb-stack-md">
+<div class="absolute inset-0 bg-primary-container/40 blur-2xl rounded-full scale-150"></div>
+<div class="relative flex items-center justify-center w-24 h-24 bg-surface-container rounded-xl border border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]">
+<span class="material-symbols-outlined text-5xl text-primary glow-purple" data-weight="fill">filter_drama</span>
+</div>
+</div>
+<h1 class="font-display-lg text-display-lg text-white tracking-widest drop-shadow-[0_0_15px_rgba(188,19,254,0.8)]">
+                FLUX_AI
+            </h1>
+<p class="mt-stack-sm font-label-caps text-label-caps text-secondary-fixed-dim uppercase tracking-[0.3em] glow-cyan">
+                Transform content into cinematic reality
+            </p>
+</div>
+<!-- Action Section -->
+<div class="w-full max-w-sm space-y-stack-md mt-stack-lg">
+<!-- Primary CTA -->
+<button class="w-full h-14 bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-headline-md text-headline-md rounded-lg shadow-[0_0_30px_rgba(188,19,254,0.4)] active:scale-95 transition-all duration-200 flex items-center justify-center gap-stack-sm">
+                Get Started
+                <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<!-- Secondary Options -->
+<div class="pt-stack-md space-y-stack-md">
+<div class="flex items-center gap-stack-md py-stack-sm">
+<div class="h-px flex-1 bg-white/10"></div>
+<span class="font-label-caps text-label-caps text-zinc-500 uppercase">Or continue with</span>
+<div class="h-px flex-1 bg-white/10"></div>
+</div>
+<div class="grid grid-cols-2 gap-stack-md">
+<button class="flex items-center justify-center gap-stack-sm h-12 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors active:scale-95">
+<img alt="Google" class="w-5 h-5 invert opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkcg6urzdWAxAAb2d472C2O9iwwWq_awY7Tz2Y8lBSy5GGOUF7gKzoE3gTmbUx7t2vmAx0DrFpQ2_b904iaE2f3eGHOEG9uYcGiQ_0yFF7mGDdnyrRVyQf1mKBeOhSvRfPqUQ0rb7RoGjLHHQvd9zOYRmuOY7BsCLg-9BSCss-4R57V51j0-OKLZMYhR4yDPVFtX3kGLXzz86H73hdf1AyWd81oGxSeseQu-kstrd3oNMPpJ094a4xr5-uaQe3SWJjZLW8z-y3uzot"/>
+<span class="font-body-sm text-body-sm text-on-surface">Google</span>
+</button>
+<button class="flex items-center justify-center gap-stack-sm h-12 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-xl text-on-surface" data-icon="apple">ios</span>
+<span class="font-body-sm text-body-sm text-on-surface">Apple</span>
+</button>
+</div>
+<button class="w-full py-stack-md font-body-lg text-body-lg text-zinc-400 hover:text-white transition-colors underline decoration-primary/30 underline-offset-4 active:scale-95">
+                    Already have an account? Sign In
+                </button>
+</div>
+</div>
+<!-- Footer Meta -->
+<div class="absolute bottom-10 left-0 right-0 px-margin-mobile flex flex-col items-center gap-2">
+<div class="flex items-center gap-4 text-zinc-600">
+<span class="font-label-caps text-label-caps">v2.4.0 NEURAL CORE</span>
+<span class="w-1 h-1 bg-zinc-700 rounded-full"></span>
+<span class="font-label-caps text-label-caps">SECURE PROTOCOL</span>
+</div>
+<div class="h-1 w-24 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full w-2/3 bg-gradient-to-r from-primary to-secondary-container animate-pulse"></div>
+</div>
+</div>
+</main>
+<!-- Contextual Element: Glass Card Detail -->
+<div class="hidden lg:block fixed right-10 top-1/2 -translate-y-1/2 w-64 p-6 bg-white/5 backdrop-blur-xl rounded-xl border border-white/10 shadow-2xl space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-headline-md text-sm text-white uppercase tracking-widest">Active Engine</span>
+</div>
+<div class="space-y-2">
+<div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-4/5 bg-primary"></div>
+</div>
+<div class="flex justify-between font-label-caps text-[10px] text-zinc-500">
+<span>GPU OPTIMIZED</span>
+<span>89% READY</span>
+</div>
+</div>
+<p class="font-body-sm text-[12px] text-zinc-400 leading-relaxed">
+            Neural synthesis initialized. Hardware acceleration is active on FLUX_AI infrastructure.
+        </p>
+</div>
+</body></html>

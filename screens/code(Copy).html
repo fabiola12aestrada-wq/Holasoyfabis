@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed": "#f8d8ff",
+                      "surface-container": "#201f20",
+                      "surface-container-high": "#2a2a2b",
+                      "on-secondary-fixed-variant": "#004f53",
+                      "inverse-surface": "#e5e2e3",
+                      "error": "#ffb4ab",
+                      "outline": "#9d8ba0",
+                      "surface-container-low": "#1c1b1c",
+                      "secondary-fixed-dim": "#00dce5",
+                      "on-tertiary-fixed-variant": "#474647",
+                      "background": "#131314",
+                      "on-background": "#e5e2e3",
+                      "tertiary-container": "#777677",
+                      "tertiary": "#c8c6c7",
+                      "primary-container": "#bc13fe",
+                      "on-secondary-fixed": "#002021",
+                      "on-error": "#690005",
+                      "surface-container-highest": "#353436",
+                      "primary": "#ebb2ff",
+                      "secondary": "#e6feff",
+                      "surface": "#131314",
+                      "on-primary-container": "#ffffff",
+                      "on-secondary": "#003739",
+                      "on-primary-fixed": "#320047",
+                      "on-tertiary-fixed": "#1b1b1c",
+                      "surface-dim": "#131314",
+                      "on-tertiary": "#303031",
+                      "inverse-primary": "#9800d0",
+                      "secondary-fixed": "#63f7ff",
+                      "inverse-on-surface": "#313031",
+                      "on-surface": "#e5e2e3",
+                      "primary-fixed-dim": "#ebb2ff",
+                      "on-error-container": "#ffdad6",
+                      "on-primary": "#520072",
+                      "error-container": "#93000a",
+                      "on-surface-variant": "#d4c0d7",
+                      "on-tertiary-container": "#ffffff",
+                      "secondary-container": "#00f4fe",
+                      "surface-variant": "#353436",
+                      "tertiary-fixed": "#e5e2e3",
+                      "on-secondary-container": "#006c71",
+                      "surface-bright": "#3a393a",
+                      "on-primary-fixed-variant": "#74009f",
+                      "tertiary-fixed-dim": "#c8c6c7",
+                      "surface-tint": "#ebb2ff",
+                      "surface-container-lowest": "#0e0e0f",
+                      "outline-variant": "#504254"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "stack-md": "16px",
+                      "gutter": "16px",
+                      "margin-mobile": "20px",
+                      "stack-sm": "8px",
+                      "stack-lg": "32px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Space Grotesk"],
+                      "display-lg": ["Space Grotesk"],
+                      "label-caps": ["Space Grotesk"],
+                      "mono": ["JetBrains Mono"]
+              },
+              "fontSize": {
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(26, 26, 27, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        .bloom-purple {
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
+        }
+        .bloom-cyan {
+            box-shadow: 0 0 15px rgba(0, 244, 254, 0.2);
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #353436;
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bc13fe;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#050505] text-on-background font-body-lg min-h-screen overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.1)]">
+<div class="flex items-center gap-stack-md">
+<span class="text-xl font-bold bg-gradient-to-r from-[#BC13FE] to-cyan-400 bg-clip-text text-transparent font-['Space_Grotesk'] tracking-tighter">FLUX_AI</span>
+<div class="hidden md:flex items-center gap-stack-lg ml-stack-lg">
+<span class="text-[#BC13FE] font-label-caps cursor-pointer">Projects</span>
+<span class="text-white/70 font-label-caps cursor-pointer hover:text-cyan-400 transition-colors">Storyboard Editor</span>
+<span class="text-white/70 font-label-caps cursor-pointer hover:text-cyan-400 transition-colors">Library</span>
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="p-2 text-white/70 hover:text-cyan-400 transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-[#BC13FE]/50">
+<img alt="Profile" data-alt="A highly detailed 3D avatar of a professional creative director, sporting sleek glasses and a modern turtleneck. The lighting is dramatic with purple and cyan rim lights, creating a high-tech obsidian aesthetic that fits a futuristic AI command center theme. The background is a soft, blurred studio environment with tech-focused atmospheric depth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMK7vTkEpDkK8x5ulXbGo1L7moJlYF98nUBLfpmHYVwF3MevwbtfYelioPbrcEmtk7IJpEVoW1xnaQsn_tfochBfF7WzHJUWMETRrSq8Vb3vx80hqeVcgdhAe9gdOre8qRoL5oYe2MqayXafxuFDZ5h_ayTectLuoCNIHnphH3ix8Bnfgbbo-9h0xthSbZpof2T7m-a1NHbgHYqt77or-PORHA9eYXa0GFGZ8-12gUmZK3pyvOQf0PjRJ2El9QbMixbJaBxovwkSJ3"/>
+</div>
+</div>
+</header>
+<!-- Main Content: Vertical Timeline -->
+<main class="pt-24 pb-32 px-margin-mobile max-w-5xl mx-auto flex flex-col gap-stack-lg">
+<!-- Scene 1 -->
+<div class="relative pl-8 border-l-2 border-[#BC13FE]/20 group">
+<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary-container bloom-purple ring-4 ring-[#050505]"></div>
+<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-lg group-hover:border-primary-container/30 transition-all">
+<!-- Script Section -->
+<div class="flex-1 flex flex-col gap-stack-sm">
+<div class="flex items-center justify-between">
+<span class="text-primary-container font-label-caps">SCENE 01 / EXTERIOR / CITY</span>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-white/30 text-sm cursor-pointer hover:text-white" data-icon="drag_indicator">drag_indicator</span>
+</div>
+</div>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-body-sm font-body-sm focus:border-secondary-container focus:ring-1 focus:ring-secondary-container outline-none min-h-[100px] resize-none transition-all" placeholder="Enter your script here...">EL CIELO SE TORNA VIOLETA MIENTRAS LAS LUCES DE NEÓN DE LA MEGACIUDAD SE ENCIENDEN UNA A UNA. UN VEHÍCULO SILENCIOSO DESLIZA POR LA CALLE MOJADA.</textarea>
+<div class="bg-black/40 rounded p-3 border-l-2 border-secondary-container mt-stack-sm">
+<span class="text-[10px] text-secondary-container font-label-caps block mb-1">AI VISUAL PROMPT</span>
+<code class="text-secondary-fixed-dim font-mono text-xs leading-relaxed">hyper-realistic cinematic wide shot of a futuristic neo-tokyo street at dusk, wet asphalt reflecting purple and cyan neon signs, sleek black electric vehicle hovering 2 inches above ground, volumetric fog, 8k resolution, anamorphic lens.</code>
+</div>
+</div>
+<!-- Visual Reference -->
+<div class="w-full md:w-80 h-48 md:h-auto rounded-lg overflow-hidden relative group/image border border-white/5">
+<img class="w-full h-full object-cover" data-alt="A cinematic wide shot of a futuristic cyberpunk city at dusk. The sky is a deep electric purple, and the streets are illuminated by vibrant cyan and magenta neon signs. The ground is wet asphalt reflecting the neon glow. A sleek, black aerodynamic vehicle is captured mid-motion, gliding through the atmospheric fog. The visual style is sharp, high-contrast, and reminiscent of premium sci-fi cinema." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7oXFemcHXwII-HYVQ7aC3CKRwvNpknxKJBS7QaAeZRr_kMfdOtpf-zihW7Mj5gKpC0GNssDm14QCrFZ8typZXutLx7hhr2uQzBVaU3U6deEthRD3TbEA-1Ok1ILbbLo9CF5nQmarm_8Kpy5dteFx6Ph-upWMQukPHaXeucRFgCJq18FWmVczxIja7Jjem2-b--1Zj4SlAOnHkZujG00VYoweAGau0o61dOlsN1e5DkDTXl_wwXDgs7u2oxgqPTyr5LJMTTHOAP8Pg"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity flex items-center justify-center gap-4">
+<button class="w-10 h-10 rounded-full bg-primary-container text-white flex items-center justify-center bloom-purple active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-container-highest text-white flex items-center justify-center border border-white/20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Scene Action Button -->
+<div class="flex justify-center mt-stack-md">
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-caps flex items-center gap-2 bloom-purple active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+                    Generar Visuales
+                </button>
+</div>
+</div>
+<!-- Scene 2 -->
+<div class="relative pl-8 border-l-2 border-white/5 group">
+<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-surface-container-highest border border-white/20 ring-4 ring-[#050505]"></div>
+<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-lg group-hover:border-secondary-container/30 transition-all opacity-80 hover:opacity-100">
+<div class="flex-1 flex flex-col gap-stack-sm">
+<div class="flex items-center justify-between">
+<span class="text-white/40 font-label-caps">SCENE 02 / INTERIOR / APARTMENT</span>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-white/30 text-sm cursor-pointer hover:text-white" data-icon="drag_indicator">drag_indicator</span>
+</div>
+</div>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-body-sm font-body-sm focus:border-secondary-container focus:ring-1 focus:ring-secondary-container outline-none min-h-[100px] resize-none transition-all" placeholder="Enter your script here...">UN HOMBRE OBSERVA LA CIUDAD DESDE SU VENTANA. SU ROSTRO ESTÁ PARCIALMENTE ILUMINADO POR EL RESPLANDOR DE UNA PANTALLA HOLOGRÁFICA.</textarea>
+<div class="bg-black/40 rounded p-3 border-l-2 border-white/20 mt-stack-sm">
+<span class="text-[10px] text-white/40 font-label-caps block mb-1">AI VISUAL PROMPT</span>
+<code class="text-white/60 font-mono text-xs leading-relaxed">close up portrait of a man, moody lighting, cyan holographic interface reflecting in his eyes, background blurred cityscape, high detail skin textures, unreal engine 5 render style.</code>
+</div>
+</div>
+<div class="w-full md:w-80 h-48 md:h-auto rounded-lg overflow-hidden bg-surface-container flex items-center justify-center border border-dashed border-white/10 group/empty">
+<div class="text-center flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-white/20 text-4xl" data-icon="image">image</span>
+<span class="text-white/20 font-label-caps text-[10px]">PREVIEW PENDING</span>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-stack-md">
+<button class="border border-secondary-container text-secondary-container px-6 py-2 rounded-full font-label-caps flex items-center gap-2 bloom-cyan active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="play_circle">play_circle</span>
+                    Generar Visuales
+                </button>
+</div>
+</div>
+<!-- Scene 3 -->
+<div class="relative pl-8 border-l-2 border-white/5 group">
+<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-surface-container-highest border border-white/20 ring-4 ring-[#050505]"></div>
+<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-lg group-hover:border-primary-container/30 transition-all">
+<div class="flex-1 flex flex-col gap-stack-sm">
+<div class="flex items-center justify-between">
+<span class="text-primary-container font-label-caps">SCENE 03 / EXTERIOR / ROOFTOP</span>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-white/30 text-sm cursor-pointer hover:text-white" data-icon="drag_indicator">drag_indicator</span>
+</div>
+</div>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-body-sm font-body-sm focus:border-secondary-container focus:ring-1 focus:ring-secondary-container outline-none min-h-[100px] resize-none transition-all" placeholder="Enter your script here...">DOS FIGURAS EN CAPUCHADAS SE ENCUENTRAN BAJO LA LLUVIA CONSTANTE. EL INTERCAMBIO ES RÁPIDO.</textarea>
+<div class="bg-black/40 rounded p-3 border-l-2 border-secondary-container mt-stack-sm">
+<span class="text-[10px] text-secondary-container font-label-caps block mb-1">AI VISUAL PROMPT</span>
+<code class="text-secondary-fixed-dim font-mono text-xs leading-relaxed">low angle shot, two mysterious figures in tech-wear cloaks, heavy rain, dramatic backlighting from a drone hovering above, cinematic noir aesthetic, high grain, sharp contrast.</code>
+</div>
+</div>
+<div class="w-full md:w-80 h-48 md:h-auto rounded-lg overflow-hidden relative group/image border border-white/5">
+<img class="w-full h-full object-cover" data-alt="A dark and moody cinematic shot of two figures in futuristic tech-wear standing on a rainy rooftop. The scene is lit by a single bright spotlight from above, creating long shadows and highlighting the falling raindrops like diamonds. The aesthetic is industrial noir with deep obsidian tones and cold blue highlights. The atmosphere is tense and mysterious, captured with a grainy, filmic texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNsjRMwS4-CdouJieDR7y3PmweEIoEFNNUlQHaeEu7I9tFuizwYHezlO9ff7-LM2IGUt_BFfM0RPkwYYSfg-ifjPEkTZkn6xuSvhaSKVuA_v54zL_eYi0pECV6hIL07H0lByVmVC29gY_rU7tQzG3_6FLntNjmTMFAQl-SPlS18iIgbttyRT2dxB-reOvFAt7yGJX68xIO5dJxOS5Of8e-Qa4qa2Fopy5p800CBSncHK_nEu-OLDYpf0yGZGtJdWgCmoCjBkBmB1xn"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity flex items-center justify-center gap-4">
+<button class="w-10 h-10 rounded-full bg-primary-container text-white flex items-center justify-center bloom-purple active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-surface-container-highest text-white flex items-center justify-center border border-white/20 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-stack-md">
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-caps flex items-center gap-2 bloom-purple active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+                    Generar Visuales
+                </button>
+</div>
+</div>
+<!-- Add New Scene Placeholder -->
+<button class="w-full py-8 border-2 border-dashed border-white/10 rounded-xl hover:border-secondary-container/50 hover:bg-secondary-container/5 transition-all group">
+<div class="flex flex-col items-center gap-2">
+<span class="material-symbols-outlined text-white/20 group-hover:text-secondary-container transition-colors" data-icon="add_circle">add_circle</span>
+<span class="text-white/30 font-label-caps group-hover:text-white transition-colors">Añadir Nueva Escena</span>
+</div>
+</button>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
+<div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="video_library">video_library</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#BC13FE] drop-shadow-[0_0_8px_rgba(188,19,254,0.5)] active:scale-90 transition-transform duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="add_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="folder_copy">folder_copy</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Assets</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

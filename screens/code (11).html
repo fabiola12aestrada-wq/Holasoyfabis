@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FLUX_AI | Restore Neural Access</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#e6feff",
+                    "inverse-surface": "#e5e2e3",
+                    "surface-bright": "#3a393a",
+                    "tertiary": "#c8c6c7",
+                    "surface-container-high": "#2a2a2b",
+                    "on-surface-variant": "#d4c0d7",
+                    "tertiary-fixed": "#e5e2e3",
+                    "secondary-fixed": "#63f7ff",
+                    "on-secondary-fixed-variant": "#004f53",
+                    "on-primary-fixed": "#320047",
+                    "inverse-primary": "#9800d0",
+                    "inverse-on-surface": "#313031",
+                    "surface-container-lowest": "#0e0e0f",
+                    "surface-dim": "#131314",
+                    "on-primary-container": "#ffffff",
+                    "error": "#ffb4ab",
+                    "tertiary-container": "#777677",
+                    "on-error": "#690005",
+                    "outline": "#9d8ba0",
+                    "on-primary-fixed-variant": "#74009f",
+                    "background": "#131314",
+                    "surface-container-highest": "#353436",
+                    "surface-container": "#201f20",
+                    "on-background": "#e5e2e3",
+                    "surface-container-low": "#1c1b1c",
+                    "on-primary": "#520072",
+                    "primary-container": "#bc13fe",
+                    "on-surface": "#e5e2e3",
+                    "outline-variant": "#504254",
+                    "on-secondary-fixed": "#002021",
+                    "surface-variant": "#353436",
+                    "primary": "#ebb2ff",
+                    "on-tertiary": "#303031",
+                    "tertiary-fixed-dim": "#c8c6c7",
+                    "primary-fixed": "#f8d8ff",
+                    "secondary-container": "#00f4fe",
+                    "on-tertiary-fixed-variant": "#474647",
+                    "on-tertiary-fixed": "#1b1b1c",
+                    "primary-fixed-dim": "#ebb2ff",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#00dce5",
+                    "on-secondary-container": "#006c71",
+                    "surface-tint": "#ebb2ff",
+                    "on-secondary": "#003739",
+                    "on-error-container": "#ffdad6",
+                    "surface": "#131314",
+                    "on-tertiary-container": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "stack-md": "16px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-caps": ["Space Grotesk"],
+                    "headline-md": ["Space Grotesk"],
+                    "display-lg": ["Space Grotesk"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(26, 26, 27, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
+        }
+        .neon-glow-cyan {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+        }
+        .neural-grid {
+            background-image: 
+                linear-gradient(rgba(188, 19, 254, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-lg min-h-screen selection:bg-primary-container selection:text-white">
+<!-- Background Decorative Elements -->
+<div class="fixed inset-0 neural-grid pointer-events-none opacity-40"></div>
+<div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-container/20 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary-container/10 blur-[120px] rounded-full pointer-events-none"></div>
+<!-- Main Content Canvas -->
+<main class="relative min-h-screen flex items-center justify-center px-margin-mobile py-stack-lg">
+<div class="w-full max-w-[480px] space-y-stack-lg">
+<!-- Brand Anchor -->
+<div class="flex justify-center mb-stack-lg">
+<div class="flex flex-col items-center gap-stack-sm">
+<span class="text-display-lg font-display-lg text-white drop-shadow-[0_0_10px_rgba(188,19,254,0.8)] tracking-widest">FLUX_AI</span>
+<div class="h-[1px] w-12 bg-primary-container"></div>
+</div>
+</div>
+<!-- Recovery Card -->
+<section class="glass-panel rounded-xl p-8 md:p-10 relative overflow-hidden">
+<!-- Inner Glow Ornament -->
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+<header class="space-y-stack-sm mb-stack-lg">
+<h1 class="text-headline-md font-headline-md text-white">Restore Neural Access</h1>
+<p class="text-body-sm font-body-sm text-zinc-400">Enter your registered identity email to receive a recovery link</p>
+</header>
+<form class="space-y-stack-lg">
+<!-- Email Field -->
+<div class="space-y-stack-sm">
+<label class="text-label-caps font-label-caps text-zinc-500 block" for="recovery-email">Neural Identifier</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-zinc-500 group-focus-within:text-secondary-container transition-colors" data-icon="lock">lock</span>
+</div>
+<input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white font-body-lg placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-secondary-container focus:border-secondary-container transition-all neon-glow-cyan" id="recovery-email" name="email" placeholder="name@domain.ai" type="email"/>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full bg-primary-container hover:bg-primary-container/90 text-white font-label-caps py-4 rounded-lg transition-all active:scale-[0.98] neon-glow-primary flex items-center justify-center gap-stack-sm" type="submit">
+<span>Send Recovery Link</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="rocket_launch">rocket_launch</span>
+</button>
+</form>
+<!-- Footer Links -->
+<footer class="mt-stack-lg flex flex-col items-center gap-stack-md pt-stack-lg border-t border-white/5">
+<a class="text-label-caps font-label-caps text-secondary-container hover:text-cyan-300 transition-colors flex items-center gap-stack-sm" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_back">arrow_back</span>
+                        Back to Sign In
+                    </a>
+</footer>
+</section>
+<!-- Tech Details Decor -->
+<div class="flex justify-between items-center px-4">
+<div class="flex gap-2">
+<div class="w-1 h-1 rounded-full bg-primary-container"></div>
+<div class="w-1 h-1 rounded-full bg-primary-container/40"></div>
+<div class="w-1 h-1 rounded-full bg-primary-container/20"></div>
+</div>
+<span class="text-[10px] font-label-caps text-zinc-600 tracking-[0.2em]">ENCRYPTION_STATUS: ACTIVE</span>
+<div class="flex gap-2">
+<div class="w-1 h-1 rounded-full bg-primary-container/20"></div>
+<div class="w-1 h-1 rounded-full bg-primary-container/40"></div>
+<div class="w-1 h-1 rounded-full bg-primary-container"></div>
+</div>
+</div>
+<!-- Contextual Image/Graphic -->
+<div class="w-full h-48 rounded-xl overflow-hidden border border-white/5 relative group">
+<img alt="Neural Network Visualization" class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700" data-alt="A highly sophisticated digital neural network visualization with thin neon purple and cyan filaments connecting glowing data nodes in a deep obsidian space. The lighting is cinematic, with a soft bloom effect around the central processing core, evoking a sense of immense computational power and futuristic minimalist aesthetics. The scene is framed by a subtle glassmorphism overlay that catches faint prismatic light leaks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdFh3fS8FNlDfTisvBAlTZmIL33b4OQU3e2ODyyvEYkf0zyhrIKOAAhT7hF3nf5FYelxuZY0q9cOxihwQjHuEdwQIfpiGyHkKiHc525-ihSgpBen7h_OCZ8qYHVGxxVZ4SML1EYJioYgTPV3F8moraLiui5kX8XeIspCysDdWeyl2E6dgkMDfiCRQLnJezPoksBu6WdzLPg9-lSRrpFA9n8xOyp7jSfYeUYQgct519Up05hYyoACKt3deuSDp5ljzRx0YdqLtpBEG3"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex items-center gap-stack-sm">
+<div class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></div>
+<span class="text-[10px] font-label-caps text-zinc-400">CORE_SYNC: WAITING_FOR_IDENTITY</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Support Elements -->
+<div class="fixed bottom-margin-mobile right-margin-mobile hidden md:block">
+<button class="glass-panel p-stack-md rounded-full text-zinc-400 hover:text-white transition-colors border-white/5">
+<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
+</button>
+</div>
+</body></html>
