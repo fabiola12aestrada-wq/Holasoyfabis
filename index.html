@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FLUX_AI — Portal de Navegación</title>
+  <title>Yopfaby App — FLUX_AI</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <style>
@@ -35,7 +35,7 @@
 
     .container {
       width: 100%;
-      max-width: 400px;
+      max-width: 360px;
       text-align: center;
     }
 
@@ -55,17 +55,16 @@
 
     h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--text-dim);
       margin-bottom: 2rem;
       letter-spacing: 1px;
-      text-transform: uppercase;
     }
 
     nav {
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
+      gap: 1rem;
       width: 100%;
     }
 
@@ -76,31 +75,31 @@
       background: var(--surface-elevated);
       color: var(--text);
       text-decoration: none;
-      padding: 1rem 1.2rem;
+      padding: 1rem 1.5rem;
       border-radius: 12px;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 500;
       border: 1px solid var(--border);
       transition: all 0.2s ease;
     }
 
     nav a .material-icons {
-      font-size: 20px;
+      font-size: 22px;
       color: var(--cyan);
       transition: color 0.2s ease;
     }
 
     nav a:hover {
-      background: var(--surface);
-      border-color: var(--primary);
+      background: var(--primary);
       color: #fff;
+      border-color: var(--primary);
       transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(188, 19, 254, 0.2);
+      box-shadow: 0 4px 15px rgba(188, 19, 254, 0.3);
     }
 
     nav a:hover .material-icons {
-      color: var(--primary-glow);
+      color: #fff;
     }
   </style>
 </head>
@@ -109,29 +108,29 @@
   <div class="container">
     <div class="logo">
       <span class="material-icons">auto_awesome</span>
-      FLUX<span>_AI</span>
+      ✦ FLUX<span>_AI</span>
     </div>
-    <h1>Yopfaby App — Navegación Principal</h1>
+    <h1>Yopfaby App</h1>
 
     <nav>
-      <a href="screens/inicio/">
+      <a href="screens/inicio/index.html">
         <span class="material-icons">home</span>
-        <span>Inicio</span>
+        <span>🏠 Inicio</span>
       </a>
-      <a href="screens/registro/">
+      <a href="screens/registro/index.html">
         <span class="material-icons">person_add</span>
-        <span>Registro</span>
+        <span>👤 Registro</span>
       </a>
-      <a href="screens/generador/">
+      <a href="screens/generador/index.html">
         <span class="material-icons">palette</span>
-        <span>Generador</span>
+        <span>🎨 Generador</span>
       </a>
-      <a href="screens/perfil/">
+      <a href="screens/perfil/index.html">
         <span class="material-icons">settings</span>
-        <span>Perfil</span>
+        <span>⚙️ Perfil</span>
       </a>
     </nav>
   </div>
 
 </body>
-</html>       
+</html>
