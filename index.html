@@ -3,65 +3,139 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Yopfaby App</title>
+  <title>FLUX_AI — Portal de Navegación</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <style>
+    :root {
+      --bg: #131314;
+      --surface: #1c1b1c;
+      --surface-elevated: #201f20;
+      --border: #353436;
+      --primary: #bc13fe;
+      --primary-glow: #ebb2ff;
+      --text: #e5e2e3;
+      --text-dim: #d4c0d7;
+      --cyan: #00f4fe;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     body {
-      background: #131314;
-      color: #e5e2e3;
-      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      padding: 1.5rem;
     }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
     .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #ebb2ff;
-      margin-bottom: 2rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-glow);
+      margin-bottom: 0.5rem;
       letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
-    .logo span { color: #bc13fe; }
+    .logo span { color: var(--primary); }
+
     h1 {
-      font-size: 1.1rem;
-      color: #d4c0d7;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      color: var(--text-dim);
       margin-bottom: 2rem;
       letter-spacing: 1px;
+      text-transform: uppercase;
     }
+
     nav {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      width: 280px;
+      gap: 0.85rem;
+      width: 100%;
     }
+
     nav a {
-      display: block;
-      background: #201f20;
-      color: #e5e2e3;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface-elevated);
+      color: var(--text);
       text-decoration: none;
-      padding: 1rem 1.5rem;
+      padding: 1rem 1.2rem;
       border-radius: 12px;
-      font-size: 1rem;
-      border: 1px solid #353436;
-      transition: background 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
     }
+
+    nav a .material-icons {
+      font-size: 20px;
+      color: var(--cyan);
+      transition: color 0.2s ease;
+    }
+
     nav a:hover {
-      background: #bc13fe;
+      background: var(--surface);
+      border-color: var(--primary);
       color: #fff;
-      border-color: #bc13fe;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(188, 19, 254, 0.2);
+    }
+
+    nav a:hover .material-icons {
+      color: var(--primary-glow);
     }
   </style>
 </head>
 <body>
-  <div class="logo">✦ FLUX<span>_AI</span></div>
-  <h1>Yopfaby App</h1>
-  <nav>
-    <a href="screens/inicio/">🏠 Inicio</a>
-    <a href="screens/registro/">👤 Registro</a>
-    <a href="screens/generador/">🎨 Generador</a>
-    <a href="screens/perfil/">⚙️ Perfil</a>
-  </nav>
+
+  <div class="container">
+    <div class="logo">
+      <span class="material-icons">auto_awesome</span>
+      FLUX<span>_AI</span>
+    </div>
+    <h1>Yopfaby App — Navegación Principal</h1>
+
+    <nav>
+      <a href="./app/dashboard.html">
+        <span class="material-icons">dashboard</span>
+        <span>Dashboard de Proyectos</span>
+      </a>
+      <a href="./studio/generate.html">
+        <span class="material-icons">add_circle</span>
+        <span>Generador de Imágenes</span>
+      </a>
+      <a href="./app/assets.html">
+        <span class="material-icons">folder_copy</span>
+        <span>Biblioteca de Activos</span>
+      </a>
+      <a href="./app/profile.html">
+        <span class="material-icons">account_circle</span>
+        <span>Perfil de Usuario</span>
+      </a>
+      <a href="./auth/login.html">
+        <span class="material-icons">lock</span>
+        <span>Iniciar Sesión / Registro</span>
+      </a>
+    </nav>
+  </div>
+
 </body>
 </html>
