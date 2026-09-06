@@ -30,12 +30,12 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 1.5rem;
+      padding: 2rem 1rem;
     }
 
     .container {
       width: 100%;
-      max-width: 360px;
+      max-width: 420px;
       text-align: center;
     }
 
@@ -57,35 +57,42 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: 1.1rem;
       color: var(--text-dim);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       letter-spacing: 1px;
     }
 
     nav {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.75rem;
       width: 100%;
+      max-height: 70vh;
+      overflow-y: auto;
+      padding-right: 4px;
     }
+
+    /* Scrollbar personalizada para el menú */
+    nav::-webkit-scrollbar { width: 6px; }
+    nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
     nav a {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.85rem;
       background: var(--surface-elevated);
       color: var(--text);
       text-decoration: none;
-      padding: 1rem 1.5rem;
+      padding: 0.85rem 1.2rem;
       border-radius: 12px;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 500;
       border: 1px solid var(--border);
       transition: all 0.2s ease;
     }
 
     nav a .material-icons {
-      font-size: 22px;
+      font-size: 20px;
       color: var(--cyan);
       transition: color 0.2s ease;
     }
@@ -95,7 +102,7 @@
       color: #fff;
       border-color: var(--primary);
       transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(188, 19, 254, 0.3);
+      box-shadow: 0 4px 12px rgba(188, 19, 254, 0.3);
     }
 
     nav a:hover .material-icons {
@@ -113,6 +120,7 @@
     <h1>Yopfaby App</h1>
 
     <nav>
+      <!-- Cambia o renombra la ruta "screens/..." de cada botón según el nombre real de tus carpetas -->
       <a href="screens/inicio/index.html">
         <span class="material-icons">home</span>
         <span>🏠 Inicio</span>
@@ -128,6 +136,34 @@
       <a href="screens/perfil/index.html">
         <span class="material-icons">settings</span>
         <span>⚙️ Perfil</span>
+      </a>
+      <a href="screens/galeria/index.html">
+        <span class="material-icons">photo_library</span>
+        <span>🖼️ Galería</span>
+      </a>
+      <a href="screens/historial/index.html">
+        <span class="material-icons">history</span>
+        <span>📜 Historial</span>
+      </a>
+      <a href="screens/favoritos/index.html">
+        <span class="material-icons">star</span>
+        <span>⭐ Favoritos</span>
+      </a>
+      <a href="screens/ajustes/index.html">
+        <span class="material-icons">tune</span>
+        <span>Ajustes</span>
+      </a>
+      <a href="screens/proyectos/index.html">
+        <span class="material-icons">folder</span>
+        <span>📁 Proyectos</span>
+      </a>
+      <a href="screens/herramientas/index.html">
+        <span class="material-icons">build</span>
+        <span>🛠️ Herramientas</span>
+      </a>
+      <a href="screens/ayuda/index.html">
+        <span class="material-icons">help_outline</span>
+        <span>❓ Ayuda</span>
       </a>
     </nav>
   </div>
