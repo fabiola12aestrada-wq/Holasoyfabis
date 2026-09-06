@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#9d8ba0",
+                    "on-surface-variant": "#d4c0d7",
+                    "surface-bright": "#3a393a",
+                    "secondary-fixed": "#63f7ff",
+                    "on-background": "#e5e2e3",
+                    "tertiary-fixed-dim": "#c8c6c7",
+                    "surface-container": "#201f20",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#353436",
+                    "primary-fixed-dim": "#ebb2ff",
+                    "primary-container": "#bc13fe",
+                    "on-tertiary-fixed-variant": "#474647",
+                    "on-primary": "#520072",
+                    "on-surface": "#e5e2e3",
+                    "tertiary-fixed": "#e5e2e3",
+                    "secondary": "#e6feff",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#74009f",
+                    "surface": "#131314",
+                    "outline-variant": "#504254",
+                    "on-tertiary": "#303031",
+                    "error": "#ffb4ab",
+                    "on-secondary": "#003739",
+                    "on-secondary-container": "#006c71",
+                    "on-secondary-fixed": "#002021",
+                    "inverse-primary": "#9800d0",
+                    "surface-container-low": "#1c1b1c",
+                    "error-container": "#93000a",
+                    "surface-container-high": "#2a2a2b",
+                    "surface-container-highest": "#353436",
+                    "on-tertiary-fixed": "#1b1b1c",
+                    "primary": "#ebb2ff",
+                    "tertiary-container": "#777677",
+                    "on-primary-container": "#ffffff",
+                    "tertiary": "#c8c6c7",
+                    "on-primary-fixed": "#320047",
+                    "inverse-surface": "#e5e2e3",
+                    "surface-dim": "#131314",
+                    "surface-tint": "#ebb2ff",
+                    "secondary-fixed-dim": "#00dce5",
+                    "inverse-on-surface": "#313031",
+                    "primary-fixed": "#f8d8ff",
+                    "background": "#131314",
+                    "on-tertiary-container": "#ffffff",
+                    "on-secondary-fixed-variant": "#004f53",
+                    "secondary-container": "#00f4fe",
+                    "surface-container-lowest": "#0e0e0f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "margin-mobile": "20px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "stack-md": "16px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Space Grotesk"],
+                    "display-lg": ["Space Grotesk"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Space Grotesk"]
+            },
+            "fontSize": {
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>.glass-card {
+    background: rgba(26, 26, 27, 0.6);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2)
+    }
+.neon-glow {
+    box-shadow: 0 0 20px rgba(188, 19, 254, 0.4)
+    }
+.neural-bg {
+    background-image: linear-gradient(to bottom, rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.95)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuCN5pZE9OmvIOfFoeQUE03-DlZYZeSmJtFJZatcR3H11H3QtrDHNmnmlvieUbqhlVVmi_FHaV0zicxDoNhsIOq839pwm1-dudQTOqB4f6qwUqGJqA2jsbgCP9EiheJ39TF45ZQhiiDe7Kxbjlx44Twk8ax0n_DBK-mQNxlaBH3Z4i3WRJTFarCP_vRCCfGmBblSdob6JrsOnle5GV6ysUPQOg2bm58CJp5sJrHy9IvqpLuJklxE8uHLJtMr08xBoVkfTDIlH81MPJpv);
+    background-size: cover;
+    background-position: center
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-lg text-on-surface selection:bg-primary-container selection:text-white overflow-hidden">
+<!-- Cinematic Neural Background -->
+<div class="fixed inset-0 neural-bg z-0" data-alt="A dark cinematic visualization of a complex neural network consisting of glowing purple and cyan nodes connected by thin fiber optic strands. The background is a deep obsidian void with subtle atmospheric dust motes catching the neon light. Light streaks pulses through the connections like data moving at high speeds. The overall aesthetic is futuristic, sophisticated, and evokes immense computational power through high-contrast lighting and deep shadows.">
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 flex flex-col items-center justify-between min-h-screen px-margin-mobile pt-stack-lg pb-stack-lg">
+<!-- Header Branding -->
+<header class="w-full flex justify-center">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary-container text-4xl" data-weight="fill">hub</span>
+<h1 class="font-display-lg text-headline-md tracking-tighter text-on-surface-variant drop-shadow-[0_0_10px_rgba(188,19,254,0.6)]">
+                    FLUX_AI
+                </h1>
+</div>
+</header>
+<!-- Center Stage Selection -->
+<div class="w-full max-w-md flex flex-col items-center text-center">
+<div class="mb-stack-lg animate-pulse-slow">
+<h2 class="font-display-lg text-display-lg text-white mb-stack-sm">
+                    TRANSFORM CONTENT INTO CINEMATIC REALITY
+                </h2>
+<div class="h-1 w-24 bg-gradient-to-r from-primary-container to-secondary-fixed mx-auto rounded-full"></div>
+</div>
+<!-- Interaction Cluster -->
+<div class="w-full space-y-stack-md">
+<!-- Primary Action -->
+<button class="w-full py-4 bg-primary-container text-on-primary-container rounded-xl font-label-caps text-lg neon-glow transition-all active:scale-95 duration-200">
+                    Get Started
+                </button>
+<div class="flex items-center gap-stack-sm w-full opacity-40 py-2">
+<div class="h-px bg-on-surface-variant grow"></div>
+<span class="font-label-caps text-[10px]">SECURE ENTRY</span>
+<div class="h-px bg-on-surface-variant grow"></div>
+</div>
+<!-- Secondary Actions (Glassmorphism) -->
+<div class="grid grid-cols-1 gap-stack-sm">
+<button class="glass-card w-full py-3 px-6 rounded-xl flex items-center justify-center gap-stack-md text-on-surface transition-all hover:bg-white/10 active:scale-[0.98]">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+<span class="font-label-caps">Continue with Google</span>
+</button>
+<button class="glass-card w-full py-3 px-6 rounded-xl flex items-center justify-center gap-stack-md text-on-surface transition-all hover:bg-white/10 active:scale-[0.98]">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"></path>
+</svg>
+<span class="font-label-caps">Continue with Apple</span>
+</button>
+</div>
+<button class="mt-stack-md text-stone-500 font-label-caps text-xs hover:text-cyan-400 transition-colors duration-300 active:scale-95">
+                    Continue as Guest
+                </button>
+</div>
+</div>
+<!-- Footer Data -->
+<footer class="w-full flex flex-col items-center gap-stack-sm">
+<div class="h-px w-12 bg-white/10 mb-2"></div>
+<p class="font-label-caps text-[10px] text-stone-500 tracking-[0.2em]">
+                v2.4.0 NEURAL CORE • SECURE PROTOCOL
+            </p>
+<div class="flex gap-stack-lg mt-stack-sm">
+<span class="material-symbols-outlined text-stone-600 text-sm">security</span>
+<span class="material-symbols-outlined text-stone-600 text-sm">language</span>
+<span class="material-symbols-outlined text-stone-600 text-sm">verified_user</span>
+</div>
+</footer>
+</main>
+<!-- Decorative Elements -->
+<div class="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-[#050505] to-transparent pointer-events-none opacity-80"></div>
+<div class="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none opacity-80"></div>
+<!-- Subtle Edge Glare -->
+<div class="fixed top-0 right-0 w-[500px] h-[500px] bg-primary-container/5 blur-[120px] rounded-full -mr-64 -mt-64"></div>
+<div class="fixed bottom-0 left-0 w-[400px] h-[400px] bg-secondary-fixed/5 blur-[100px] rounded-full -ml-48 -mb-48"></div>
+</body></html>
