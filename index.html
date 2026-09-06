@@ -172,3 +172,75 @@
 
 </body>
 </html>
+<body> <div class="container">
+    <div class="logo">
+        <span class="material-icons">palette</span> FLUX<span>_GEN</span>
+    </div>
+    <h1>Generador de Imágenes IA</h1>
+
+    <!-- 1. AQUÍ EL USUARIO ESCRIBE EL PROMPT -->
+    <div class="prompt-container">
+        <textarea id="promptInput" placeholder="Describe la imagen que quieres crear... (Ej: Un gato astronauta en Marte, estilo cyberpunk)"></textarea>
+        
+        <button id="btnGenerar" onclick="enviarPrompt()">
+            <span class="material-icons">auto_awesome</span> Generar Imagen
+        </button>
+    </div>
+
+    <!-- 2. AQUÍ SE MUESTRA EL RESULTADO -->
+    <div class="resultado-container">
+        <div id="loader" class="loader" style="display: none;">Generando tu arte...</div>
+        <img id="resultadoIA" src="" alt="Tu imagen aparecerá aquí" style="display: none;" />
+    </div>
+    
+    <br>
+    <a href="../../index.html" class="btn-volver">
+        <span class="material-icons">arrow_back</span> Volver al Menú
+    </a>
+</div>
+
+<!-- 3. EL JAVASCRIPT QUE CONECTA EL PROMPT CON TU JAVA -->
+<script>
+async function enviarPrompt() {
+    const promptTexto = document.getElementById("promptInput").value;
+    const btn = document.getElementById("btnGenerar");
+    const loader = document.getElementById("loader");
+    const imagenContenedor = document.getElementById("resultadoIA");
+
+    if (!promptTexto.trim()) {
+        alert("Por favor, escribe un prompt primero.");
+        return;
+    }
+
+    // Bloquear interfaz mientras procesa
+    btn.disabled = true;
+    loader.style.display = "block";
+    imagenContenedor.style.display = "none";
+
+    try {
+        // Hace la petición a tu controlador Java (/api/ia/generar)
+        const respuesta = await fetch('/api/ia/generar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: promptTexto }) // Enviamos el prompt capturado
+        });
+        
+        const datos = await respuesta.json();
+        
+        if (datos.imagen) {
+            // Muestra la imagen devuelta por Java en base64
+            imagenContenedor.src = datos.imagen;
+            imagenContenedor.style.display = "block";
+        } else {
+            alert("Error: " + (datos.error || "No se pudo generar"));
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        alert("Hubo un error al conectar con el servidor Java.");
+    } finally {
+        // Desbloquear interfaz
+        btn.disabled = false;
+        loader.style.display = "none";
+    }
+}
+</script>
