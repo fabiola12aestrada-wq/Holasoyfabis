@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neural Key Recovery | FLUX_AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#3a393a",
+                        "secondary-fixed": "#63f7ff",
+                        "inverse-primary": "#9800d0",
+                        "surface-variant": "#353436",
+                        "on-background": "#e5e2e3",
+                        "on-secondary-container": "#006c71",
+                        "on-primary": "#520072",
+                        "on-secondary-fixed": "#002021",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0e0e0f",
+                        "on-primary-container": "#ffffff",
+                        "tertiary-fixed-dim": "#c8c6c7",
+                        "on-tertiary-fixed-variant": "#474647",
+                        "surface-container": "#201f20",
+                        "on-tertiary-fixed": "#1b1b1c",
+                        "tertiary": "#c8c6c7",
+                        "on-tertiary": "#303031",
+                        "primary": "#ebb2ff",
+                        "surface-container-low": "#1c1b1c",
+                        "on-primary-fixed": "#320047",
+                        "primary-fixed": "#f8d8ff",
+                        "outline": "#9d8ba0",
+                        "on-secondary-fixed-variant": "#004f53",
+                        "secondary-container": "#00f4fe",
+                        "on-secondary": "#003739",
+                        "inverse-surface": "#e5e2e3",
+                        "background": "#131314",
+                        "surface-container-high": "#2a2a2b",
+                        "error-container": "#93000a",
+                        "secondary-fixed-dim": "#00dce5",
+                        "surface-dim": "#131314",
+                        "on-surface-variant": "#d4c0d7",
+                        "surface": "#131314",
+                        "inverse-on-surface": "#313031",
+                        "primary-fixed-dim": "#ebb2ff",
+                        "error": "#ffb4ab",
+                        "on-surface": "#e5e2e3",
+                        "tertiary-fixed": "#e5e2e3",
+                        "on-tertiary-container": "#ffffff",
+                        "secondary": "#e6feff",
+                        "on-primary-fixed-variant": "#74009f",
+                        "on-error": "#690005",
+                        "outline-variant": "#504254",
+                        "surface-tint": "#ebb2ff",
+                        "primary-container": "#bc13fe",
+                        "surface-container-highest": "#353436",
+                        "tertiary-container": "#777677"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Space Grotesk"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["Space Grotesk"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(26, 26, 27, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen flex flex-col selection:bg-primary-container selection:text-white">
+<!-- TopAppBar Component (from JSON structure) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-fuchsia-600" data-icon="hub">hub</span>
+<span class="text-xl font-bold tracking-tighter text-fuchsia-500 drop-shadow-[0_0_8px_rgba(188,19,254,0.6)] font-display-lg">FLUX_AI</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-stone-500 hover:text-cyan-400 transition-colors duration-300 active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center px-margin-mobile pt-16 pb-stack-lg">
+<div class="w-full max-w-md space-y-stack-lg">
+<!-- Hero Header -->
+<div class="text-center space-y-2">
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">Neural Key Recovery</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant opacity-80">Initialize secure protocol to restore your access</p>
+</div>
+<!-- Graphic Element (Aesthetic placeholder) -->
+<div class="relative w-full aspect-square max-h-48 overflow-hidden rounded-xl border border-white/5 bg-surface-container-low group">
+<div class="absolute inset-0 bg-gradient-to-t from-[#131314] via-transparent to-transparent z-10"></div>
+<img alt="Neural interface" class="w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-transform duration-700" data-alt="A high-tech digital interface showcasing abstract neural network connections and data streams in a dark obsidian environment. The scene is illuminated by sharp neon purple light pulses that ripple through fiber optic lines. The overall aesthetic is futuristic minimalism with cinematic depth and sophisticated glass textures, reflecting an advanced AI computational core." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjwqKIv3se-9T7QtLGnrcpGYHOkOoWAgYFbIr6k0x3to1vyg4kOajmxlgAmLizSZvjoTafhz-d0UW_eYheUOKpmkMUj9TgBNm9WqpQjFYz87DRm6yUSVeXLpbMj_GIviSWfSjCPav1BY9od9mrT6ugldctLRzlhKvKKQnyhfN6RDTww3abYa7ApAp9wyMnk31QzdwQ6IrsGdJkWL2yy-QjC6o9dQtJ0j5nxHkEEbU5UvkvywzT4NBzuINxW9HiXhcCaoWA1ngta3Bx"/>
+<div class="absolute inset-0 flex items-center justify-center z-20">
+<div class="w-16 h-16 rounded-full border border-primary/30 flex items-center justify-center backdrop-blur-sm bg-primary/5 neon-glow">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="fingerprint" style="font-variation-settings: 'FILL' 0;">fingerprint</span>
+</div>
+</div>
+</div>
+<!-- Recovery Form Card -->
+<div class="glass-card p-stack-lg rounded-xl space-y-stack-md shadow-2xl">
+<div class="space-y-stack-sm">
+<label class="font-label-caps text-label-caps text-outline block mb-2">Neural Identity (Email)</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-500 group-focus-within:text-secondary-fixed transition-colors" data-icon="security">security</span>
+<input class="w-full bg-[#050505] border border-white/10 rounded-lg py-3 pl-10 pr-4 text-on-surface placeholder:text-stone-600 focus:outline-none focus:border-secondary-fixed focus:ring-1 focus:ring-secondary-fixed/30 transition-all font-body-sm" placeholder="user@neural-node.flux" type="email"/>
+</div>
+</div>
+<!-- Info Box -->
+<div class="flex gap-stack-sm p-stack-md bg-primary-container/10 border border-primary/20 rounded-lg">
+<span class="material-symbols-outlined text-primary text-body-sm" data-icon="info">info</span>
+<p class="text-body-sm text-primary/90 font-body-sm leading-relaxed">
+                        A unique, single-use authentication hash will be dispatched to reset your Neural Key. Protocol expires in 15 minutes.
+                    </p>
+</div>
+<!-- Action Button -->
+<button class="w-full bg-primary-container text-on-primary-container font-label-caps py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-container/90 active:scale-[0.98] transition-all neon-glow mt-stack-md">
+<span>Send Recovery Link</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="rocket_launch">rocket_launch</span>
+</button>
+</div>
+<!-- Navigation Link -->
+<div class="text-center pt-stack-md">
+<a class="inline-flex items-center gap-2 font-label-caps text-on-surface-variant hover:text-cyan-400 transition-colors group" href="#">
+<span class="material-symbols-outlined text-body-sm group-hover:-translate-x-1 transition-transform" data-icon="arrow_back">arrow_back</span>
+                    Back to Login
+                </a>
+</div>
+</div>
+</main>
+<!-- Background Decoration -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+<div class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] bg-secondary-container/5 blur-[100px] rounded-full"></div>
+</div>
+</body></html>
