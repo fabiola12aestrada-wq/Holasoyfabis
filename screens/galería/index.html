@@ -40,7 +40,7 @@
       color: var(--text); opacity: 0.8;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    #estado { margin-top: 2rem; opacity: 0.6; font-size: 0.9rem; }
+    #estado { margin-top: 2rem; opacity: 0.6; font-size: 0.9rem; text-align: center; }
     .btn-volver {
       display: inline-block; margin-top: 2rem; color: var(--text);
       text-decoration: none; font-size: 0.9rem;
@@ -48,9 +48,55 @@
   </style>
 </head>
 <body>
-  <h1>🖼️ Galería de Imágenes</h1>
+  <h1> Galería de Imágenes</h1>
   <div id="galeria" class="grid"></div>
   <p id="estado">Cargando imágenes...</p>
   <a href="../../index.html" class="btn-volver">← Volver al Menú</a>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const estado = document.getElementById("estado");
+
+    try {
+      const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
+      const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
+
+      if (!window.supabase) {
+        estado.textContent = "Error: no cargó la librería de Supabase (revisa tu conexión o el CDN).";
+      } else {
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        supabase
+          .from("generated_images")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .then(({ data, error }) => {
+            if (error) {
+              estado.textContent = "Error de Supabase: " + error.message;
+              return;
+            }
+
+            if (!data || data.length === 0) {
+              estado.textContent = "Aún no hay imágenes generadas.";
+              return;
+            }
+
+            estado.style.display = "none";
+            const galeria = document.getElementById("galeria");
+            data.forEach(item => {
+              const card = document.createElement("div");
+              card.className = "card";
+              card.innerHTML = `<img src="${item.image_url}" alt="${item.prompt}" /><p>${item.prompt}</p>`;
+              galeria.appendChild(card);
+            });
+          })
+          .catch(err => {
+            estado.textContent = "Error inesperado: " + err.message;
+          });
+      }
+    } catch (err) {
+      estado.textContent = "Error al iniciar: " + err.message;
+    }
+  </script>
+</body>
+</html>
