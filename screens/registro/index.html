@@ -89,4 +89,61 @@
     }
   </script>
 </body>
-</html>
+</html> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const mensaje = document.getElementById("mensaje");
+
+  window.onerror = function(msg, url, line) {
+    mensaje.textContent = "Error JS: " + msg + " (línea " + line + ")";
+  };
+
+  let supabase;
+  try {
+    if (!window.supabase) {
+      mensaje.textContent = "Error: no cargó la librería de Supabase.";
+    } else {
+      const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
+      const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      mensaje.textContent = "Listo para registrar.";
+    }
+  } catch (err) {
+    mensaje.textContent = "Error al iniciar: " + err.message;
+  }
+
+  async function registrar() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const btn = document.getElementById("btnRegistrar");
+
+    if (!email || !password) {
+      mensaje.textContent = "Completa correo y contraseña.";
+      return;
+    }
+    if (password.length < 6) {
+      mensaje.textContent = "La contraseña debe tener al menos 6 caracteres.";
+      return;
+    }
+    if (!supabase) {
+      mensaje.textContent = "Error: Supabase no está inicializado.";
+      return;
+    }
+
+    btn.disabled = true;
+    mensaje.textContent = "Creando cuenta...";
+
+    try {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      btn.disabled = false;
+
+      if (error) {
+        mensaje.textContent = "Error de Supabase: " + error.message;
+        return;
+      }
+      mensaje.textContent = "¡Cuenta creada! Revisa tu correo para confirmar.";
+    } catch (err) {
+      btn.disabled = false;
+      mensaje.textContent = "Error inesperado: " + err.message;
+    }
+  }
+</script>
