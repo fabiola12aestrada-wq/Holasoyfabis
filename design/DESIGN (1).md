@@ -1,3 +1,4 @@
+[DESIGN (1).md](https://github.com/user-attachments/files/31981240/DESIGN.1.md)
 # Glacier — Glassmorphism
 
 ## North Star: "Frozen Light"
