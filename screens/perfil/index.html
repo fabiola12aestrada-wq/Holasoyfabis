@@ -119,10 +119,10 @@
       const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
       const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
 
-      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       async function cargarUsuario() {
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        const { data: { user }, error: userError } = await sbClient.auth.getUser();
 
         if (userError || !user) {
           document.getElementById("nombre-usuario").textContent = "Invitado";
@@ -144,7 +144,7 @@
         if (!user) return;
 
         // Total de imágenes generadas por este usuario
-        const { count, error: countError } = await supabase
+        const { count, error: countError } = await sbClient
           .from("generated_images")
           .select("*", { count: "exact", head: true })
           .eq("user_id", user.id);
@@ -157,7 +157,7 @@
         document.getElementById("total-imagenes").textContent = count ?? 0;
 
         // Últimas 5 imágenes generadas por este usuario
-        const { data, error } = await supabase
+        const { data, error } = await sbClient
           .from("generated_images")
           .select("*")
           .eq("user_id", user.id)
@@ -176,7 +176,7 @@
         }
 
         // Días desde la primera imagen generada por este usuario
-        const { data: primerRegistro } = await supabase
+        const { data: primerRegistro } = await sbClient
           .from("generated_images")
           .select("created_at")
           .eq("user_id", user.id)
@@ -206,7 +206,7 @@
         btnLogout.disabled = true;
         btnLogout.textContent = "Cerrando sesión...";
 
-        const { error } = await supabase.auth.signOut();
+        const { error } = await sbClient.auth.signOut();
 
         if (error) {
           estado.textContent = "Error al cerrar sesión: " + error.message;
