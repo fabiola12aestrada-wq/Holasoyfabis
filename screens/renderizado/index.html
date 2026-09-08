@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
       tailwind.config = {
@@ -102,18 +100,30 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .neon-pulse {
-            box-shadow: 0 0 15px rgba(0, 244, 254, 0.4);
+        .neon-pulse { box-shadow: 0 0 15px rgba(0, 244, 254, 0.4); }
+        body { min-height: max(884px, 100dvh); }
+
+        .scene-thumb {
+            width: 64px; height: 64px; border-radius: 10px; overflow: hidden;
+            flex-shrink: 0; position: relative; background: #0e0e0f;
+            border: 2px solid transparent;
         }
-        .radial-progress-bg {
-            background: conic-gradient(from 0deg, #bc13fe 0%, #00f4fe 100%);
+        .scene-thumb.done { border-color: #00f4fe; }
+        .scene-thumb.pending { border-color: rgba(255,255,255,0.1); }
+        .scene-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .scene-thumb .thumb-status {
+            position: absolute; bottom: 2px; right: 2px;
+            width: 16px; height: 16px; border-radius: 9999px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px;
         }
+        .thumb-status.done { background: #00f4fe; color: #003739; }
+        .thumb-status.pending { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); }
+
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        #estado-render { text-align: center; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+        #estado-render.error { color: #ffb4ab; }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
   </head>
 <body class="bg-surface-dim text-on-surface font-body-lg min-h-screen flex flex-col">
 <!-- TopAppBar -->
@@ -125,147 +135,277 @@
 <button class="text-white/70 hover:text-cyan-400 transition-colors active:scale-95 duration-200">
 <span class="material-symbols-outlined">notifications</span>
 </button>
-<div class="w-8 h-8 rounded-full border border-primary-container overflow-hidden">
-<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCekMBp4Gk6y50TJZq4Xcjp36R_wEYt4J0VPUylXv3sl3TM222qI58_tt5pw9u3ctK4eZLroPXvbRlm4DzltOzylCPza03k0WBdk0HVUzjjX1jKr7WiUpfhCIx_88qGFOVN6u4SCxA_AkjtdWXQ1m_Za_hSIfuoGUw86kJxwxtD9ZQIjPCV0uukAqy0Ol2hW11R0cyg6TlabMsFUDnnKAOujt_aJORS85E7VHznVNek2jYq0WKGqWgTKLPUKERRuzSRNQwio8G_m7Op"/>
+<div class="w-8 h-8 rounded-full border border-primary-container overflow-hidden flex items-center justify-center bg-zinc-800">
+<span class="material-symbols-outlined text-zinc-500 text-lg">person</span>
 </div>
 </div>
 </header>
 <!-- Main Content -->
 <main class="flex-1 mt-16 mb-20 px-margin-mobile pt-stack-lg max-w-4xl mx-auto w-full">
-<!-- Video Player Section (Render Preview) -->
+
+<!-- Preview: filmstrip de escenas en orden -->
 <section class="mb-stack-lg">
-<div class="relative aspect-video glass-panel rounded-xl overflow-hidden shadow-2xl flex items-center justify-center group">
-<img class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity" data-alt="A cinematic, futuristic computer screen displaying a complex neural network visualization in neon purples and electric cyans. The room is dark, obsidian-like, with subtle glass reflections on the surfaces. The atmosphere is highly technological, sleek, and high-performance, featuring blurred light trails and professional cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr7whRKuBgMw9_h2LGqPU1z5fMDVG4m9Q47mYMYE7AHTXPQmoNA-G0feJ-LCt2plRsLigLbkT2dQcOMWult3P61H5Gwg4ox2PjJ9C6xr_-w8XnZ86BVhesiFI6uzbCTPACtyhbXodCblLfRyZkVJjaos0f7UdGDbHh3VM4JuA0nIAN-PqhW6efE-q3SHF4lKc2XVe6hNgxumgqv18BLqhkIR0xXfVzBorPKT5ahywlbrcyBtPbKnVD65GF9AmSd4-b9F_OqkfjrDqu"/>
-<!-- Loading Loop Overlay -->
-<div class="relative z-10 flex flex-col items-center gap-stack-md">
-<div class="relative w-24 h-24">
-<div class="absolute inset-0 rounded-full border-4 border-primary-container/20"></div>
-<div class="absolute inset-0 rounded-full border-4 border-t-secondary-container border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
-<div class="absolute inset-2 rounded-full border-2 border-primary/10 border-t-primary animate-[spin_2s_linear_infinite]"></div>
+<div class="relative glass-panel rounded-xl overflow-hidden shadow-2xl p-stack-md">
+<div class="flex items-center justify-between mb-stack-md">
+<div class="relative w-16 h-16 flex-shrink-0">
+<svg class="w-16 h-16 -rotate-90" viewbox="0 0 64 64">
+<circle cx="32" cy="32" fill="none" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6"></circle>
+<circle cx="32" cy="32" fill="none" id="progress-ring" r="28" stroke="#00f4fe" stroke-dasharray="176" stroke-dashoffset="176" stroke-linecap="round" stroke-width="6"></circle>
+</svg>
 <div class="absolute inset-0 flex items-center justify-center">
-<span class="text-secondary-container font-headline-md text-headline-md">74%</span>
+<span id="progress-percent" class="text-secondary-container font-headline-md text-sm">0%</span>
 </div>
 </div>
-<p class="text-label-caps font-label-caps text-secondary-fixed tracking-widest animate-pulse">RENDERIZANDO VIDEO FINAL...</p>
+<div class="flex-1 ml-stack-md">
+<p id="render-title" class="text-label-caps font-label-caps text-secondary-fixed tracking-widest">CARGANDO STORYBOARD...</p>
+<p id="render-subtitle" class="text-body-sm text-white/40 mt-1">—</p>
 </div>
-<!-- Bottom Player Controls (Disabled during render) -->
-<div class="absolute bottom-0 w-full p-stack-md flex items-center gap-stack-md bg-gradient-to-t from-black/80 to-transparent opacity-50">
-<span class="material-symbols-outlined text-white/40">play_arrow</span>
-<div class="h-1 flex-1 bg-white/10 rounded-full overflow-hidden">
-<div class="h-full w-[74%] bg-gradient-to-r from-primary-container to-secondary-container"></div>
 </div>
-<span class="text-body-sm font-body-sm text-white/40">01:42 / 02:15</span>
-</div>
+<!-- Filmstrip de miniaturas en orden -->
+<div id="filmstrip" class="flex gap-2 overflow-x-auto pb-1"></div>
 </div>
 </section>
-<!-- Progress Steps -->
-<section class="grid grid-cols-1 md:grid-cols-2 gap-stack-md mb-stack-lg">
-<!-- Analysis Step -->
-<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 border-secondary-container">
-<div class="flex items-center gap-stack-md">
-<div class="w-10 h-10 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary-container">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-<div>
-<h3 class="font-headline-md text-body-lg text-white">Análisis</h3>
-<p class="font-body-sm text-body-sm text-white/40">Estructura semántica completada</p>
-</div>
-</div>
-<span class="text-secondary-container text-xs font-label-caps">100%</span>
-</div>
-<!-- Script Step -->
-<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 border-secondary-container">
-<div class="flex items-center gap-stack-md">
-<div class="w-10 h-10 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary-container">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-<div>
-<h3 class="font-headline-md text-body-lg text-white">Guion</h3>
-<p class="font-body-sm text-body-sm text-white/40">Narrativa generada por IA</p>
-</div>
-</div>
-<span class="text-secondary-container text-xs font-label-caps">100%</span>
-</div>
-<!-- Generation Step -->
-<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 border-primary-container relative overflow-hidden">
-<div class="absolute inset-0 bg-primary-container/5 animate-pulse"></div>
-<div class="flex items-center gap-stack-md relative z-10">
-<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container">
-<span class="material-symbols-outlined animate-spin">sync</span>
-</div>
-<div>
-<h3 class="font-headline-md text-body-lg text-white">Generación de Imágenes</h3>
-<p class="font-body-sm text-body-sm text-white/60">Procesando fotogramas clave...</p>
-</div>
-</div>
-<span class="text-primary-container text-xs font-label-caps relative z-10">62%</span>
-</div>
-<!-- Audio Composition -->
-<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 border-white/10 opacity-50">
-<div class="flex items-center gap-stack-md">
-<div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/40">
-<span class="material-symbols-outlined">music_note</span>
-</div>
-<div>
-<h3 class="font-headline-md text-body-lg text-white">Composición de Audio</h3>
-<p class="font-body-sm text-body-sm text-white/40">En espera de visuales</p>
-</div>
-</div>
-<span class="text-white/40 text-xs font-label-caps">Pautado</span>
-</div>
-</section>
+
+<!-- Lista de escenas con estado real -->
+<section class="flex flex-col gap-stack-sm mb-stack-lg" id="scene-status-list"></section>
+
+<p id="estado-render"></p>
+
 <!-- Actions -->
-<section class="flex flex-col sm:flex-row gap-stack-md">
-<button class="flex-1 py-4 px-stack-lg rounded-xl bg-primary-container text-on-primary-container font-headline-md flex items-center justify-center gap-stack-sm opacity-50 cursor-not-allowed">
+<section class="flex flex-col sm:flex-row gap-stack-md mt-stack-md">
+<button id="btn-download" class="flex-1 py-4 px-stack-lg rounded-xl bg-primary-container text-on-primary-container font-headline-md flex items-center justify-center gap-stack-sm" disabled="">
 <span class="material-symbols-outlined">download</span>
-<span>Descargar Video</span>
+<span>Descargar Storyboard</span>
 </button>
-<button class="flex-1 py-4 px-stack-lg rounded-xl glass-panel border border-secondary-container/50 text-secondary-container font-headline-md flex items-center justify-center gap-stack-sm hover:bg-secondary-container/10 transition-all">
+<button id="btn-share" class="flex-1 py-4 px-stack-lg rounded-xl glass-panel border border-secondary-container/50 text-secondary-container font-headline-md flex items-center justify-center gap-stack-sm hover:bg-secondary-container/10 transition-all" disabled="">
 <span class="material-symbols-outlined">share</span>
 <span>Compartir</span>
 </button>
 </section>
-<!-- Detail Bento Grid -->
-<section class="mt-stack-lg grid grid-cols-1 md:grid-cols-3 gap-stack-md">
-<div class="md:col-span-2 glass-panel p-stack-lg rounded-xl flex flex-col justify-center">
-<h4 class="text-label-caps font-label-caps text-white/40 mb-stack-sm">DETALLES DE RENDERIZADO</h4>
-<div class="flex justify-between items-end">
-<div>
-<span class="text-display-lg font-display-lg text-white">4K</span>
-<span class="text-body-lg text-white/60 ml-2">60fps</span>
-</div>
-<div class="text-right">
-<p class="text-body-sm text-white/40">Tiempo estimado restante</p>
-<p class="text-headline-md text-secondary-container">04:12</p>
-</div>
-</div>
-</div>
-<div class="glass-panel p-stack-lg rounded-xl flex flex-col items-center justify-center text-center">
-<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container mb-stack-sm">
-<span class="material-symbols-outlined">memory</span>
-</div>
-<p class="text-label-caps font-label-caps text-white/40">Uso de GPU V100</p>
-<p class="text-body-lg text-white font-medium">89.4% carga</p>
-</div>
-</section>
+
 </main>
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
-<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="#">
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="../inicio/index.html">
 <span class="material-symbols-outlined">video_library</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#BC13FE] drop-shadow-[0_0_8px_rgba(188,19,254,0.5)]" href="#">
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="../storyboard/index.html">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
 </a>
-<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="#">
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="../activos/index.html">
 <span class="material-symbols-outlined">folder_copy</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Assets</span>
 </a>
-<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="#">
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="../perfil/index.html">
 <span class="material-symbols-outlined">account_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
 </a>
 </nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
+
+  let sbClient = null;
+  try {
+    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (e) {
+    console.error("No se pudo inicializar Supabase:", e);
+  }
+
+  const filmstrip = document.getElementById("filmstrip");
+  const sceneList = document.getElementById("scene-status-list");
+  const estado = document.getElementById("estado-render");
+  const renderTitle = document.getElementById("render-title");
+  const renderSubtitle = document.getElementById("render-subtitle");
+  const progressRing = document.getElementById("progress-ring");
+  const progressPercent = document.getElementById("progress-percent");
+  const btnDownload = document.getElementById("btn-download");
+  const btnShare = document.getElementById("btn-share");
+
+  const RING_CIRCUMFERENCE = 176; // 2 * PI * 28, redondeado
+
+  let scenes = [];
+  let finalBlob = null; // el archivo final ya ensamblado (se genera al completar)
+
+  function setProgress(percent) {
+    const offset = RING_CIRCUMFERENCE - (RING_CIRCUMFERENCE * percent) / 100;
+    progressRing.style.strokeDashoffset = offset;
+    progressPercent.textContent = percent + "%";
+  }
+
+  function renderFilmstrip() {
+    filmstrip.innerHTML = scenes.map(function (s, i) {
+      const isDone = !!s.image_url;
+      const cls = isDone ? "done" : "pending";
+      const img = isDone
+        ? '<img src="' + s.image_url + '" alt="Escena ' + (i + 1) + '"/>'
+        : '<div class="w-full h-full flex items-center justify-center text-white/20"><span class="material-symbols-outlined text-lg">image</span></div>';
+      return (
+        '<div class="scene-thumb ' + cls + '">' + img +
+          '<div class="thumb-status ' + cls + '">' +
+            '<span class="material-symbols-outlined" style="font-size:12px;">' + (isDone ? 'check' : 'hourglass_empty') + '</span>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  function renderSceneList() {
+    sceneList.innerHTML = scenes.map(function (s, i) {
+      const isDone = !!s.image_url;
+      const borderColor = isDone ? "border-secondary-container" : "border-white/10";
+      const iconColor = isDone ? "text-secondary-container bg-secondary-container/10" : "text-white/40 bg-white/5";
+      const icon = isDone ? "check_circle" : "hourglass_top";
+      const statusText = isDone ? "Generada" : "Pendiente";
+      const statusColor = isDone ? "text-secondary-container" : "text-white/40";
+      return (
+        '<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 ' + borderColor + '">' +
+          '<div class="flex items-center gap-stack-md">' +
+            '<div class="w-10 h-10 rounded-full ' + iconColor + ' flex items-center justify-center">' +
+              '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">' + icon + '</span>' +
+            '</div>' +
+            '<div>' +
+              '<h3 class="font-headline-md text-body-lg text-white">Escena ' + (i + 1) + '</h3>' +
+              '<p class="font-body-sm text-body-sm text-white/40">' + (s.label || s.script || "Sin descripción") + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<span class="' + statusColor + ' text-xs font-label-caps">' + statusText + '</span>' +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  function imageToImageElement(url) {
+    return new Promise(function (resolve, reject) {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = function () { resolve(img); };
+      img.onerror = function () { reject(new Error("No se pudo cargar una imagen para el render: " + url)); };
+      img.src = url;
+    });
+  }
+
+  // Ensambla todas las imágenes de las escenas (en orden) en un único
+  // lienzo vertical con separadores — este es "el archivo renderizado".
+  async function assembleFinalImage(scenesConImagen) {
+    const images = await Promise.all(scenesConImagen.map(function (s) { return imageToImageElement(s.image_url); }));
+
+    const targetWidth = 1024;
+    const gap = 12;
+    const heights = images.map(function (img) { return Math.round((img.height / img.width) * targetWidth); });
+    const totalHeight = heights.reduce(function (a, b) { return a + b; }, 0) + gap * (images.length - 1);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = targetWidth;
+    canvas.height = totalHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#050505";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    let y = 0;
+    images.forEach(function (img, i) {
+      ctx.drawImage(img, 0, y, targetWidth, heights[i]);
+      y += heights[i] + gap;
+    });
+
+    return new Promise(function (resolve) {
+      canvas.toBlob(function (blob) { resolve(blob); }, "image/png");
+    });
+  }
+
+  btnDownload.addEventListener("click", function () {
+    if (!finalBlob) return;
+    const url = URL.createObjectURL(finalBlob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "storyboard-flux-ai.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  btnShare.addEventListener("click", async function () {
+    if (!finalBlob) return;
+    const file = new File([finalBlob], "storyboard-flux-ai.png", { type: "image/png" });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: "Mi Storyboard — FLUX_AI",
+          text: "Mirá el storyboard que armé con FLUX_AI",
+        });
+      } catch (e) {
+        // el usuario canceló el share u ocurrió un error; no hacemos nada más
+      }
+    } else {
+      estado.textContent = "Tu navegador no soporta compartir archivos directamente. Usá 'Descargar' y compartilo manualmente.";
+      estado.className = "";
+    }
+  });
+
+  async function cargarYRenderizar() {
+    if (!sbClient) {
+      estado.textContent = "No se pudo conectar con el servicio.";
+      estado.className = "error";
+      return;
+    }
+
+    try {
+      const { data, error } = await sbClient
+        .from("scenes")
+        .select("*")
+        .order("position", { ascending: true });
+
+      if (error) throw error;
+
+      scenes = data || [];
+
+      if (scenes.length === 0) {
+        renderTitle.textContent = "SIN ESCENAS TODAVÍA";
+        renderSubtitle.textContent = "Andá al Storyboard para crear tu primera escena.";
+        estado.textContent = "";
+        return;
+      }
+
+      const total = scenes.length;
+      const done = scenes.filter(function (s) { return !!s.image_url; }).length;
+      const percent = Math.round((done / total) * 100);
+
+      setProgress(percent);
+      renderFilmstrip();
+      renderSceneList();
+
+      if (done < total) {
+        renderTitle.textContent = "ENSAMBLANDO STORYBOARD...";
+        renderSubtitle.textContent = done + " de " + total + " escenas generadas";
+        btnDownload.disabled = true;
+        btnShare.disabled = true;
+      } else {
+        renderTitle.textContent = "¡STORYBOARD COMPLETO!";
+        renderSubtitle.textContent = total + " de " + total + " escenas listas";
+        estado.textContent = "Preparando el archivo final…";
+
+        const scenesConImagen = scenes.filter(function (s) { return !!s.image_url; });
+        finalBlob = await assembleFinalImage(scenesConImagen);
+
+        estado.textContent = "";
+        btnDownload.disabled = false;
+        btnShare.disabled = !(navigator.canShare);
+      }
+    } catch (err) {
+      estado.textContent = "Error al cargar el storyboard: " + err.message;
+      estado.className = "error";
+    }
+  }
+
+  cargarYRenderizar();
+})();
+</script>
 </body></html>
