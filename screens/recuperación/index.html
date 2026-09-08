@@ -4,9 +4,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>FLUX_AI | Restore Neural Access</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -94,132 +93,48 @@
       }
     </script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-        }
-        .glass-panel {
-            background: rgba(26, 26, 27, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .neon-glow-primary {
-            box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
-        }
-        .neon-glow-cyan {
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
-        }
-        .neural-grid {
-            background-image: 
-                linear-gradient(rgba(188, 19, 254, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-        #form-mensaje {
-            font-size: 13px;
-            text-align: center;
-            min-height: 1.2em;
-        }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(26, 26, 27, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .neon-glow-primary { box-shadow: 0 0 15px rgba(188, 19, 254, 0.4); }
+        .neon-glow-cyan { box-shadow: 0 0 15px rgba(34, 211, 238, 0.3); }
+        .neural-grid { background-image: linear-gradient(rgba(188, 19, 254, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px); background-size: 40px 40px; }
+        #form-mensaje { font-size: 13px; text-align: center; min-height: 1.2em; }
         #form-mensaje.error { color: #ffb4ab; }
         #form-mensaje.ok { color: #22d3ee; }
         button[type="submit"]:disabled { opacity: 0.5; cursor: not-allowed; }
     </style>
 </head>
 <body class="bg-surface-container-lowest text-on-surface font-body-lg min-h-screen selection:bg-primary-container selection:text-white">
-<!-- Background Decorative Elements -->
 <div class="fixed inset-0 neural-grid pointer-events-none opacity-40"></div>
 <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-container/20 blur-[120px] rounded-full pointer-events-none"></div>
 <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary-container/10 blur-[120px] rounded-full pointer-events-none"></div>
-<!-- Main Content Canvas -->
 <main class="relative min-h-screen flex items-center justify-center px-margin-mobile py-stack-lg">
 <div class="w-full max-w-[480px] space-y-stack-lg">
-<!-- Brand Anchor -->
-<div class="flex justify-center mb-stack-lg">
-<div class="flex flex-col items-center gap-stack-sm">
-<span class="text-display-lg font-display-lg text-white drop-shadow-[0_0_10px_rgba(188,19,254,0.8)] tracking-widest">FLUX_AI</span>
-<div class="h-[1px] w-12 bg-primary-container"></div>
-</div>
-</div>
-<!-- Recovery Card -->
+<div class="flex justify-center mb-stack-lg"><div class="flex flex-col items-center gap-stack-sm"><span class="text-display-lg font-display-lg text-white drop-shadow-[0_0_10px_rgba(188,19,254,0.8)] tracking-widest">FLUX_AI</span><div class="h-[1px] w-12 bg-primary-container"></div></div></div>
 <section class="glass-panel rounded-xl p-8 md:p-10 relative overflow-hidden">
-<!-- Inner Glow Ornament -->
 <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-<header class="space-y-stack-sm mb-stack-lg">
-<h1 class="text-headline-md font-headline-md text-white">Restore Neural Access</h1>
-<p class="text-body-sm font-body-sm text-zinc-400">Enter your registered identity email to receive a recovery link</p>
-</header>
+<header class="space-y-stack-sm mb-stack-lg"><h1 class="text-headline-md font-headline-md text-white">Restore Neural Access</h1><p class="text-body-sm font-body-sm text-zinc-400">Enter your registered identity email to receive a recovery link</p></header>
 <form class="space-y-stack-lg" id="recovery-form">
-<!-- Email Field -->
-<div class="space-y-stack-sm">
-<label class="text-label-caps font-label-caps text-zinc-500 block" for="recovery-email">Neural Identifier</label>
-<div class="relative group">
-<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-<span class="material-symbols-outlined text-zinc-500 group-focus-within:text-secondary-container transition-colors" data-icon="lock">lock</span>
-</div>
-<input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white font-body-lg placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-secondary-container focus:border-secondary-container transition-all neon-glow-cyan" id="recovery-email" name="email" placeholder="name@domain.ai" type="email" required=""/>
-</div>
-</div>
+<div class="space-y-stack-sm"><label class="text-label-caps font-label-caps text-zinc-500 block" for="recovery-email">Neural Identifier</label><div class="relative group"><div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><span class="material-symbols-outlined text-zinc-500 group-focus-within:text-secondary-container transition-colors">lock</span></div><input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white font-body-lg placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-secondary-container focus:border-secondary-container transition-all neon-glow-cyan" id="recovery-email" name="email" placeholder="name@domain.ai" type="email" required=""/></div></div>
 <p id="form-mensaje"></p>
-<!-- Action Button -->
-<button class="w-full bg-primary-container hover:bg-primary-container/90 text-white font-label-caps py-4 rounded-lg transition-all active:scale-[0.98] neon-glow-primary flex items-center justify-center gap-stack-sm" type="submit" id="submit-btn">
-<span id="submit-btn-text">Send Recovery Link</span>
-<span class="material-symbols-outlined text-[18px]" data-icon="rocket_launch">rocket_launch</span>
-</button>
+<button class="w-full bg-primary-container hover:bg-primary-container/90 text-white font-label-caps py-4 rounded-lg transition-all active:scale-[0.98] neon-glow-primary flex items-center justify-center gap-stack-sm" type="submit" id="submit-btn"><span id="submit-btn-text">Send Recovery Link</span><span class="material-symbols-outlined text-[18px]">rocket_launch</span></button>
 </form>
-<!-- Footer Links -->
-<footer class="mt-stack-lg flex flex-col items-center gap-stack-md pt-stack-lg border-t border-white/5">
-<a class="text-label-caps font-label-caps text-secondary-container hover:text-cyan-300 transition-colors flex items-center gap-stack-sm" href="../login/index.html">
-<span class="material-symbols-outlined text-[16px]" data-icon="arrow_back">arrow_back</span>
-                        Back to Sign In
-                    </a>
-</footer>
+<footer class="mt-stack-lg flex flex-col items-center gap-stack-md pt-stack-lg border-t border-white/5"><a class="text-label-caps font-label-caps text-secondary-container hover:text-cyan-300 transition-colors flex items-center gap-stack-sm" href="../../index.html"><span class="material-symbols-outlined text-[16px]">arrow_back</span>Back to Sign In</a></footer>
 </section>
-<!-- Tech Details Decor -->
-<div class="flex justify-between items-center px-4">
-<div class="flex gap-2">
-<div class="w-1 h-1 rounded-full bg-primary-container"></div>
-<div class="w-1 h-1 rounded-full bg-primary-container/40"></div>
-<div class="w-1 h-1 rounded-full bg-primary-container/20"></div>
-</div>
-<span class="text-[10px] font-label-caps text-zinc-600 tracking-[0.2em]">ENCRYPTION_STATUS: ACTIVE</span>
-<div class="flex gap-2">
-<div class="w-1 h-1 rounded-full bg-primary-container/20"></div>
-<div class="w-1 h-1 rounded-full bg-primary-container/40"></div>
-<div class="w-1 h-1 rounded-full bg-primary-container"></div>
-</div>
-</div>
-<!-- Contextual Image/Graphic -->
-<div class="w-full h-48 rounded-xl overflow-hidden border border-white/5 relative group">
-<img alt="Neural Network Visualization" class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdFh3fS8FNlDfTisvBAlTZmIL33b4OQU3e2ODyyvEYkf0zyhrIKOAAhT7hF3nf5FYelxuZY0q9cOxihwQjHuEdwQIfpiGyHkKiHc525-ihSgpBen7h_OCZ8qYHVGxxVZ4SML1EYJioYgTPV3F8moraLiui5kX8XeIspCysDdWeyl2E6dgkMDfiCRQLnJezPoksBu6WdzLPg9-lSRrpFA9n8xOyp7jSfYeUYQgct519Up05hYyoACKt3deuSDp5ljzRx0YdqLtpBEG3"/>
-<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
-<div class="absolute bottom-4 left-4 flex items-center gap-stack-sm">
-<div class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></div>
-<span class="text-[10px] font-label-caps text-zinc-400">CORE_SYNC: WAITING_FOR_IDENTITY</span>
-</div>
-</div>
-</div>
-</main>
-<!-- Support Elements -->
-<div class="fixed bottom-margin-mobile right-margin-mobile hidden md:block">
-<button class="glass-panel p-stack-md rounded-full text-zinc-400 hover:text-white transition-colors border-white/5">
-<span class="material-symbols-outlined" data-icon="help_center">help_center</span>
-</button>
-</div>
-
+<div class="flex justify-between items-center px-4"><div class="flex gap-2"><div class="w-1 h-1 rounded-full bg-primary-container"></div><div class="w-1 h-1 rounded-full bg-primary-container/40"></div><div class="w-1 h-1 rounded-full bg-primary-container/20"></div></div><span class="text-[10px] font-label-caps text-zinc-600 tracking-[0.2em]">ENCRYPTION_STATUS: ACTIVE</span><div class="flex gap-2"><div class="w-1 h-1 rounded-full bg-primary-container/20"></div><div class="w-1 h-1 rounded-full bg-primary-container/40"></div><div class="w-1 h-1 rounded-full bg-primary-container"></div></div></div>
+<div class="w-full h-48 rounded-xl overflow-hidden border border-white/5 relative group"><img alt="Neural Network Visualization" class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdFh3fS8FNlDfTisvBAlTZmIL33b4OQU3e2ODyyvEYkf0zyhrIKOAAhT7hF3nf5FYelxuZY0q9cOxihwQjHuEdwQIfpiGyHkKiHc525-ihSgpBen7h_OCZ8qYHVGxxVZ4SML1EYJioYgTPV3F8moraLiui5kX8XeIspCysDdWeyl2E6dgkMDfiCRQLnJezPoksBu6WdzLPg9-lSRrpFA9n8xOyp7jSfYeUYQgct519Up05hYyoACKt3deuSDp5ljzRx0YdqLtpBEG3"/><div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div><div class="absolute bottom-4 left-4 flex items-center gap-stack-sm"><div class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></div><span class="text-[10px] font-label-caps text-zinc-400">CORE_SYNC: WAITING_FOR_IDENTITY</span></div></div>
+</div></main>
+<div class="fixed bottom-margin-mobile right-margin-mobile hidden md:block"><button class="glass-panel p-stack-md rounded-full text-zinc-400 hover:text-white transition-colors border-white/5"><span class="material-symbols-outlined">help_center</span></button></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function () {
   const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
-
   let sbClient = null;
-  try {
-    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  } catch (e) {
-    console.error("No se pudo inicializar Supabase:", e);
-  }
+  try { sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch (e) { console.error("No se pudo inicializar Supabase:", e); }
 
-  // URL a la que Supabase va a redirigir al usuario para que escriba su nueva contraseña
-  const REDIRECT_URL = "https://holasoyfabis-fabys-projects-c9855716.vercel.app/screens/nueva-contrasena/index.html";
+  // La pantalla de nueva contraseña está en la raíz del proyecto, no dentro de /screens.
+  const REDIRECT_URL = "https://fabis-app.vercel.app/nueva-contraseña/";
 
   const form = document.getElementById("recovery-form");
   const emailInput = document.getElementById("recovery-email");
@@ -229,41 +144,14 @@
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const email = emailInput.value.trim();
-    if (!email) {
-      mensaje.textContent = "Ingresá tu email.";
-      mensaje.className = "error";
-      return;
-    }
-
-    if (!sbClient) {
-      mensaje.textContent = "No se pudo conectar con el servicio. Intentá más tarde.";
-      mensaje.className = "error";
-      return;
-    }
-
-    btn.disabled = true;
-    btnText.textContent = "Enviando...";
-    mensaje.textContent = "";
-    mensaje.className = "";
-
-    const { error } = await sbClient.auth.resetPasswordForEmail(email, {
-      redirectTo: REDIRECT_URL,
-    });
-
-    btn.disabled = false;
-    btnText.textContent = "Send Recovery Link";
-
-    if (error) {
-      mensaje.textContent = "Error: " + error.message;
-      mensaje.className = "error";
-      return;
-    }
-
-    mensaje.textContent = "Si el email está registrado, te enviamos un link de recuperación.";
-    mensaje.className = "ok";
-    form.reset();
+    if (!email) { mensaje.textContent = "Ingresá tu email."; mensaje.className = "error"; return; }
+    if (!sbClient) { mensaje.textContent = "No se pudo conectar con el servicio. Intentá más tarde."; mensaje.className = "error"; return; }
+    btn.disabled = true; btnText.textContent = "Enviando..."; mensaje.textContent = ""; mensaje.className = "";
+    const { error } = await sbClient.auth.resetPasswordForEmail(email, { redirectTo: REDIRECT_URL });
+    btn.disabled = false; btnText.textContent = "Send Recovery Link";
+    if (error) { mensaje.textContent = "Error: " + error.message; mensaje.className = "error"; return; }
+    mensaje.textContent = "Si el email está registrado, te enviamos un link de recuperación."; mensaje.className = "ok"; form.reset();
   });
 })();
 </script>
