@@ -60,14 +60,14 @@
       mensaje.textContent = "Error JS: " + msg + " (línea " + line + ")";
     };
 
-    let supabase;
+    let supaClient;
     try {
       if (!window.supabase) {
         mensaje.textContent = "Error: no cargó la librería de Supabase.";
       } else {
         const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        supaClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         mensaje.textContent = "Listo para registrar.";
       }
     } catch (err) {
@@ -87,7 +87,7 @@
         mensaje.textContent = "La contraseña debe tener al menos 6 caracteres.";
         return;
       }
-      if (!supabase) {
+      if (!supaClient) {
         mensaje.textContent = "Error: Supabase no está inicializado.";
         return;
       }
@@ -96,7 +96,7 @@
       mensaje.textContent = "Creando cuenta...";
 
       try {
-        const { data, error } = await supabase.auth.signUp({ email, password });
+        const { data, error } = await supaClient.auth.signUp({ email, password });
         btn.disabled = false;
 
         if (error) {
