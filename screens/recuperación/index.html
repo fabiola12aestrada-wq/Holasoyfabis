@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -115,6 +114,14 @@
                 linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
             background-size: 40px 40px;
         }
+        #form-mensaje {
+            font-size: 13px;
+            text-align: center;
+            min-height: 1.2em;
+        }
+        #form-mensaje.error { color: #ffb4ab; }
+        #form-mensaje.ok { color: #22d3ee; }
+        button[type="submit"]:disabled { opacity: 0.5; cursor: not-allowed; }
     </style>
 </head>
 <body class="bg-surface-container-lowest text-on-surface font-body-lg min-h-screen selection:bg-primary-container selection:text-white">
@@ -140,7 +147,7 @@
 <h1 class="text-headline-md font-headline-md text-white">Restore Neural Access</h1>
 <p class="text-body-sm font-body-sm text-zinc-400">Enter your registered identity email to receive a recovery link</p>
 </header>
-<form class="space-y-stack-lg">
+<form class="space-y-stack-lg" id="recovery-form">
 <!-- Email Field -->
 <div class="space-y-stack-sm">
 <label class="text-label-caps font-label-caps text-zinc-500 block" for="recovery-email">Neural Identifier</label>
@@ -148,18 +155,19 @@
 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
 <span class="material-symbols-outlined text-zinc-500 group-focus-within:text-secondary-container transition-colors" data-icon="lock">lock</span>
 </div>
-<input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white font-body-lg placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-secondary-container focus:border-secondary-container transition-all neon-glow-cyan" id="recovery-email" name="email" placeholder="name@domain.ai" type="email"/>
+<input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white font-body-lg placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-secondary-container focus:border-secondary-container transition-all neon-glow-cyan" id="recovery-email" name="email" placeholder="name@domain.ai" type="email" required=""/>
 </div>
 </div>
+<p id="form-mensaje"></p>
 <!-- Action Button -->
-<button class="w-full bg-primary-container hover:bg-primary-container/90 text-white font-label-caps py-4 rounded-lg transition-all active:scale-[0.98] neon-glow-primary flex items-center justify-center gap-stack-sm" type="submit">
-<span>Send Recovery Link</span>
+<button class="w-full bg-primary-container hover:bg-primary-container/90 text-white font-label-caps py-4 rounded-lg transition-all active:scale-[0.98] neon-glow-primary flex items-center justify-center gap-stack-sm" type="submit" id="submit-btn">
+<span id="submit-btn-text">Send Recovery Link</span>
 <span class="material-symbols-outlined text-[18px]" data-icon="rocket_launch">rocket_launch</span>
 </button>
 </form>
 <!-- Footer Links -->
 <footer class="mt-stack-lg flex flex-col items-center gap-stack-md pt-stack-lg border-t border-white/5">
-<a class="text-label-caps font-label-caps text-secondary-container hover:text-cyan-300 transition-colors flex items-center gap-stack-sm" href="#">
+<a class="text-label-caps font-label-caps text-secondary-container hover:text-cyan-300 transition-colors flex items-center gap-stack-sm" href="../login/index.html">
 <span class="material-symbols-outlined text-[16px]" data-icon="arrow_back">arrow_back</span>
                         Back to Sign In
                     </a>
@@ -181,7 +189,7 @@
 </div>
 <!-- Contextual Image/Graphic -->
 <div class="w-full h-48 rounded-xl overflow-hidden border border-white/5 relative group">
-<img alt="Neural Network Visualization" class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700" data-alt="A highly sophisticated digital neural network visualization with thin neon purple and cyan filaments connecting glowing data nodes in a deep obsidian space. The lighting is cinematic, with a soft bloom effect around the central processing core, evoking a sense of immense computational power and futuristic minimalist aesthetics. The scene is framed by a subtle glassmorphism overlay that catches faint prismatic light leaks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdFh3fS8FNlDfTisvBAlTZmIL33b4OQU3e2ODyyvEYkf0zyhrIKOAAhT7hF3nf5FYelxuZY0q9cOxihwQjHuEdwQIfpiGyHkKiHc525-ihSgpBen7h_OCZ8qYHVGxxVZ4SML1EYJioYgTPV3F8moraLiui5kX8XeIspCysDdWeyl2E6dgkMDfiCRQLnJezPoksBu6WdzLPg9-lSRrpFA9n8xOyp7jSfYeUYQgct519Up05hYyoACKt3deuSDp5ljzRx0YdqLtpBEG3"/>
+<img alt="Neural Network Visualization" class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdFh3fS8FNlDfTisvBAlTZmIL33b4OQU3e2ODyyvEYkf0zyhrIKOAAhT7hF3nf5FYelxuZY0q9cOxihwQjHuEdwQIfpiGyHkKiHc525-ihSgpBen7h_OCZ8qYHVGxxVZ4SML1EYJioYgTPV3F8moraLiui5kX8XeIspCysDdWeyl2E6dgkMDfiCRQLnJezPoksBu6WdzLPg9-lSRrpFA9n8xOyp7jSfYeUYQgct519Up05hYyoACKt3deuSDp5ljzRx0YdqLtpBEG3"/>
 <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
 <div class="absolute bottom-4 left-4 flex items-center gap-stack-sm">
 <div class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></div>
@@ -196,4 +204,67 @@
 <span class="material-symbols-outlined" data-icon="help_center">help_center</span>
 </button>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
+
+  let sbClient = null;
+  try {
+    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (e) {
+    console.error("No se pudo inicializar Supabase:", e);
+  }
+
+  // URL a la que Supabase va a redirigir al usuario para que escriba su nueva contraseña
+  const REDIRECT_URL = "https://holasoyfabis-rgppf55lg-fabys-projects-c9855716.vercel.app/screens/nueva-contrasena/index.html";
+
+  const form = document.getElementById("recovery-form");
+  const emailInput = document.getElementById("recovery-email");
+  const mensaje = document.getElementById("form-mensaje");
+  const btn = document.getElementById("submit-btn");
+  const btnText = document.getElementById("submit-btn-text");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    if (!email) {
+      mensaje.textContent = "Ingresá tu email.";
+      mensaje.className = "error";
+      return;
+    }
+
+    if (!sbClient) {
+      mensaje.textContent = "No se pudo conectar con el servicio. Intentá más tarde.";
+      mensaje.className = "error";
+      return;
+    }
+
+    btn.disabled = true;
+    btnText.textContent = "Enviando...";
+    mensaje.textContent = "";
+    mensaje.className = "";
+
+    const { error } = await sbClient.auth.resetPasswordForEmail(email, {
+      redirectTo: REDIRECT_URL,
+    });
+
+    btn.disabled = false;
+    btnText.textContent = "Send Recovery Link";
+
+    if (error) {
+      mensaje.textContent = "Error: " + error.message;
+      mensaje.className = "error";
+      return;
+    }
+
+    mensaje.textContent = "Si el email está registrado, te enviamos un link de recuperación.";
+    mensaje.className = "ok";
+    form.reset();
+  });
+})();
+</script>
 </body></html>
