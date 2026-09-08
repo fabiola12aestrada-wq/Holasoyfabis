@@ -1,8 +1,7 @@
 {
-  "name": "holasoyfabis",
-  "version": "1.0.0",
-  "dependencies": {
-    "@huggingface/inference": "^3.0.0",
-    "@supabase/supabase-js": "^2.45.0"
+  "functions": {
+    "api/generate.js": {
+      "maxDuration": 60
+    }
   }
 }
