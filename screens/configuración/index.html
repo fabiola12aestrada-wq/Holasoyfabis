@@ -5,7 +5,6 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600&amp;family=Space+Mono&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
       tailwind.config = {
@@ -121,24 +120,48 @@
             cursor: pointer;
             box-shadow: 0 0 10px rgba(99, 247, 255, 0.8);
         }
+        .toggle-track { transition: background-color 0.2s ease; }
+        .toggle-thumb { transition: transform 0.2s ease; }
+        .toggle-on { background-color: #bc13fe; }
+        .toggle-off { background-color: #353436; }
+        .toggle-thumb-on { transform: translateX(20px); background-color: #ffffff; }
+        .toggle-thumb-off { transform: translateX(0); background-color: #71717a; }
+        .model-card.active {
+            border-color: #00f4fe;
+            background: rgba(0, 55, 57, 0.2);
+            box-shadow: 0 0 15px rgba(99, 247, 255, 0.3);
+        }
+        .tone-btn.active {
+            background: rgba(0, 55, 57, 0.2);
+            border-color: #00f4fe;
+        }
+        .tone-btn.active span { color: #63f7ff; }
+        .save-toast {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+        .save-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        body {
+          min-height: max(884px, 100dvh);
+        }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
   </head>
 <body class="font-body-lg text-on-surface antialiased">
 <!-- TopAppBar -->
 <header class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] flex justify-between items-center px-5 h-16">
 <div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-purple-600 dark:text-purple-500" data-icon="model_training">model_training</span>
+<span class="material-symbols-outlined text-purple-600 dark:text-purple-500">model_training</span>
 <span class="text-xl font-black tracking-widest text-white font-['Space_Grotesk']">FLUX_AI</span>
 </div>
 <div class="flex items-center gap-4">
-<span class="hidden md:block font-label-caps text-label-caps text-zinc-500 hover:text-cyan-300 transition-colors cursor-pointer">Status: Optimal</span>
-<div class="w-10 h-10 rounded-full border border-purple-500/30 overflow-hidden">
-<img alt="User Profile" data-alt="A high-end professional avatar of a creative technologist in a sleek, obsidian-themed digital workspace. The lighting is dramatic and moody, with sharp neon cyan reflections glinting off a glass desk. The character has a futuristic, minimalist aesthetic, wearing dark techwear. Deep purple ambient glows fill the background, suggesting a sophisticated computational environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDE-y6EEHI7xYqFz1k2w2UmzTY6g5mF9Xxj0bJglnPXUW6EwtxQwRMJD5ezm9JAF6Q532oDmAIy1Ut5GVGXFiHhB0aLpf1XyBaSmf7ZPlUxeoxGvrL1HzQ9Z4NKryHFHyTjJ5Nme0Z483HAjikvFAZPO914H_auIm8zTMmY_mbk7RJry6sPIUy7OELr0bs8vTrw7M3FrSCFcgBMc0_r6BwGlhgptSjQmX-RGES9iCH4QExZJtekWCxffO9ZkhO7Lg6db2JlDql2zG1D"/>
+<span id="status-label" class="hidden md:block font-label-caps text-label-caps text-zinc-500 transition-colors">Status: Optimal</span>
+<div class="w-10 h-10 rounded-full border border-purple-500/30 overflow-hidden bg-zinc-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-500 text-lg">person</span>
 </div>
 </div>
 </header>
@@ -146,7 +169,7 @@
 <!-- Title Section -->
 <div class="mb-stack-lg">
 <h1 class="font-display-lg text-display-lg text-white mb-2">Ajustes de Parámetros Neurales</h1>
-<p class="font-body-sm text-body-sm text-on-surface-variant font-mono">CORE_VERSION: 4.2.0-STABLE // SYSTEM_STATUS: READY</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-mono">CORE_VERSION: 4.2.0-STABLE // SYSTEM_STATUS: <span id="system-status">READY</span></p>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
 <!-- Left Column: Primary Config -->
@@ -154,60 +177,55 @@
 <!-- Modelo Configuration -->
 <section class="glass-card p-gutter rounded-xl">
 <div class="flex items-center gap-stack-sm mb-stack-md">
-<span class="material-symbols-outlined text-secondary-fixed" data-icon="memory">memory</span>
+<span class="material-symbols-outlined text-secondary-fixed">memory</span>
 <h2 class="font-headline-md text-headline-md text-white">Configuración del Modelo</h2>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
-<button class="flex flex-col items-start p-stack-md rounded-lg border-2 border-secondary-container bg-on-secondary/20 transition-all neon-glow-cyan">
-<span class="font-label-caps text-label-caps text-secondary-fixed mb-1">CURRENT ACTIVE</span>
-<span class="font-display-lg text-lg text-white">GPT-4o</span>
-</button>
-<button class="flex flex-col items-start p-stack-md rounded-lg border border-outline-variant hover:border-secondary-fixed/50 transition-all">
-<span class="font-label-caps text-label-caps text-zinc-500 mb-1">AVAILABLE</span>
-<span class="font-display-lg text-lg text-white/70">Claude 3.5</span>
-</button>
+<p class="text-xs text-on-surface-variant font-mono mb-stack-md">Fallback automático en el orden mostrado si un modelo no responde.</p>
+<div id="model-grid" class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<!-- rendered by JS -->
 </div>
 </section>
 <!-- Technical Sliders -->
 <section class="glass-card p-gutter rounded-xl space-y-stack-lg">
 <div class="flex items-center gap-stack-sm mb-2">
-<span class="material-symbols-outlined text-secondary-fixed" data-icon="tune">tune</span>
+<span class="material-symbols-outlined text-secondary-fixed">tune</span>
 <h2 class="font-headline-md text-headline-md text-white">Parámetros Técnicos</h2>
 </div>
-<!-- Slider 1 -->
+<!-- Slider 1: Steps de inferencia (reemplaza "Profundidad de Análisis") -->
 <div class="space-y-stack-sm">
 <div class="flex justify-between items-end">
-<label class="font-label-caps text-label-caps text-on-surface-variant">Profundidad de Análisis</label>
-<span class="font-mono text-secondary-fixed text-sm">EXHAUSTIVO</span>
+<label class="font-label-caps text-label-caps text-on-surface-variant">Pasos de Inferencia</label>
+<span id="steps-value" class="font-mono text-secondary-fixed text-sm">30</span>
 </div>
-<input class="w-full" max="100" min="0" type="range" value="85"/>
+<input id="steps-slider" class="w-full" max="50" min="10" step="1" type="range" value="30"/>
 <div class="flex justify-between text-[10px] font-mono text-zinc-600">
-<span>SUPERFICIAL</span>
-<span>COMPLEJO</span>
+<span>RÁPIDO (10)</span>
+<span>DETALLADO (50)</span>
 </div>
 </div>
 <!-- Slider 2 -->
 <div class="space-y-stack-sm">
 <div class="flex justify-between items-end">
-<label class="font-label-caps text-label-caps text-on-surface-variant">Creatividad (Temperature)</label>
-<span class="font-mono text-secondary-fixed text-sm">0.72</span>
+<label class="font-label-caps text-label-caps text-on-surface-variant">Creatividad (Guidance Scale)</label>
+<span id="guidance-value" class="font-mono text-secondary-fixed text-sm">7.5</span>
 </div>
-<input class="w-full" max="100" min="0" type="range" value="72"/>
+<input id="guidance-slider" class="w-full" max="20" min="1" step="0.5" type="range" value="7.5"/>
 <div class="flex justify-between text-[10px] font-mono text-zinc-600">
-<span>DETERMINISTA</span>
-<span>CREATIVO</span>
+<span>LIBRE</span>
+<span>FIEL AL PROMPT</span>
 </div>
 </div>
-<!-- Slider 3 -->
+<!-- Slider 3: Resolución (reemplaza "Longitud del Guion", que no aplica a imágenes) -->
 <div class="space-y-stack-sm">
 <div class="flex justify-between items-end">
-<label class="font-label-caps text-label-caps text-on-surface-variant">Longitud del Guion</label>
-<span class="font-mono text-secondary-fixed text-sm">120 SEC</span>
+<label class="font-label-caps text-label-caps text-on-surface-variant">Resolución de Salida</label>
+<span id="resolution-value" class="font-mono text-secondary-fixed text-sm">1024x1024</span>
 </div>
-<input class="w-full" max="600" min="30" type="range" value="120"/>
+<input id="resolution-slider" class="w-full" max="2" min="0" step="1" type="range" value="1"/>
 <div class="flex justify-between text-[10px] font-mono text-zinc-600">
-<span>30s</span>
-<span>600s</span>
+<span>512</span>
+<span>768</span>
+<span>1024</span>
 </div>
 </div>
 </section>
@@ -217,87 +235,243 @@
 <!-- Feature Switches -->
 <section class="glass-card p-gutter rounded-xl space-y-stack-md">
 <div class="flex items-center gap-stack-sm mb-2">
-<span class="material-symbols-outlined text-secondary-fixed" data-icon="settings_input_component">settings_input_component</span>
+<span class="material-symbols-outlined text-secondary-fixed">settings_input_component</span>
 <h2 class="font-headline-md text-headline-md text-white">Procesamiento Neural</h2>
 </div>
 <div class="flex items-center justify-between p-stack-sm border-b border-white/5">
 <div class="flex flex-col">
-<span class="text-white font-medium">Extracción de Entidades</span>
-<span class="text-xs text-on-surface-variant">Marcas, nombres y lugares</span>
+<span class="text-white font-medium">Reintentos automáticos</span>
+<span class="text-xs text-on-surface-variant">Reintenta si el modelo está cargando</span>
 </div>
-<div class="w-12 h-6 bg-primary-container rounded-full relative cursor-pointer flex items-center px-1">
-<div class="w-4 h-4 bg-white rounded-full ml-auto"></div>
-</div>
+<button data-toggle="autoRetry" class="toggle-btn w-12 h-6 rounded-full relative cursor-pointer flex items-center px-1">
+<div class="toggle-thumb w-4 h-4 rounded-full"></div>
+</button>
 </div>
 <div class="flex items-center justify-between p-stack-sm border-b border-white/5">
 <div class="flex flex-col">
-<span class="text-white font-medium">Análisis de Sentimiento</span>
-<span class="text-xs text-on-surface-variant">Detección de tono emocional</span>
+<span class="text-white font-medium">Prompt mejorado</span>
+<span class="text-xs text-on-surface-variant">Agrega calidad/detalle automáticamente</span>
 </div>
-<div class="w-12 h-6 bg-surface-container-highest rounded-full relative cursor-pointer flex items-center px-1">
-<div class="w-4 h-4 bg-zinc-500 rounded-full"></div>
-</div>
+<button data-toggle="promptEnhance" class="toggle-btn w-12 h-6 rounded-full relative cursor-pointer flex items-center px-1">
+<div class="toggle-thumb w-4 h-4 rounded-full"></div>
+</button>
 </div>
 <div class="flex items-center justify-between p-stack-sm">
 <div class="flex flex-col">
-<span class="text-white font-medium">Optimización para SEO</span>
-<span class="text-xs text-on-surface-variant">Palabras clave sugeridas</span>
+<span class="text-white font-medium">Filtro de contenido seguro</span>
+<span class="text-xs text-on-surface-variant">Bloquea contenido NSFW</span>
 </div>
-<div class="w-12 h-6 bg-primary-container rounded-full relative cursor-pointer flex items-center px-1">
-<div class="w-4 h-4 bg-white rounded-full ml-auto"></div>
-</div>
+<button data-toggle="safetyFilter" class="toggle-btn w-12 h-6 rounded-full relative cursor-pointer flex items-center px-1">
+<div class="toggle-thumb w-4 h-4 rounded-full"></div>
+</button>
 </div>
 </section>
-<!-- Tone Selection -->
+<!-- Style Selection (reemplaza "Tono", ya que aplica mejor a generación de imágenes) -->
 <section class="glass-card p-gutter rounded-xl">
 <div class="flex items-center gap-stack-sm mb-stack-md">
-<span class="material-symbols-outlined text-secondary-fixed" data-icon="palette">palette</span>
-<h2 class="font-headline-md text-headline-md text-white">Configuración de Tono</h2>
+<span class="material-symbols-outlined text-secondary-fixed">palette</span>
+<h2 class="font-headline-md text-headline-md text-white">Estilo Visual</h2>
 </div>
-<div class="grid grid-cols-2 gap-stack-sm">
-<button class="p-stack-md rounded-lg bg-surface-container-highest border border-outline-variant hover:border-secondary-fixed transition-colors text-left group">
-<span class="font-label-caps text-label-caps text-on-surface-variant group-hover:text-secondary-fixed">Profesional</span>
-</button>
-<button class="p-stack-md rounded-lg bg-on-secondary/20 border border-secondary-container transition-colors text-left">
-<span class="font-label-caps text-label-caps text-secondary-fixed">Dramático</span>
-</button>
-<button class="p-stack-md rounded-lg bg-surface-container-highest border border-outline-variant hover:border-secondary-fixed transition-colors text-left group">
-<span class="font-label-caps text-label-caps text-on-surface-variant group-hover:text-secondary-fixed">Informativo</span>
-</button>
-<button class="p-stack-md rounded-lg bg-surface-container-highest border border-outline-variant hover:border-secondary-fixed transition-colors text-left group">
-<span class="font-label-caps text-label-caps text-on-surface-variant group-hover:text-secondary-fixed">Inspirador</span>
-</button>
+<div id="style-grid" class="grid grid-cols-2 gap-stack-sm">
+<!-- rendered by JS -->
 </div>
 </section>
 <!-- Action Button -->
-<button class="w-full py-stack-md rounded-xl bg-primary-container text-white font-display-lg text-lg uppercase tracking-widest neon-glow-purple active:scale-95 transition-all">
+<button id="save-btn" class="w-full py-stack-md rounded-xl bg-primary-container text-white font-display-lg text-lg uppercase tracking-widest neon-glow-purple active:scale-95 transition-all">
                     Guardar Configuración
                 </button>
 </div>
 </div>
 <!-- Footer Visual Element -->
 <div class="mt-stack-lg glass-card p-stack-md rounded-xl border border-secondary-fixed/20 flex items-center gap-stack-md">
-<div class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></div>
-<span class="font-mono text-xs text-secondary-fixed uppercase tracking-tighter">Sincronización en tiempo real activa con los nodos de inferencia globales.</span>
+<div id="sync-dot" class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></div>
+<span id="sync-label" class="font-mono text-xs text-secondary-fixed uppercase tracking-tighter">Sincronización en tiempo real activa con los nodos de inferencia globales.</span>
 </div>
 </main>
+<!-- Save toast -->
+<div id="save-toast" class="save-toast fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-secondary-container text-on-secondary-container font-label-caps text-label-caps px-6 py-3 rounded-full shadow-lg">
+  Configuración guardada ✓
+</div>
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 left-0 w-full h-20 bg-zinc-950/90 backdrop-blur-2xl border-t border-white/5 flex justify-around items-center px-4 pb-safe z-50 rounded-t-lg shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
 <div class="flex flex-col items-center justify-center text-zinc-600 hover:text-purple-400 transition-colors cursor-pointer">
-<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="material-symbols-outlined">psychology</span>
 <span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-wider">Neural</span>
 </div>
 <div class="flex flex-col items-center justify-center text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.4)] scale-110 cursor-pointer">
-<span class="material-symbols-outlined" data-icon="movie_filter">movie_filter</span>
+<span class="material-symbols-outlined">movie_filter</span>
 <span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-wider">Generate</span>
 </div>
 <div class="flex flex-col items-center justify-center text-zinc-600 hover:text-purple-400 transition-colors cursor-pointer">
-<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="material-symbols-outlined">inventory_2</span>
 <span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-wider">Assets</span>
 </div>
 <div class="flex flex-col items-center justify-center text-zinc-600 hover:text-purple-400 transition-colors cursor-pointer">
-<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="material-symbols-outlined">account_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-wider">Profile</span>
 </div>
 </nav>
+
+<script>
+(function () {
+  // ---- Data: modelos disponibles (orden = orden de fallback) ----
+  // huggingFaceId = ID real a usar en la llamada a la API de inferencia de Hugging Face
+  var MODELS = [
+    { id: 'flux-schnell', label: 'FLUX.1 schnell', huggingFaceId: 'black-forest-labs/FLUX.1-schnell', note: 'Rápido, sin token' },
+    { id: 'sdxl', label: 'Stable Diffusion XL', huggingFaceId: 'stabilityai/stable-diffusion-xl-base-1.0', note: 'Estable, sin token' },
+    { id: 'flux-dev', label: 'FLUX.1 Dev', huggingFaceId: 'black-forest-labs/FLUX.1-dev', note: 'Puede requerir token' },
+    { id: 'sd35', label: 'Stable Diffusion 3.5', huggingFaceId: 'stabilityai/stable-diffusion-3.5-large', note: 'Puede requerir token' }
+  ];
+
+  var STYLES = ['Fotorrealista', 'Ilustración', 'Anime', 'Pintura Digital'];
+  var RESOLUTIONS = ['512x512', '768x768', '1024x1024'];
+
+  var STORAGE_KEY = 'fluxai_config_v1';
+
+  var defaultConfig = {
+    model: MODELS[0].id,
+    steps: 30,
+    guidance: 7.5,
+    resolutionIndex: 2,
+    style: STYLES[0],
+    toggles: { autoRetry: true, promptEnhance: true, safetyFilter: true }
+  };
+
+  var config = loadConfig();
+
+  function loadConfig() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return JSON.parse(JSON.stringify(defaultConfig));
+      var parsed = JSON.parse(raw);
+      return Object.assign(JSON.parse(JSON.stringify(defaultConfig)), parsed);
+    } catch (e) {
+      return JSON.parse(JSON.stringify(defaultConfig));
+    }
+  }
+
+  function persistConfig() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+    } catch (e) {
+      console.warn('No se pudo guardar en localStorage', e);
+    }
+  }
+
+  // ---- Render: tarjetas de modelo ----
+  var modelGrid = document.getElementById('model-grid');
+  function renderModels() {
+    modelGrid.innerHTML = '';
+    MODELS.forEach(function (m) {
+      var btn = document.createElement('button');
+      btn.className = 'model-card flex flex-col items-start p-stack-md rounded-lg border-2 border-outline-variant transition-all text-left' + (config.model === m.id ? ' active' : '');
+      btn.innerHTML =
+        '<span class="font-label-caps text-label-caps text-zinc-500 mb-1">' + (config.model === m.id ? 'ACTIVO' : 'DISPONIBLE') + '</span>' +
+        '<span class="font-display-lg text-lg text-white">' + m.label + '</span>' +
+        '<span class="text-[10px] font-mono text-on-surface-variant mt-1">' + m.note + '</span>';
+      btn.addEventListener('click', function () {
+        config.model = m.id;
+        renderModels();
+      });
+      modelGrid.appendChild(btn);
+    });
+  }
+
+  // ---- Render: estilos ----
+  var styleGrid = document.getElementById('style-grid');
+  function renderStyles() {
+    styleGrid.innerHTML = '';
+    STYLES.forEach(function (s) {
+      var btn = document.createElement('button');
+      btn.className = 'tone-btn p-stack-md rounded-lg bg-surface-container-highest border border-outline-variant hover:border-secondary-fixed transition-colors text-left group' + (config.style === s ? ' active' : '');
+      btn.innerHTML = '<span class="font-label-caps text-label-caps text-on-surface-variant group-hover:text-secondary-fixed">' + s + '</span>';
+      btn.addEventListener('click', function () {
+        config.style = s;
+        renderStyles();
+      });
+      styleGrid.appendChild(btn);
+    });
+  }
+
+  // ---- Sliders ----
+  var stepsSlider = document.getElementById('steps-slider');
+  var stepsValue = document.getElementById('steps-value');
+  stepsSlider.value = config.steps;
+  stepsValue.textContent = config.steps;
+  stepsSlider.addEventListener('input', function () {
+    config.steps = parseInt(stepsSlider.value, 10);
+    stepsValue.textContent = config.steps;
+  });
+
+  var guidanceSlider = document.getElementById('guidance-slider');
+  var guidanceValue = document.getElementById('guidance-value');
+  guidanceSlider.value = config.guidance;
+  guidanceValue.textContent = config.guidance;
+  guidanceSlider.addEventListener('input', function () {
+    config.guidance = parseFloat(guidanceSlider.value);
+    guidanceValue.textContent = config.guidance;
+  });
+
+  var resolutionSlider = document.getElementById('resolution-slider');
+  var resolutionValue = document.getElementById('resolution-value');
+  resolutionSlider.value = config.resolutionIndex;
+  resolutionValue.textContent = RESOLUTIONS[config.resolutionIndex];
+  resolutionSlider.addEventListener('input', function () {
+    config.resolutionIndex = parseInt(resolutionSlider.value, 10);
+    resolutionValue.textContent = RESOLUTIONS[config.resolutionIndex];
+  });
+
+  // ---- Toggles ----
+  var toggleButtons = document.querySelectorAll('.toggle-btn');
+  function renderToggles() {
+    toggleButtons.forEach(function (btn) {
+      var key = btn.getAttribute('data-toggle');
+      var on = !!config.toggles[key];
+      var thumb = btn.querySelector('.toggle-thumb');
+      btn.classList.remove('toggle-on', 'toggle-off');
+      btn.classList.add(on ? 'toggle-on' : 'toggle-off');
+      thumb.classList.remove('toggle-thumb-on', 'toggle-thumb-off');
+      thumb.classList.add(on ? 'toggle-thumb-on' : 'toggle-thumb-off');
+    });
+  }
+  toggleButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-toggle');
+      config.toggles[key] = !config.toggles[key];
+      renderToggles();
+    });
+  });
+
+  // ---- Guardar ----
+  var saveBtn = document.getElementById('save-btn');
+  var toast = document.getElementById('save-toast');
+  saveBtn.addEventListener('click', function () {
+    persistConfig();
+    toast.classList.add('show');
+    setTimeout(function () {
+      toast.classList.remove('show');
+    }, 1800);
+
+    // Config lista para usarse en la llamada real a la API de Hugging Face:
+    var activeModel = MODELS.find(function (m) { return m.id === config.model; });
+    window.FLUX_AI_CONFIG = {
+      huggingFaceModelId: activeModel.huggingFaceId,
+      fallbackOrder: MODELS.map(function (m) { return m.huggingFaceId; }),
+      steps: config.steps,
+      guidanceScale: config.guidance,
+      resolution: RESOLUTIONS[config.resolutionIndex],
+      style: config.style,
+      autoRetry: config.toggles.autoRetry,
+      promptEnhance: config.toggles.promptEnhance,
+      safetyFilter: config.toggles.safetyFilter
+    };
+    console.log('FLUX_AI_CONFIG guardada:', window.FLUX_AI_CONFIG);
+  });
+
+  // ---- Init ----
+  renderModels();
+  renderStyles();
+  renderToggles();
+})();
+</script>
 </body></html>
