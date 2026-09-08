@@ -49,6 +49,7 @@ export default async function handler(req, res) {
     res.setHeader('Content-Type', contentType);
     return res.status(200).send(Buffer.from(arrayBuffer));
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    var detail = err && err.cause ? (err.cause.message || String(err.cause)) : null;
+    return res.status(500).json({ error: err.message, cause: detail });
   }
 }
