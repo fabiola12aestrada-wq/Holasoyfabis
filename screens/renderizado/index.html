@@ -58,7 +58,7 @@ tailwind.config = {
         "tertiary-fixed-dim": "#c8c6c7",
         "surface-tint": "#ebb2ff",
         "surface-container-lowest": "#0e0e0f",
-        "outline-variant": "#504254"
+        "outline-variant": "#504254
       },
       borderRadius: {
         "DEFAULT": "0.25rem",
@@ -180,7 +180,6 @@ button:disabled {
 
 <body class="bg-surface-dim text-on-surface font-body-lg min-h-screen flex flex-col">
 
-<!-- TopAppBar -->
 <header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.1)]">
 
   <div class="flex items-center gap-stack-md">
@@ -201,10 +200,8 @@ button:disabled {
 
 </header>
 
-<!-- Main Content -->
 <main class="flex-1 mt-16 mb-20 px-margin-mobile pt-stack-lg max-w-4xl mx-auto w-full">
 
-  <!-- Preview -->
   <section class="mb-stack-lg">
     <div class="relative glass-panel rounded-xl overflow-hidden shadow-2xl p-stack-md">
 
@@ -262,13 +259,11 @@ button:disabled {
 
       </div>
 
-      <!-- Filmstrip -->
       <div
         id="filmstrip"
         class="flex gap-2 overflow-x-auto pb-1 mb-stack-md">
       </div>
 
-      <!-- Video Preview -->
       <video
         id="video-preview"
         class="w-full rounded-lg hidden"
@@ -279,7 +274,6 @@ button:disabled {
     </div>
   </section>
 
-  <!-- Lista de escenas -->
   <section
     class="flex flex-col gap-stack-sm mb-stack-lg"
     id="scene-status-list">
@@ -287,7 +281,6 @@ button:disabled {
 
   <p id="estado-render"></p>
 
-  <!-- Actions -->
   <section class="flex flex-col sm:flex-row gap-stack-md mt-stack-md">
 
     <button
@@ -314,7 +307,6 @@ button:disabled {
 
 </main>
 
-<!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
 
   <a
@@ -322,6 +314,7 @@ button:disabled {
     href="../inicio/index.html">
 
     <span class="material-symbols-outlined">video_library</span>
+
     <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">
       Projects
     </span>
@@ -370,7 +363,8 @@ button:disabled {
 
 </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/@Supabase/supabase-js@2"></script>
+<!-- CAMBIO 1: @Supabase -> @supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 (function () {
@@ -1072,7 +1066,7 @@ button:disabled {
             "";
 
           /* ==========================
-             AQUÍ ESTÁ EL CAMBIO
+             BOTONES HABILITADOS
              ========================== */
 
           btnDownload.disabled =
