@@ -1,213 +1,102 @@
 <!DOCTYPE html>
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>FLUX_AI | Set New Password</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "secondary": "#e6feff",
-                    "surface-container-lowest": "#0e0e0f",
-                    "on-primary-container": "#ffffff",
-                    "error": "#ffb4ab",
-                    "background": "#131314",
-                    "on-background": "#e5e2e3",
-                    "on-primary": "#520072",
-                    "primary-container": "#bc13fe",
-                    "on-surface": "#e5e2e3",
-                    "primary": "#ebb2ff",
-                    "secondary-container": "#00f4fe"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "unit": "4px",
-                    "gutter": "16px",
-                    "stack-md": "16px",
-                    "stack-lg": "32px",
-                    "stack-sm": "8px",
-                    "margin-mobile": "20px"
-            },
-            "fontFamily": {
-                    "body-sm": ["Inter"],
-                    "body-lg": ["Inter"],
-                    "label-caps": ["Space Grotesk"],
-                    "headline-md": ["Space Grotesk"],
-                    "display-lg": ["Space Grotesk"]
-            }
-          },
-        },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-        }
-        .glass-panel {
-            background: rgba(26, 26, 27, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .neon-glow-primary { box-shadow: 0 0 15px rgba(188, 19, 254, 0.4); }
-        .neon-glow-cyan { box-shadow: 0 0 15px rgba(34, 211, 238, 0.3); }
-        .neural-grid {
-            background-image:
-                linear-gradient(rgba(188, 19, 254, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-        #form-mensaje { font-size: 13px; text-align: center; min-height: 1.2em; }
-        #form-mensaje.error { color: #ffb4ab; }
-        #form-mensaje.ok { color: #22d3ee; }
-        button[type="submit"]:disabled { opacity: 0.5; cursor: not-allowed; }
-    </style>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nueva contraseña — FLUX_AI</title>
+  <style>
+    :root {
+      --bg: #131314;
+      --surface-elevated: #201f20;
+      --border: #353436;
+      --primary: #bc13fe;
+      --primary-glow: #ebb2ff;
+      --text: #e5e2e3;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Inter', sans-serif;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 2rem 1rem;
+    }
+    .container { width: 100%; max-width: 380px; text-align: center; }
+    .logo { font-size: 1.6rem; font-weight: 700; color: var(--primary-glow); margin-bottom: 1.5rem; }
+    .logo span { color: var(--primary); }
+    h1 { font-size: 1.2rem; margin-bottom: 1.5rem; }
+    input {
+      width: 100%; background: var(--surface-elevated);
+      color: var(--text); border: 1px solid var(--border); border-radius: 12px;
+      padding: 0.9rem; font-family: inherit; font-size: 0.95rem; margin-bottom: 1rem;
+    }
+    button {
+      width: 100%; background: var(--primary); color: #fff; border: none;
+      border-radius: 12px; padding: 0.9rem; font-size: 1rem; font-weight: 600;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    #mensaje { margin-top: 1rem; font-size: 0.85rem; }
+  </style>
 </head>
-<body class="bg-surface-container-lowest text-on-surface font-body-lg min-h-screen selection:bg-primary-container selection:text-white">
-<div class="fixed inset-0 neural-grid pointer-events-none opacity-40"></div>
-<div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-container/20 blur-[120px] rounded-full pointer-events-none"></div>
-<div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary-container/10 blur-[120px] rounded-full pointer-events-none"></div>
+<body>
+  <div class="container">
+    <div class="logo">✦ FLUX<span>_AI</span></div>
+    <h1>Elige tu nueva contraseña</h1>
 
-<main class="relative min-h-screen flex items-center justify-center px-margin-mobile py-stack-lg">
-<div class="w-full max-w-[480px] space-y-stack-lg">
+    <input type="password" id="password" placeholder="Nueva contraseña (mínimo 6 caracteres)" />
+    <input type="password" id="password2" placeholder="Confirma la contraseña" />
+    <button id="btnGuardar" onclick="guardarNuevaPassword()">Guardar nueva contraseña</button>
+    <p id="mensaje"></p>
+  </div>
 
-<div class="flex justify-center mb-stack-lg">
-<div class="flex flex-col items-center gap-stack-sm">
-<span class="text-display-lg font-display-lg text-white drop-shadow-[0_0_10px_rgba(188,19,254,0.8)] tracking-widest">FLUX_AI</span>
-<div class="h-[1px] w-12 bg-primary-container"></div>
-</div>
-</div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const mensaje = document.getElementById("mensaje");
+    let supaClient;
 
-<section class="glass-panel rounded-xl p-8 md:p-10 relative overflow-hidden">
-<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-<header class="space-y-stack-sm mb-stack-lg">
-<h1 class="text-headline-md font-headline-md text-white">Set New Password</h1>
-<p class="text-body-sm font-body-sm text-zinc-400" id="subtitle">Enter a new password for your account</p>
-</header>
-
-<form class="space-y-stack-lg" id="password-form">
-<div class="space-y-stack-sm">
-<label class="text-label-caps font-label-caps text-zinc-500 block" for="new-password">New Password</label>
-<div class="relative group">
-<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-<span class="material-symbols-outlined text-zinc-500 group-focus-within:text-secondary-container transition-colors">lock</span>
-</div>
-<input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white font-body-lg placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-secondary-container focus:border-secondary-container transition-all neon-glow-cyan" id="new-password" minlength="6" placeholder="••••••••" required="" type="password"/>
-</div>
-</div>
-
-<div class="space-y-stack-sm">
-<label class="text-label-caps font-label-caps text-zinc-500 block" for="confirm-password">Confirm Password</label>
-<div class="relative group">
-<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-<span class="material-symbols-outlined text-zinc-500 group-focus-within:text-secondary-container transition-colors">lock</span>
-</div>
-<input class="w-full bg-[#0e0e0f] border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white font-body-lg placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-secondary-container focus:border-secondary-container transition-all neon-glow-cyan" id="confirm-password" minlength="6" placeholder="••••••••" required="" type="password"/>
-</div>
-</div>
-
-<p id="form-mensaje"></p>
-
-<button class="w-full bg-primary-container hover:bg-primary-container/90 text-white font-label-caps py-4 rounded-lg transition-all active:scale-[0.98] neon-glow-primary flex items-center justify-center gap-stack-sm" id="submit-btn" type="submit">
-<span id="submit-btn-text">Update Password</span>
-<span class="material-symbols-outlined text-[18px]">rocket_launch</span>
-</button>
-</form>
-
-<footer class="mt-stack-lg flex flex-col items-center gap-stack-md pt-stack-lg border-t border-white/5">
-<a class="text-label-caps font-label-caps text-secondary-container hover:text-cyan-300 transition-colors flex items-center gap-stack-sm" href="../login/index.html">
-<span class="material-symbols-outlined text-[16px]">arrow_back</span>
-                        Back to Sign In
-                    </a>
-</footer>
-</section>
-</div>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-(function () {
-  const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
-
-  let sbClient = null;
-  try {
-    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  } catch (e) {
-    console.error("No se pudo inicializar Supabase:", e);
-  }
-
-  const form = document.getElementById("password-form");
-  const newPasswordInput = document.getElementById("new-password");
-  const confirmPasswordInput = document.getElementById("confirm-password");
-  const mensaje = document.getElementById("form-mensaje");
-  const btn = document.getElementById("submit-btn");
-  const btnText = document.getElementById("submit-btn-text");
-  const subtitle = document.getElementById("subtitle");
-
-  // Supabase mete el token de recuperación en el hash de la URL (#access_token=...&type=recovery)
-  // El cliente de supabase-js lo detecta automáticamente y crea una sesión temporal.
-  if (!sbClient) {
-    subtitle.textContent = "No se pudo conectar con el servicio. Intentá más tarde.";
-  }
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const newPassword = newPasswordInput.value;
-    const confirmPassword = confirmPasswordInput.value;
-
-    if (newPassword.length < 6) {
-      mensaje.textContent = "La contraseña debe tener al menos 6 caracteres.";
-      mensaje.className = "error";
-      return;
+    try {
+      const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
+      const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
+      supaClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } catch (err) {
+      mensaje.textContent = "Error al iniciar: " + err.message;
     }
 
-    if (newPassword !== confirmPassword) {
-      mensaje.textContent = "Las contraseñas no coinciden.";
-      mensaje.className = "error";
-      return;
+    async function guardarNuevaPassword() {
+      const password = document.getElementById("password").value;
+      const password2 = document.getElementById("password2").value;
+      const btn = document.getElementById("btnGuardar");
+
+      if (!password || password.length < 6) {
+        mensaje.textContent = "La contraseña debe tener al menos 6 caracteres.";
+        return;
+      }
+      if (password !== password2) {
+        mensaje.textContent = "Las contraseñas no coinciden.";
+        return;
+      }
+
+      btn.disabled = true;
+      mensaje.textContent = "Guardando...";
+
+      try {
+        const { data, error } = await supaClient.auth.updateUser({ password });
+        btn.disabled = false;
+
+        if (error) {
+          mensaje.textContent = "Error: " + error.message;
+          return;
+        }
+
+        mensaje.textContent = "¡Contraseña actualizada! Ya puedes iniciar sesión.";
+        setTimeout(() => {
+          window.location.href = "../bienvenida_a_flux_ai/index.html";
+        }, 1500);
+      } catch (err) {
+        btn.disabled = false;
+        mensaje.textContent = "Error inesperado: " + err.message;
+      }
     }
-
-    if (!sbClient) {
-      mensaje.textContent = "No se pudo conectar con el servicio.";
-      mensaje.className = "error";
-      return;
-    }
-
-    btn.disabled = true;
-    btnText.textContent = "Actualizando...";
-    mensaje.textContent = "";
-    mensaje.className = "";
-
-    const { error } = await sbClient.auth.updateUser({ password: newPassword });
-
-    btn.disabled = false;
-    btnText.textContent = "Update Password";
-
-    if (error) {
-      mensaje.textContent = "Error: " + error.message + " (el link puede haber expirado, pedí uno nuevo)";
-      mensaje.className = "error";
-      return;
-    }
-
-    mensaje.textContent = "¡Contraseña actualizada! Redirigiendo al inicio de sesión...";
-    mensaje.className = "ok";
-    form.reset();
-
-    setTimeout(() => {
-      window.location.href = "../login/index.html";
-    }, 2000);
-  });
-})();
-</script>
-</body></html>
+  </script>
+</body>
+</html>
