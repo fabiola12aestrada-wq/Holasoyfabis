@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FLUX_GEN — Generador de Imágenes IA</title>
+  <title>Generador — FLUX_AI</title>
   <style>
     :root {
       --bg: #131314;
@@ -13,6 +13,7 @@
       --primary-glow: #ebb2ff;
       --text: #e5e2e3;
       --cyan: #00f4fe;
+      --error: #ffb4ab;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -21,84 +22,178 @@
       display: flex; flex-direction: column; align-items: center;
       min-height: 100vh; padding: 2rem 1rem;
     }
-    .container { width: 100%; max-width: 420px; text-align: center; }
-    .logo { font-size: 1.6rem; font-weight: 700; color: var(--primary-glow); margin-bottom: 1.5rem; }
-    .logo span { color: var(--primary); }
+    .container { width: 100%; max-width: 420px; }
+
+    h1 { text-align: center; font-size: 1.3rem; margin-bottom: 0.25rem; }
+    .subtitle { text-align: center; opacity: 0.6; font-size: 0.85rem; margin-bottom: 2rem; }
+
+    label {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
     textarea {
-      width: 100%; min-height: 100px; background: var(--surface-elevated);
-      color: var(--text); border: 1px solid var(--border); border-radius: 12px;
-      padding: 1rem; font-family: inherit; font-size: 0.95rem; margin-bottom: 1rem;
+      width: 100%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      padding: 0.75rem;
+      resize: none;
+      margin-bottom: 1.25rem;
     }
-    button {
-      width: 100%; background: var(--primary); color: #fff; border: none;
-      border-radius: 12px; padding: 0.9rem; font-size: 1rem; font-weight: 600;
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .btn-generar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.85rem;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
       cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-    .resultado-container { margin-top: 1.5rem; }
-    #loader { color: var(--cyan); }
-    img { max-width: 100%; border-radius: 12px; margin-top: 1rem; }
+    .btn-generar:active { transform: scale(0.97); }
+    .btn-generar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .btn-generar.loading .spinner { display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .resultado {
+      margin-top: 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface-elevated);
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .resultado img {
+      width: 100%;
+      display: block;
+    }
+    .resultado .placeholder {
+      opacity: 0.4;
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    #estado {
+      text-align: center;
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      min-height: 1.2em;
+    }
+    #estado.error { color: var(--error); }
+    #estado.ok { color: var(--cyan); }
+
     .btn-volver {
-      display: inline-block; margin-top: 1.5rem; color: var(--text);
-      text-decoration: none; font-size: 0.9rem;
+      display: block; text-align: center; margin-top: 2rem; color: var(--text);
+      text-decoration: none; font-size: 0.9rem; opacity: 0.7;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo">✦ FLUX<span>_GEN</span></div>
-    <h1>Generador de Imágenes IA</h1>
+    <h1>Generador de imágenes</h1>
+    <p class="subtitle">Describí lo que querés crear</p>
 
-    <textarea id="promptInput" placeholder="Describe la imagen que quieres crear..."></textarea>
-    <button id="btnGenerar" onclick="enviarPrompt()">Generar Imagen</button>
+    <label for="prompt-input">Prompt</label>
+    <textarea id="prompt-input" rows="4" placeholder="Ej: un zorro futurista caminando por una ciudad neón bajo la lluvia"></textarea>
 
-    <div class="resultado-container">
-      <div id="loader" style="display:none;">Generando tu arte...</div>
-      <img id="resultadoIA" src="" alt="" style="display:none;" />
+    <button id="btn-generar" class="btn-generar">
+      <span class="spinner"></span>
+      <span id="btn-generar-text">Generar imagen</span>
+    </button>
+
+    <div class="resultado" id="resultado">
+      <p class="placeholder" id="placeholder-text">Tu imagen generada va a aparecer acá</p>
     </div>
+
+    <p id="estado"></p>
 
     <a href="../../index.html" class="btn-volver">← Volver al Menú</a>
   </div>
 
   <script>
-    async function enviarPrompt() {
-      const promptTexto = document.getElementById("promptInput").value;
-      const btn = document.getElementById("btnGenerar");
-      const loader = document.getElementById("loader");
-      const imagenContenedor = document.getElementById("resultadoIA");
+    const promptInput = document.getElementById("prompt-input");
+    const btnGenerar = document.getElementById("btn-generar");
+    const btnGenerarText = document.getElementById("btn-generar-text");
+    const resultado = document.getElementById("resultado");
+    const placeholderText = document.getElementById("placeholder-text");
+    const estado = document.getElementById("estado");
 
-      if (!promptTexto.trim()) {
-        alert("Por favor, escribe un prompt primero.");
+    async function generarImagen() {
+      const prompt = promptInput.value.trim();
+
+      if (!prompt) {
+        estado.textContent = "Escribí una descripción antes de generar.";
+        estado.className = "error";
         return;
       }
 
-      btn.disabled = true;
-      loader.style.display = "block";
-      imagenContenedor.style.display = "none";
+      btnGenerar.disabled = true;
+      btnGenerar.classList.add("loading");
+      btnGenerarText.textContent = "Generando...";
+      estado.textContent = "";
+      estado.className = "";
+      if (placeholderText) placeholderText.textContent = "Generando tu imagen...";
 
       try {
-        const respuesta = await fetch('/api/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: promptTexto })
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt }),
         });
 
-        const datos = await respuesta.json();
+        const data = await response.json();
 
-        if (datos.image) {
-          imagenContenedor.src = datos.image;
-          imagenContenedor.style.display = "block";
-        } else {
-          alert("Error: " + (datos.error || "No se pudo generar"));
+        if (!response.ok) {
+          throw new Error(data.error || "Ocurrió un error al generar la imagen.");
         }
-      } catch (error) {
-        console.error("Error de conexión:", error);
-        alert("Hubo un error al conectar con el servidor.");
+
+        resultado.innerHTML = `<img src="${data.image}" alt="${prompt}" />`;
+        estado.textContent = "¡Imagen generada con éxito!";
+        estado.className = "ok";
+      } catch (err) {
+        estado.textContent = "Error: " + err.message;
+        estado.className = "error";
+        resultado.innerHTML = `<p class="placeholder">No se pudo generar la imagen</p>`;
       } finally {
-        btn.disabled = false;
-        loader.style.display = "none";
+        btnGenerar.disabled = false;
+        btnGenerar.classList.remove("loading");
+        btnGenerarText.textContent = "Generar imagen";
       }
     }
+
+    btnGenerar.addEventListener("click", generarImagen);
   </script>
 </body>
 </html>
