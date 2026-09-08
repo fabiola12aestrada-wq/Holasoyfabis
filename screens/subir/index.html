@@ -250,8 +250,6 @@
 
 <script>
 (async function () {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.js';
-
   // ---- Ruta a la pantalla de storyboard: ajusta si tu ruta es distinta ----
   var STORYBOARD_PATH = '../storyboard/index.html';
 
@@ -350,6 +348,10 @@
 
   // ---- Leer PDF (extraer texto con pdf.js) ----
   async function extractPdfText(file) {
+    if (typeof pdfjsLib === 'undefined') {
+      throw new Error('La librería pdf.js no cargó (revisa tu conexión o si algo está bloqueando cdnjs.cloudflare.com).');
+    }
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.js';
     var arrayBuffer = await file.arrayBuffer();
     var pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     var fullText = '';
@@ -481,6 +483,13 @@
 
     window.location.href = STORYBOARD_PATH;
   }
-})();
+})().catch(function (e) {
+  console.error('Error inicializando la página:', e);
+  var el = document.getElementById('analyze-error');
+  if (el) {
+    el.textContent = 'Error cargando la página: ' + e.message;
+    el.className = 'error-box';
+  }
+});
 </script>
 </body></html>
