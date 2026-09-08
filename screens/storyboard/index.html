@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -179,9 +178,9 @@
 <div class="flex items-center gap-stack-md">
 <span class="text-xl font-bold bg-gradient-to-r from-[#BC13FE] to-cyan-400 bg-clip-text text-transparent font-['Space_Grotesk'] tracking-tighter">FLUX_AI</span>
 <div class="hidden md:flex items-center gap-stack-lg ml-stack-lg">
-<span class="text-[#BC13FE] font-label-caps cursor-pointer">Projects</span>
-<span class="text-white/70 font-label-caps cursor-pointer hover:text-cyan-400 transition-colors">Storyboard Editor</span>
-<span class="text-white/70 font-label-caps cursor-pointer hover:text-cyan-400 transition-colors">Library</span>
+<a href="../storyboard/index.html" class="text-[#BC13FE] font-label-caps cursor-pointer">Projects</a>
+<a href="../storyboard/index.html" class="text-white/70 font-label-caps cursor-pointer hover:text-cyan-400 transition-colors">Storyboard Editor</a>
+<a href="../activos/index.html" class="text-white/70 font-label-caps cursor-pointer hover:text-cyan-400 transition-colors">Library</a>
 </div>
 </div>
 <div class="flex items-center gap-stack-md">
@@ -208,22 +207,22 @@
 </main>
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
-<div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
+<a href="../storyboard/index.html" class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
 <span class="material-symbols-outlined">video_library</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
-</div>
+</a>
 <div class="flex flex-col items-center justify-center text-[#BC13FE] drop-shadow-[0_0_8px_rgba(188,19,254,0.5)] active:scale-90 transition-transform duration-150 cursor-pointer">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
 </div>
-<div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
+<a href="../activos/index.html" class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
 <span class="material-symbols-outlined">folder_copy</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Assets</span>
-</div>
-<div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
+</a>
+<a href="../perfil/index.html" class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
 <span class="material-symbols-outlined">account_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
-</div>
+</a>
 </nav>
 
 <script>
@@ -273,15 +272,10 @@
   modelBadge.textContent = 'MODEL: ' + getFallbackOrder()[0].split('/')[1];
 
   // ---- Token de Hugging Face ----
-  // El token ya NO vive en el cliente: /api/generate.js (Vercel Function) lo
-  // guarda como variable de entorno del servidor y lo agrega ahí. El navegador
-  // nunca lo ve. Este badge solo indica que el proxy está en uso.
   var tokenArea = document.getElementById('token-area');
   tokenArea.innerHTML = '<span class="token-ok-badge" title="El token se maneja en el servidor (Vercel), no en el navegador">PROXY: /api/generate</span>';
 
   // ---- Supabase (persistencia real de escenas + imágenes) ----
-  // La URL y la llave "anon" son públicas por diseño de Supabase; la
-  // seguridad la da la política RLS de la tabla `scenes`, no ocultar esto.
   var supabase = null;
   var supabaseReady = false;
 
@@ -333,7 +327,6 @@
     var rows = res.data;
 
     if (!rows || rows.length === 0) {
-      // Tabla vacía (primera vez): sembramos las escenas por defecto en Supabase.
       var seedRows = DEFAULT_SCENES.map(function (s, i) {
         return { id: s.id, position: i, label: s.label, script: s.script, prompt: s.prompt, image_url: null, status: 'idle' };
       });
@@ -418,7 +411,6 @@
           '</button>' +
         '</div>';
 
-      // ---- listeners ----
       var scriptInput = wrap.querySelector('.script-input');
       scriptInput.addEventListener('input', function () {
         scene.script = scriptInput.value;
@@ -456,7 +448,6 @@
       container.appendChild(wrap);
     });
 
-    // Reetiquetar visualmente el orden (Scene 01, 02, 03...) sin tocar el texto libre después del "/"
     container.querySelectorAll('.scene-label').forEach(function (el, i) {
       var parts = el.textContent.split('/');
       parts[0] = sceneIndexLabel(i) + ' ';
@@ -480,7 +471,6 @@
     '</div>';
   }
 
-  // ---- Generación real vía Hugging Face Inference API ----
   function buildPrompt(scene) {
     var p = scene.prompt.trim();
     if (appConfig && appConfig.toggles && appConfig.toggles.promptEnhance) {
@@ -533,8 +523,6 @@
 
     generateWithFallback(prompt, modelList, scene)
       .then(function (imageUrl) {
-        // La imagen ya quedó subida a Supabase Storage y la fila guardada
-        // por /api/generate; aquí solo reflejamos la URL final en la UI.
         scene.imageUrl = imageUrl;
         scene.status = 'done';
         render();
@@ -546,7 +534,6 @@
       });
   }
 
-  // ---- Añadir nueva escena ----
   document.getElementById('add-scene-btn').addEventListener('click', function () {
     var newScene = {
       id: 's' + Date.now(),
@@ -572,7 +559,6 @@
     }
   });
 
-  // ---- Inicio ----
   try {
     await initSupabase();
     scenes = await loadScenes();
