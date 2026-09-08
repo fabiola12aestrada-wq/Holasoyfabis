@@ -6,7 +6,6 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -116,6 +115,27 @@
             background: #BC13FE;
             border-radius: 10px;
         }
+        #estado-assets {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+            padding: 24px 0;
+        }
+        #estado-assets.error { color: #ffb4ab; }
+        .source-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 10;
+            font-size: 9px;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            backdrop-filter: blur(6px);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .source-badge.generador { background: rgba(188,19,254,0.35); color: #f8d8ff; }
+        .source-badge.storyboard { background: rgba(0,244,254,0.25); color: #00dce5; }
     </style>
 <style>
     body {
@@ -128,7 +148,7 @@
 <header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.1)]">
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 rounded-full overflow-hidden border border-[#BC13FE]/50">
-<img class="w-full h-full object-cover" data-alt="A futuristic high-fidelity headshot of a creative professional in a dark studio setting. The lighting is dominated by a sharp cyan rim light on one side and a soft electric purple glow on the other, creating a cinematic obsidian flux aesthetic. The individual has a focused expression, representing the fusion of human creativity and AI technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLiYZfaPTMbbvQ--drij9Apb4I8DaeMWt85vudck4HiP0EZQJVC0n8XW6tnv2211CcGxdGx_YRG-apMGi84tK40JlTfZ2cWQySxZfvkFxjqvArcgBTrWx5_VvgOlM25S2T2ZX8ohALGPDft5VgAv6mcjevYp-Xln-RoHlNVHNz5rIZbMdve2KqxGrfoDFZRXGym_vkIhKBwENDOKauykfS5dXsdB6y04tJ2sEI1doxMTdG2316EXdmcVi4_RnMcGa5skC2SBQL6zVl"/>
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLiYZfaPTMbbvQ--drij9Apb4I8DaeMWt85vudck4HiP0EZQJVC0n8XW6tnv2211CcGxdGx_YRG-apMGi84tK40JlTfZ2cWQySxZfvkFxjqvArcgBTrWx5_VvgOlM25S2T2ZX8ohALGPDft5VgAv6mcjevYp-Xln-RoHlNVHNz5rIZbMdve2KqxGrfoDFZRXGym_vkIhKBwENDOKauykfS5dXsdB6y04tJ2sEI1doxMTdG2316EXdmcVi4_RnMcGa5skC2SBQL6zVl"/>
 </div>
 <span class="text-xl font-bold bg-gradient-to-r from-[#BC13FE] to-cyan-400 bg-clip-text text-transparent font-['Space_Grotesk'] tracking-tighter">FLUX_AI</span>
 </div>
@@ -142,19 +162,17 @@
 <div class="mb-gutter">
 <div class="glass-card rounded-xl px-4 py-3 flex items-center gap-3 focus-within:ring-1 focus-within:ring-secondary-container transition-all">
 <span class="material-symbols-outlined text-white/40">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-body-sm w-full placeholder:text-white/20 text-on-surface" placeholder="Search your assets..." type="text"/>
+<input id="search-input" class="bg-transparent border-none focus:ring-0 text-body-sm w-full placeholder:text-white/20 text-on-surface" placeholder="Search your assets..." type="text"/>
 <span class="material-symbols-outlined text-white/40">tune</span>
 </div>
 </div>
 <!-- Filter Tabs -->
 <div class="flex gap-4 mb-stack-lg overflow-x-auto pb-2 custom-scrollbar">
-<button class="flex-shrink-0 font-label-caps text-label-caps px-4 py-2 rounded-full border border-[#BC13FE] text-[#BC13FE] bg-[#BC13FE]/10 bloom-active">All</button>
-<button class="flex-shrink-0 font-label-caps text-label-caps px-4 py-2 rounded-full border border-white/10 text-white/40 hover:text-white/70">Videos</button>
-<button class="flex-shrink-0 font-label-caps text-label-caps px-4 py-2 rounded-full border border-white/10 text-white/40 hover:text-white/70">Images</button>
-<button class="flex-shrink-0 font-label-caps text-label-caps px-4 py-2 rounded-full border border-white/10 text-white/40 hover:text-white/70">Audio</button>
-<button class="flex-shrink-0 font-label-caps text-label-caps px-4 py-2 rounded-full border border-white/10 text-white/40 hover:text-white/70">Favorites</button>
+<button class="filter-tab flex-shrink-0 font-label-caps text-label-caps px-4 py-2 rounded-full border border-[#BC13FE] text-[#BC13FE] bg-[#BC13FE]/10 bloom-active" data-filter="all">All</button>
+<button class="filter-tab flex-shrink-0 font-label-caps text-label-caps px-4 py-2 rounded-full border border-white/10 text-white/40 hover:text-white/70" data-filter="generador">Generador</button>
+<button class="filter-tab flex-shrink-0 font-label-caps text-label-caps px-4 py-2 rounded-full border border-white/10 text-white/40 hover:text-white/70" data-filter="storyboard">Storyboard</button>
 </div>
-<!-- Batch Actions (Conditional UI) -->
+<!-- Batch Actions -->
 <div class="flex justify-between items-center mb-stack-md">
 <h2 class="font-headline-md text-headline-md text-on-surface">Recent Assets</h2>
 <div class="flex gap-2">
@@ -164,107 +182,176 @@
                 </button>
 </div>
 </div>
-<!-- Bento Grid Layout -->
-<div class="grid grid-cols-2 gap-4">
-<!-- Video Item -->
-<div class="glass-card rounded-2xl overflow-hidden flex flex-col group relative">
-<div class="absolute top-2 left-2 z-10">
-<span class="material-symbols-outlined text-white text-sm bg-black/50 backdrop-blur-md p-1 rounded-full">play_arrow</span>
-</div>
-<div class="aspect-square relative overflow-hidden">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A breathtaking AI-generated video frame showing an abstract liquid nebula of iridescent purple and neon cyan swirling in a void. The visual style is highly cinematic with micro-textures and hyper-realistic light refractions, evoking a sense of deep space and computational power. Subtle glow effects highlight the edges of the gaseous formations." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHeAQryMSVTQWEpxUhNbsP0_0CpxMPWhPV5g4mNsRlB_u1FZG-zY5HJ6ddBIJovLsDkITy1ZAksb1CWMDJrDkvyJJIDhM57OTEJkBXq3xH_qsslLeLLsM4cKp3_kLvDDO6PfkrbBX7uIvXl0QpnPFK0Wq54JXUSDcwod0AJy09dnEu3P_F7ZGBklGeSi7NRsQ3zWtD7YVEtTD_GgvHL4CNeKCG4uQNt8yZVhX4inbnlJ7AIdG2iNqAOJZtDx-AjMauYJxM7ztIknZ_"/>
-<div class="absolute bottom-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-md rounded text-[10px] font-mono text-white">00:15</div>
-</div>
-<div class="p-3">
-<p class="text-body-sm font-medium truncate mb-1">Cyber_Drift_v2.mp4</p>
-<p class="text-[10px] text-white/40 uppercase tracking-tighter">48.2 MB • Project Alpha</p>
-</div>
-</div>
-<!-- Image Item -->
-<div class="glass-card rounded-2xl overflow-hidden flex flex-col group border border-[#BC13FE]/30 bloom-active">
-<div class="absolute top-2 right-2 z-10">
-<span class="material-symbols-outlined text-[#BC13FE] text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-</div>
-<div class="aspect-square relative overflow-hidden">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A high-end digital art piece of a futuristic geometric architecture. The structure is made of translucent glass panes reflecting a cityscape of neon lights. The palette is dominated by obsidian blacks and vibrant purple accents. Sharp architectural lines and a misty atmosphere create a sophisticated minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYMnh0j1DftLY-d56FYosxUPJ2_fxHnKzNeGLIFms9aHJVoD7o9alPMDbNkNOgqLESMkmSfKX56TYF7sO7J2xSBVpvQmVnFkbB1MWmVB6ZE6d3ZvRH5PGKA6Az3hi97B8VSCP1mFZ5yTAkdgZUUHBcgA8g4j3w2nByd2Kv_C_vY1U4L3mLHU9uHsN_tpuwwC4qYgsyR9rhyfJryAO1hepOBgzCRyv1ASxfRBhNP95QeAonVtt4OSbjaQbMzc7ber0kqANqNNVETGfR"/>
-</div>
-<div class="p-3">
-<p class="text-body-sm font-medium truncate mb-1">Neon_Nexus_Cover.png</p>
-<p class="text-[10px] text-white/40 uppercase tracking-tighter">12.5 MB • Favorites</p>
-</div>
-</div>
-<!-- Audio Section (Full width in grid) -->
-<div class="col-span-2 mt-4">
-<h3 class="font-label-caps text-label-caps text-white/40 mb-3 tracking-[0.2em] uppercase">Audio Tracks</h3>
-<div class="glass-card rounded-2xl p-4 flex items-center gap-4 border-l-2 border-[#00f4fe]">
-<button class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-container">
-<span class="material-symbols-outlined">play_arrow</span>
-</button>
-<div class="flex-1">
-<p class="text-body-sm font-medium">Glitch_Atmosphere_Loop.wav</p>
-<div class="flex items-end gap-[2px] h-4 mt-1">
-<div class="w-[2px] bg-secondary-container/50 h-2"></div>
-<div class="w-[2px] bg-secondary-container/50 h-3"></div>
-<div class="w-[2px] bg-secondary-container h-4"></div>
-<div class="w-[2px] bg-secondary-container h-2"></div>
-<div class="w-[2px] bg-secondary-container/50 h-1"></div>
-<div class="w-[2px] bg-secondary-container/50 h-3"></div>
-<div class="w-[2px] bg-secondary-container h-4"></div>
-<div class="w-[2px] bg-secondary-container/50 h-2"></div>
-<div class="w-[2px] bg-secondary-container/50 h-1"></div>
-<div class="w-[2px] bg-secondary-container/50 h-3"></div>
-<div class="w-[2px] bg-secondary-container h-2"></div>
-<div class="w-[2px] bg-secondary-container/30 h-1"></div>
-<div class="w-[2px] bg-secondary-container/30 h-2"></div>
-<div class="w-[2px] bg-secondary-container/30 h-4"></div>
-<div class="w-[2px] bg-secondary-container/10 h-1"></div>
-</div>
-</div>
-<div class="text-[10px] text-white/40">3:42</div>
-</div>
-</div>
-<!-- More Items -->
-<div class="glass-card rounded-2xl overflow-hidden flex flex-col group">
-<div class="aspect-square relative overflow-hidden">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="An intricate 3D render of neural network pathways glowing in electric blue and magenta. The visual style is cybernetic and high-tech, with tiny particles of light flowing through translucent fiber-optic cables against a pitch-black background. The composition is dynamic and suggests lightning-fast data processing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDK6ky6SPgFrCNOw_8KAnmu1p0aonsU5p8vUIJJveWDpgF3v5irS1Uiuh9Fiuy0AkN9a7sAq6kK9-j-DGd7qayTgU4cL5GhCjn2Mc49_iLb8s5LJzeypYTpv33CuzSotzdXgwWKJPBhmc8R_xA8l-B1dvb1Tx2GNBmQia5tRYmTt95bAY7pZho8NGTI_OGA2KZY9jyvDShyhhH_TzgeghQqrBrECH3ekK276ynib_Pug02RbHeIY4Adk1dAW3EUZq6vk2wbq2LDbYhT"/>
-</div>
-<div class="p-3">
-<p class="text-body-sm font-medium truncate mb-1">Neural_Flow_Raw.jpg</p>
-<p class="text-[10px] text-white/40 uppercase tracking-tighter">8.1 MB • AI Lab</p>
-</div>
-</div>
-<div class="glass-card rounded-2xl overflow-hidden flex flex-col group">
-<div class="aspect-square relative overflow-hidden">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A futuristic portrait of a robotic humanoid with sleek white ceramic plating and visible internal copper circuitry glowing softly in purple. The background is a dark, out-of-focus laboratory with blue ambient lighting. The aesthetic is clean, sophisticated, and evokes a high-end cinematic sci-fi production." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnOw_eOYDSxkTzRWCHKELqjnHlUayPzC_joBGsWnMEojUXdLAO1wMoxaz3u6VydXTaclCIMMavU7br6rvKePThI3zyRg-48eEHhM69qP9OtvnEdfgOaQZcGrqsO75SUZcQHBTlTytuLndPvBOhTfnW_K2VE5fw3SgFE8lmQp9qztOxM3k3ugYA24LKYdswx3YNpxuS0rdY_I_VmOUG19JYeO220VWK2Q5oUbh4O_Q0H_XhEUfrBPvCmYbz65UFK7kiqBZ5HmfPu0Fz"/>
-</div>
-<div class="p-3">
-<p class="text-body-sm font-medium truncate mb-1">Android_Portrait_01.png</p>
-<p class="text-[10px] text-white/40 uppercase tracking-tighter">15.2 MB • Character Design</p>
-</div>
-</div>
-</div>
+<!-- Estado -->
+<p id="estado-assets">Cargando tus assets…</p>
+<!-- Bento Grid Layout (se llena dinámicamente) -->
+<div class="grid grid-cols-2 gap-4" id="assets-grid"></div>
 </main>
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
-<button class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-transform duration-150 active:scale-90">
+<a href="../inicio/index.html" class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-transform duration-150 active:scale-90">
 <span class="material-symbols-outlined">video_library</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
-</button>
-<button class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-transform duration-150 active:scale-90">
+</a>
+<a href="../generador/index.html" class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-transform duration-150 active:scale-90">
 <span class="material-symbols-outlined">add_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
-</button>
-<button class="flex flex-col items-center justify-center text-[#BC13FE] drop-shadow-[0_0_8px_rgba(188,19,254,0.5)] transition-transform duration-150 active:scale-90">
+</a>
+<div class="flex flex-col items-center justify-center text-[#BC13FE] drop-shadow-[0_0_8px_rgba(188,19,254,0.5)] transition-transform duration-150 active:scale-90">
 <span class="material-symbols-outlined">folder_copy</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Assets</span>
-</button>
-<button class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-transform duration-150 active:scale-90">
+</div>
+<a href="../perfil/index.html" class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-transform duration-150 active:scale-90">
 <span class="material-symbols-outlined">account_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
-</button>
+</a>
 </nav>
-<!-- Contextual Batch Action FAB (Multi-select) -->
-<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(188,19,254,0.4)] active:scale-95 transition-all z-40">
-<span class="material-symbols-outlined text-white text-3xl">download</span>
-</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
+
+  let sbClient = null;
+  try {
+    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (e) {
+    console.error("No se pudo inicializar Supabase:", e);
+  }
+
+  const grid = document.getElementById("assets-grid");
+  const estado = document.getElementById("estado-assets");
+  const searchInput = document.getElementById("search-input");
+  const filterTabs = document.querySelectorAll(".filter-tab");
+
+  let allAssets = [];
+  let currentFilter = "all";
+
+  function formatFecha(iso) {
+    if (!iso) return "";
+    const d = new Date(iso);
+    return d.toLocaleDateString();
+  }
+
+  function renderCard(asset) {
+    const badgeClass = asset.source === "generador" ? "generador" : "storyboard";
+    const badgeText = asset.source === "generador" ? "Generador" : "Storyboard";
+    return (
+      '<div class="glass-card rounded-2xl overflow-hidden flex flex-col group relative">' +
+        '<span class="source-badge ' + badgeClass + '">' + badgeText + '</span>' +
+        '<div class="aspect-square relative overflow-hidden">' +
+          '<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="' + asset.imageUrl + '" alt="' + (asset.prompt || "").replace(/"/g, "&quot;") + '"/>' +
+        '</div>' +
+        '<div class="p-3">' +
+          '<p class="text-body-sm font-medium truncate mb-1">' + (asset.label || asset.prompt || "Sin título") + '</p>' +
+          '<p class="text-[10px] text-white/40 uppercase tracking-tighter">' + formatFecha(asset.createdAt) + '</p>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function renderGrid() {
+    const query = (searchInput.value || "").trim().toLowerCase();
+
+    const filtered = allAssets.filter(function (a) {
+      const matchesFilter = currentFilter === "all" || a.source === currentFilter;
+      const text = ((a.label || "") + " " + (a.prompt || "")).toLowerCase();
+      const matchesSearch = !query || text.includes(query);
+      return matchesFilter && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+      grid.innerHTML = "";
+      estado.textContent = allAssets.length === 0
+        ? "Todavía no generaste ninguna imagen. Andá al Generador o al Storyboard para crear tu primera."
+        : "No hay resultados para este filtro/búsqueda.";
+      estado.className = "";
+      return;
+    }
+
+    estado.textContent = "";
+    grid.innerHTML = filtered.map(renderCard).join("");
+  }
+
+  filterTabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      filterTabs.forEach(function (t) {
+        t.classList.remove("border-[#BC13FE]", "text-[#BC13FE]", "bg-[#BC13FE]/10", "bloom-active");
+        t.classList.add("border-white/10", "text-white/40");
+      });
+      tab.classList.remove("border-white/10", "text-white/40");
+      tab.classList.add("border-[#BC13FE]", "text-[#BC13FE]", "bg-[#BC13FE]/10", "bloom-active");
+      currentFilter = tab.getAttribute("data-filter");
+      renderGrid();
+    });
+  });
+
+  searchInput.addEventListener("input", renderGrid);
+
+  async function cargarAssets() {
+    if (!sbClient) {
+      estado.textContent = "No se pudo conectar con el servicio.";
+      estado.className = "error";
+      return;
+    }
+
+    try {
+      const { data: { user } } = await sbClient.auth.getUser();
+
+      // --- Imágenes del Generador simple (solo del usuario logueado) ---
+      let generadorItems = [];
+      if (user) {
+        const { data, error } = await sbClient
+          .from("generated_images")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+
+        generadorItems = (data || []).map(function (row) {
+          return {
+            source: "generador",
+            imageUrl: row.image_url,
+            prompt: row.prompt,
+            label: row.prompt,
+            createdAt: row.created_at,
+          };
+        });
+      }
+
+      // --- Imágenes del Storyboard (todas las escenas con imagen ya generada) ---
+      const { data: scenesData, error: scenesError } = await sbClient
+        .from("scenes")
+        .select("*")
+        .not("image_url", "is", null)
+        .order("updated_at", { ascending: false });
+
+      if (scenesError) throw scenesError;
+
+      const storyboardItems = (scenesData || []).map(function (row) {
+        return {
+          source: "storyboard",
+          imageUrl: row.image_url,
+          prompt: row.prompt,
+          label: row.label,
+          createdAt: row.updated_at,
+        };
+      });
+
+      allAssets = generadorItems.concat(storyboardItems).sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
+      renderGrid();
+    } catch (err) {
+      estado.textContent = "Error al cargar tus assets: " + err.message;
+      estado.className = "error";
+    }
+  }
+
+  cargarAssets();
+})();
+</script>
 </body></html>
