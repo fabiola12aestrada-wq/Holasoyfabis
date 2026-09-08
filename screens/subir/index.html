@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.js"></script>
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -121,6 +122,20 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
+        .scene-preview-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 0.5rem;
+            padding: 12px;
+        }
+        .error-box {
+            border: 1px solid rgba(255,180,171,0.4);
+            background: rgba(147,0,10,0.15);
+            border-radius: 0.5rem;
+            padding: 12px;
+            color: #ffdad6;
+            font-size: 12px;
+        }
     </style>
 <style>
     body {
@@ -145,7 +160,7 @@
 <!-- Header Section -->
 <section class="space-y-stack-sm">
 <h1 class="font-display-lg text-display-lg text-white">Central de <span class="text-secondary-container">Análisis</span></h1>
-<p class="font-body-sm text-on-surface-variant max-w-xl">Procesa documentos complejos con la potencia de nuestra red neuronal. Sube un PDF o describe tu consulta para obtener una síntesis ejecutiva instantánea.</p>
+<p class="font-body-sm text-on-surface-variant max-w-xl">Procesa documentos complejos con la potencia de nuestra red neuronal. Sube un PDF, indica cuántas escenas quieres, y genera tu storyboard.</p>
 </section>
 <!-- Analysis Tools Grid -->
 <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
@@ -155,11 +170,12 @@
 <span class="material-symbols-outlined text-primary-container">upload_file</span>
 <h2 class="font-label-caps text-label-caps text-white uppercase tracking-widest">Carga de Documentos</h2>
 </div>
-<div class="border-2 border-dashed border-outline-variant/30 rounded-lg h-48 flex flex-col items-center justify-center space-y-stack-sm hover:border-secondary-container/50 transition-all cursor-pointer group">
-<span class="material-symbols-outlined text-4xl text-outline group-hover:text-secondary-container transition-colors">cloud_upload</span>
+<input accept="application/pdf" class="hidden" id="pdf-input" type="file"/>
+<div class="border-2 border-dashed border-outline-variant/30 rounded-lg h-48 flex flex-col items-center justify-center space-y-stack-sm hover:border-secondary-container/50 transition-all cursor-pointer group" id="upload-zone">
+<span class="material-symbols-outlined text-4xl text-outline group-hover:text-secondary-container transition-colors" id="upload-icon">cloud_upload</span>
 <div class="text-center">
-<p class="font-body-lg text-white">Suelta tus archivos PDF aquí</p>
-<p class="font-body-sm text-outline">Máximo 50MB por archivo</p>
+<p class="font-body-lg text-white" id="upload-main-text">Suelta tus archivos PDF aquí</p>
+<p class="font-body-sm text-outline" id="upload-sub-text">Máximo 50MB por archivo</p>
 </div>
 </div>
 <div class="space-y-stack-sm">
@@ -167,57 +183,50 @@
 <span class="font-label-caps text-[10px] text-white/50 uppercase">Manual Prompt</span>
 <span class="material-symbols-outlined text-xs text-white/30">info</span>
 </div>
-<textarea class="w-full bg-[#131314] border border-outline-variant/30 rounded-lg p-stack-md font-body-sm text-on-surface focus:outline-none focus:border-secondary-container focus:ring-1 focus:ring-secondary-container transition-all min-h-[120px] resize-none" placeholder="Describe qué necesitas analizar específicamente..."></textarea>
+<textarea class="w-full bg-[#131314] border border-outline-variant/30 rounded-lg p-stack-md font-body-sm text-on-surface focus:outline-none focus:border-secondary-container focus:ring-1 focus:ring-secondary-container transition-all min-h-[120px] resize-none" id="manual-prompt" placeholder="Describe qué necesitas analizar específicamente (opcional)..."></textarea>
 </div>
-<button class="w-full py-4 bg-primary-container text-on-primary-container font-headline-md text-sm rounded-lg flex items-center justify-center gap-stack-sm hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(188,19,254,0.3)]">
+<div class="flex items-center gap-stack-md">
+<div class="flex-1">
+<span class="font-label-caps text-[10px] text-white/50 uppercase block mb-1 px-1">Número de escenas</span>
+<input class="w-full bg-[#131314] border border-outline-variant/30 rounded-lg p-3 font-body-sm text-on-surface focus:outline-none focus:border-secondary-container focus:ring-1 focus:ring-secondary-container transition-all" id="scene-count" max="20" min="1" type="number" value="5"/>
+</div>
+</div>
+<button class="w-full py-4 bg-primary-container text-on-primary-container font-headline-md text-sm rounded-lg flex items-center justify-center gap-stack-sm hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(188,19,254,0.3)] disabled:opacity-40 disabled:cursor-not-allowed" id="analyze-btn">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">neurology</span>
-                    Analizar con IA
-                </button>
+<span id="analyze-btn-text">Analizar con IA</span>
+</button>
+<div class="hidden" id="analyze-error"></div>
 </div>
 <!-- Analysis Status / Preview Card -->
 <div class="md:col-span-5 flex flex-col gap-gutter">
 <!-- Status Card -->
-<div class="glass-panel rounded-xl p-gutter inner-stroke relative overflow-hidden h-fit">
-<div class="pulse-cyan absolute top-0 left-0 w-full h-[2px]"></div>
+<div class="glass-panel rounded-xl p-gutter inner-stroke relative overflow-hidden h-fit" id="status-card">
+<div class="pulse-cyan absolute top-0 left-0 w-full h-[2px] hidden" id="status-pulse"></div>
 <div class="flex justify-between items-start mb-stack-md">
-<span class="font-label-caps text-label-caps text-secondary-container uppercase">Procesando</span>
-<span class="font-body-sm text-white/40 text-xs">84%</span>
+<span class="font-label-caps text-label-caps text-secondary-container uppercase" id="status-label">En espera</span>
+<span class="font-body-sm text-white/40 text-xs" id="status-pct"></span>
 </div>
 <div class="space-y-stack-sm">
-<h3 class="font-headline-md text-sm text-white">Análisis de Estructura</h3>
-<p class="font-body-sm text-on-surface-variant text-xs">Identificando patrones y jerarquías de datos en tiempo real...</p>
+<h3 class="font-headline-md text-sm text-white" id="status-title">Listo para procesar</h3>
+<p class="font-body-sm text-on-surface-variant text-xs" id="status-desc">Selecciona un PDF y dale a "Analizar con IA".</p>
 </div>
 </div>
-<!-- Executive Summary Preview -->
+<!-- Scenes Preview -->
 <div class="glass-panel rounded-xl p-gutter inner-stroke glow-purple border-[#BC13FE]/20 flex-grow space-y-stack-md bg-gradient-to-br from-surface-container/50 to-transparent">
 <div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps text-primary uppercase">Resumen Ejecutivo</span>
+<span class="font-label-caps text-label-caps text-primary uppercase">Escenas Generadas</span>
 <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
 </div>
-<div class="space-y-stack-sm">
-<div class="w-12 h-1 bg-[#BC13FE] rounded-full"></div>
-<p class="font-body-sm text-on-background italic leading-relaxed">
-                            "El documento presenta una correlación directa entre la eficiencia operativa y la implementación de sistemas descentralizados. Se recomienda priorizar la fase 2 para mitigar riesgos de escalabilidad identificados en la sección 4.3..."
-                        </p>
+<div class="space-y-stack-sm" id="scenes-preview-list">
+<p class="font-body-sm text-on-surface-variant text-xs italic">Aún no hay escenas generadas.</p>
 </div>
-<div class="flex gap-2">
-<span class="px-2 py-1 bg-white/5 border border-white/10 rounded-md font-label-caps text-[9px] text-white/60">RIESGOS: BAJO</span>
-<span class="px-2 py-1 bg-white/5 border border-white/10 rounded-md font-label-caps text-[9px] text-white/60">TEMA: FINTECH</span>
+<button class="hidden w-full py-3 bg-secondary-container text-on-secondary-container font-headline-md text-xs rounded-lg items-center justify-center gap-stack-sm hover:brightness-110 active:scale-95 transition-all" id="send-btn">
+<span class="material-symbols-outlined text-sm">send</span>
+                        Mandar a Storyboard
+                    </button>
 </div>
 </div>
 </div>
-</div>
-<!-- Featured Analysis Visual -->
-<section class="glass-panel rounded-2xl overflow-hidden inner-stroke relative h-48 group">
-<img class="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" data-alt="An abstract 3D visualization of data flows and neural network nodes, featuring glowing neon cyan lines connecting crystalline purple points in a deep black void. The composition uses a shallow depth of field, with soft bokeh orbs creating a sense of immense digital scale. The mood is sophisticated, futuristic, and evokes high-end computational power." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy1KP1UOheTNHKP4ts_OpsCYLpmQjNzo4pvsNXDx3jdNJvar1ci1HfTytTWzLcy_QUiUCaDgXHWbb-RipFSNsYkRLmMxeUV7WzoWYIx4mD7dv6NSXt9LUQvfDBr12_T3_c92LvC1iGzigJBqS3HTBVzztHv4nUCmQ0mAx1wACYsGQhBKic_1pToZNbQgSMBQ8MJ0TdffXZ9kVuDWvFNJ4hHnphwAPfA77RtFcoav_1V4zGMYugQm2cvzFFJwgmsXZyjcRpDEj7T2jb"/>
-<div class="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent p-gutter flex flex-col justify-end">
-<div class="flex items-center gap-stack-sm">
-<div class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></div>
-<span class="font-label-caps text-label-caps text-white">Visualización Activa</span>
-</div>
-<h4 class="font-headline-md text-lg text-white">Mapeo de Dependencias</h4>
-</div>
-</section>
 </main>
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
@@ -238,4 +247,240 @@
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest">Profile</span>
 </button>
 </nav>
+
+<script>
+(async function () {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.js';
+
+  // ---- Ruta a la pantalla de storyboard: ajusta si tu ruta es distinta ----
+  var STORYBOARD_PATH = '../storyboard/index.html';
+
+  // ---- Supabase (mismo patrón que storyboard.html) ----
+  var supabase = null;
+  var supabaseReady = false;
+
+  async function initSupabase() {
+    var cfgRes = await fetch('/api/config');
+    var cfg = await cfgRes.json();
+    if (!cfg.supabaseUrl || !cfg.supabaseAnonKey) {
+      throw new Error('Faltan SUPABASE_URL / SUPABASE_ANON_KEY en Vercel');
+    }
+    var mod = await import('https://esm.sh/@supabase/supabase-js@2');
+    supabase = mod.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+    supabaseReady = true;
+  }
+  initSupabase().catch(function (e) { console.warn('Supabase no disponible todavía:', e); });
+
+  // ---- Elementos ----
+  var pdfInput = document.getElementById('pdf-input');
+  var uploadZone = document.getElementById('upload-zone');
+  var uploadMainText = document.getElementById('upload-main-text');
+  var uploadSubText = document.getElementById('upload-sub-text');
+  var uploadIcon = document.getElementById('upload-icon');
+  var manualPrompt = document.getElementById('manual-prompt');
+  var sceneCountInput = document.getElementById('scene-count');
+  var analyzeBtn = document.getElementById('analyze-btn');
+  var analyzeBtnText = document.getElementById('analyze-btn-text');
+  var analyzeError = document.getElementById('analyze-error');
+
+  var statusPulse = document.getElementById('status-pulse');
+  var statusLabel = document.getElementById('status-label');
+  var statusPct = document.getElementById('status-pct');
+  var statusTitle = document.getElementById('status-title');
+  var statusDesc = document.getElementById('status-desc');
+
+  var scenesPreviewList = document.getElementById('scenes-preview-list');
+  var sendBtn = document.getElementById('send-btn');
+
+  var selectedFile = null;
+  var generatedScenes = null;
+
+  function setStatus(label, pct, title, desc, pulsing) {
+    statusLabel.textContent = label;
+    statusPct.textContent = pct || '';
+    statusTitle.textContent = title;
+    statusDesc.textContent = desc;
+    statusPulse.classList.toggle('hidden', !pulsing);
+  }
+
+  function showError(msg) {
+    analyzeError.textContent = msg;
+    analyzeError.className = 'error-box';
+  }
+  function clearError() {
+    analyzeError.textContent = '';
+    analyzeError.className = 'hidden';
+  }
+
+  // ---- Selección de archivo (click o drag & drop) ----
+  uploadZone.addEventListener('click', function () { pdfInput.click(); });
+
+  uploadZone.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    uploadZone.classList.add('border-secondary-container');
+  });
+  uploadZone.addEventListener('dragleave', function () {
+    uploadZone.classList.remove('border-secondary-container');
+  });
+  uploadZone.addEventListener('drop', function (e) {
+    e.preventDefault();
+    uploadZone.classList.remove('border-secondary-container');
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      setSelectedFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  pdfInput.addEventListener('change', function () {
+    if (pdfInput.files && pdfInput.files[0]) {
+      setSelectedFile(pdfInput.files[0]);
+    }
+  });
+
+  function setSelectedFile(file) {
+    if (file.type !== 'application/pdf') {
+      showError('Solo se aceptan archivos PDF.');
+      return;
+    }
+    clearError();
+    selectedFile = file;
+    uploadIcon.textContent = 'picture_as_pdf';
+    uploadMainText.textContent = file.name;
+    uploadSubText.textContent = (file.size / 1024 / 1024).toFixed(1) + ' MB — listo para analizar';
+  }
+
+  // ---- Leer PDF (extraer texto con pdf.js) ----
+  async function extractPdfText(file) {
+    var arrayBuffer = await file.arrayBuffer();
+    var pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    var fullText = '';
+    for (var i = 1; i <= pdf.numPages; i++) {
+      setStatus('Leyendo PDF', Math.round((i / pdf.numPages) * 100) + '%', 'Extrayendo texto', 'Página ' + i + ' de ' + pdf.numPages + '…', true);
+      var page = await pdf.getPage(i);
+      var content = await page.getTextContent();
+      var pageText = content.items.map(function (it) { return it.str; }).join(' ');
+      fullText += pageText + '\n\n';
+    }
+    return fullText;
+  }
+
+  // ---- Analizar con IA ----
+  analyzeBtn.addEventListener('click', function () {
+    runAnalysis().catch(function (err) {
+      console.error(err);
+      showError('Error: ' + err.message);
+      setStatus('Error', '', 'Algo falló', err.message, false);
+      analyzeBtn.disabled = false;
+      analyzeBtnText.textContent = 'Analizar con IA';
+    });
+  });
+
+  async function runAnalysis() {
+    clearError();
+
+    if (!selectedFile) {
+      showError('Primero selecciona un archivo PDF.');
+      return;
+    }
+    var sceneCount = parseInt(sceneCountInput.value, 10);
+    if (!sceneCount || sceneCount < 1) {
+      showError('Indica un número de escenas válido.');
+      return;
+    }
+
+    analyzeBtn.disabled = true;
+    analyzeBtnText.textContent = 'Procesando…';
+    sendBtn.classList.add('hidden');
+    scenesPreviewList.innerHTML = '<p class="font-body-sm text-on-surface-variant text-xs italic">Generando…</p>';
+
+    // 1. Leer PDF
+    var text = await extractPdfText(selectedFile);
+    if (!text.trim()) {
+      throw new Error('No se pudo extraer texto de ese PDF (¿es un escaneo sin texto seleccionable?).');
+    }
+
+    // 2. Prompt manual opcional, se antepone como contexto extra
+    var extra = manualPrompt.value.trim();
+    var fullText = extra ? ('[Instrucción del usuario: ' + extra + ']\n\n' + text) : text;
+
+    // 3. Analizar con Claude vía /api/analyze
+    setStatus('Analizando', '', 'Consultando a la IA', 'Dividiendo el texto en ' + sceneCount + ' escenas…', true);
+
+    var res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: fullText, sceneCount: sceneCount })
+    });
+
+    if (!res.ok) {
+      var data = await res.json().catch(function () { return {}; });
+      throw new Error((data.error || 'error desconocido').toString().slice(0, 300));
+    }
+
+    var result = await res.json();
+    generatedScenes = result.scenes || [];
+
+    if (generatedScenes.length === 0) {
+      throw new Error('La IA no devolvió escenas.');
+    }
+
+    renderScenesPreview(generatedScenes);
+    setStatus('Listo', '100%', generatedScenes.length + ' escenas generadas', 'Revísalas y mándalas al storyboard.', false);
+
+    analyzeBtn.disabled = false;
+    analyzeBtnText.textContent = 'Analizar con IA';
+    sendBtn.classList.remove('hidden');
+    sendBtn.classList.add('flex');
+  }
+
+  function renderScenesPreview(scenes) {
+    scenesPreviewList.innerHTML = '';
+    scenes.forEach(function (s, i) {
+      var card = document.createElement('div');
+      card.className = 'scene-preview-card';
+      card.innerHTML =
+        '<p class="font-label-caps text-[10px] text-secondary-container uppercase mb-1">ESCENA ' + (i + 1) + ' / ' + (s.label || '') + '</p>' +
+        '<p class="font-body-sm text-white text-xs leading-relaxed">' + (s.script || '') + '</p>';
+      scenesPreviewList.appendChild(card);
+    });
+  }
+
+  // ---- Mandar a Storyboard ----
+  sendBtn.addEventListener('click', function () {
+    sendToStoryboard().catch(function (err) {
+      console.error(err);
+      showError('No se pudo mandar al storyboard: ' + err.message);
+    });
+  });
+
+  async function sendToStoryboard() {
+    if (!generatedScenes || generatedScenes.length === 0) return;
+    if (!supabaseReady) {
+      throw new Error('Supabase no está listo todavía, intenta de nuevo en unos segundos.');
+    }
+
+    sendBtn.disabled = true;
+
+    // Reemplaza las escenas actuales del storyboard por las nuevas generadas.
+    var deleteRes = await supabase.from('scenes').delete().neq('id', '__none__');
+    if (deleteRes.error) throw deleteRes.error;
+
+    var rows = generatedScenes.map(function (s, i) {
+      return {
+        id: 's' + Date.now() + '-' + i,
+        position: i,
+        label: 'SCENE ' + String(i + 1).padStart(2, '0') + ' / ' + (s.label || 'ESCENA'),
+        script: s.script || '',
+        prompt: s.prompt || '',
+        image_url: null,
+        status: 'idle'
+      };
+    });
+
+    var insertRes = await supabase.from('scenes').insert(rows);
+    if (insertRes.error) throw insertRes.error;
+
+    window.location.href = STORYBOARD_PATH;
+  }
+})();
+</script>
 </body></html>
