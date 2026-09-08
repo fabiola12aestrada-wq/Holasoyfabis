@@ -143,7 +143,7 @@
 <!-- Main Content -->
 <main class="flex-1 mt-16 mb-20 px-margin-mobile pt-stack-lg max-w-4xl mx-auto w-full">
 
-<!-- Preview: filmstrip de escenas en orden -->
+<!-- Preview: filmstrip de escenas en orden + video final -->
 <section class="mb-stack-lg">
 <div class="relative glass-panel rounded-xl overflow-hidden shadow-2xl p-stack-md">
 <div class="flex items-center justify-between mb-stack-md">
@@ -162,7 +162,9 @@
 </div>
 </div>
 <!-- Filmstrip de miniaturas en orden -->
-<div id="filmstrip" class="flex gap-2 overflow-x-auto pb-1"></div>
+<div id="filmstrip" class="flex gap-2 overflow-x-auto pb-1 mb-stack-md"></div>
+<!-- Preview del video final (aparece cuando está listo) -->
+<video id="video-preview" class="w-full rounded-lg hidden" controls="" loop=""></video>
 </div>
 </section>
 
@@ -175,7 +177,7 @@
 <section class="flex flex-col sm:flex-row gap-stack-md mt-stack-md">
 <button id="btn-download" class="flex-1 py-4 px-stack-lg rounded-xl bg-primary-container text-on-primary-container font-headline-md flex items-center justify-center gap-stack-sm" disabled="">
 <span class="material-symbols-outlined">download</span>
-<span>Descargar Storyboard</span>
+<span>Descargar Video</span>
 </button>
 <button id="btn-share" class="flex-1 py-4 px-stack-lg rounded-xl glass-panel border border-secondary-container/50 text-secondary-container font-headline-md flex items-center justify-center gap-stack-sm hover:bg-secondary-container/10 transition-all" disabled="">
 <span class="material-symbols-outlined">share</span>
@@ -290,40 +292,92 @@
     });
   }
 
-  // Ensambla todas las imágenes de las escenas (en orden) en un único
-  // lienzo vertical con separadores — este es "el archivo renderizado".
-  async function assembleFinalImage(scenesConImagen) {
+  function sleep(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  }
+
+  // Dibuja una imagen "contain" (con barras negras) dentro del canvas destino
+  function dibujarContain(ctx, img, canvasW, canvasH) {
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvasW, canvasH);
+    const escala = Math.min(canvasW / img.width, canvasH / img.height);
+    const w = img.width * escala;
+    const h = img.height * escala;
+    const x = (canvasW - w) / 2;
+    const y = (canvasH - h) / 2;
+    ctx.drawImage(img, x, y, w, h);
+  }
+
+  var SEGUNDOS_POR_ESCENA = 2.5;
+  var FPS = 30;
+
+  function pickMimeType() {
+    var candidatos = [
+      "video/webm;codecs=vp9",
+      "video/webm;codecs=vp8",
+      "video/webm",
+    ];
+    for (var i = 0; i < candidatos.length; i++) {
+      if (window.MediaRecorder && MediaRecorder.isTypeSupported(candidatos[i])) {
+        return candidatos[i];
+      }
+    }
+    return null;
+  }
+
+  // Ensambla las imágenes de las escenas (en orden) en un VIDEO real,
+  // grabando un <canvas> con MediaRecorder — esto es "el archivo renderizado".
+  async function assembleFinalVideo(scenesConImagen) {
+    if (!window.MediaRecorder) {
+      throw new Error("Tu navegador no soporta grabación de video (MediaRecorder). Probá con Chrome o Edge.");
+    }
+    var mimeType = pickMimeType();
+    if (!mimeType) {
+      throw new Error("Tu navegador no soporta ningún formato de video compatible.");
+    }
+
     const images = await Promise.all(scenesConImagen.map(function (s) { return imageToImageElement(s.image_url); }));
 
-    const targetWidth = 1024;
-    const gap = 12;
-    const heights = images.map(function (img) { return Math.round((img.height / img.width) * targetWidth); });
-    const totalHeight = heights.reduce(function (a, b) { return a + b; }, 0) + gap * (images.length - 1);
-
     const canvas = document.createElement("canvas");
-    canvas.width = targetWidth;
-    canvas.height = totalHeight;
+    canvas.width = 1280;
+    canvas.height = 720;
     const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#050505";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    let y = 0;
-    images.forEach(function (img, i) {
-      ctx.drawImage(img, 0, y, targetWidth, heights[i]);
-      y += heights[i] + gap;
+    // Frame inicial antes de arrancar a grabar
+    dibujarContain(ctx, images[0], canvas.width, canvas.height);
+
+    const stream = canvas.captureStream(FPS);
+    const recorder = new MediaRecorder(stream, { mimeType: mimeType });
+    const chunks = [];
+    recorder.ondataavailable = function (e) {
+      if (e.data && e.data.size > 0) chunks.push(e.data);
+    };
+
+    const grabacionTerminada = new Promise(function (resolve) {
+      recorder.onstop = resolve;
     });
 
-    return new Promise(function (resolve) {
-      canvas.toBlob(function (blob) { resolve(blob); }, "image/png");
-    });
+    recorder.start();
+
+    for (var i = 0; i < images.length; i++) {
+      dibujarContain(ctx, images[i], canvas.width, canvas.height);
+      await sleep(SEGUNDOS_POR_ESCENA * 1000);
+    }
+
+    recorder.stop();
+    await grabacionTerminada;
+
+    return new Blob(chunks, { type: mimeType });
   }
+
+  const videoPreview = document.getElementById("video-preview");
 
   btnDownload.addEventListener("click", function () {
     if (!finalBlob) return;
     const url = URL.createObjectURL(finalBlob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "storyboard-flux-ai.png";
+    a.download = "storyboard-flux-ai.webm";
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -332,14 +386,14 @@
 
   btnShare.addEventListener("click", async function () {
     if (!finalBlob) return;
-    const file = new File([finalBlob], "storyboard-flux-ai.png", { type: "image/png" });
+    const file = new File([finalBlob], "storyboard-flux-ai.webm", { type: finalBlob.type });
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
         await navigator.share({
           files: [file],
           title: "Mi Storyboard — FLUX_AI",
-          text: "Mirá el storyboard que armé con FLUX_AI",
+          text: "Mirá el video que armé con FLUX_AI",
         });
       } catch (e) {
         // el usuario canceló el share u ocurrió un error; no hacemos nada más
@@ -390,14 +444,22 @@
       } else {
         renderTitle.textContent = "¡STORYBOARD COMPLETO!";
         renderSubtitle.textContent = total + " de " + total + " escenas listas";
-        estado.textContent = "Preparando el archivo final…";
+        estado.textContent = "Renderizando video… (esto tarda unos segundos, no cierres la pestaña)";
 
-        const scenesConImagen = scenes.filter(function (s) { return !!s.image_url; });
-        finalBlob = await assembleFinalImage(scenesConImagen);
+        try {
+          const scenesConImagen = scenes.filter(function (s) { return !!s.image_url; });
+          finalBlob = await assembleFinalVideo(scenesConImagen);
 
-        estado.textContent = "";
-        btnDownload.disabled = false;
-        btnShare.disabled = !(navigator.canShare);
+          videoPreview.src = URL.createObjectURL(finalBlob);
+          videoPreview.classList.remove("hidden");
+
+          estado.textContent = "";
+          btnDownload.disabled = false;
+          btnShare.disabled = !(navigator.canShare);
+        } catch (renderErr) {
+          estado.textContent = "No se pudo renderizar el video: " + renderErr.message;
+          estado.className = "error";
+        }
       }
     } catch (err) {
       estado.textContent = "Error al cargar el storyboard: " + err.message;
