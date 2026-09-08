@@ -1,3 +1,4 @@
+[DESIGN (2).md](https://github.com/user-attachments/files/31981254/DESIGN.2.md)
 ---
 name: Obsidian Flux
 colors:
