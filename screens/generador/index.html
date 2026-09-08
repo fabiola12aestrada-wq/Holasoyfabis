@@ -185,7 +185,7 @@
           userId = data && data.user ? data.user.id : null;
         }
 
-        const response = await fetch("/api/generate", {
+        const response = await fetch("/api/generate-simple", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt, user_id: userId }),
@@ -197,7 +197,7 @@
           throw new Error(data.error || "Ocurrió un error al generar la imagen.");
         }
 
-        resultado.innerHTML = `<img src="${data.image}" alt="${prompt}" />`;
+        resultado.innerHTML = `<img src="${data.imageUrl}" alt="${prompt}" />`;
         estado.textContent = "¡Imagen generada con éxito!";
         estado.className = "ok";
       } catch (err) {
