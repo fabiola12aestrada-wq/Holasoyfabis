@@ -86,9 +86,9 @@
 </head>
 <body>
   <div class="container">
-    <div class="avatar">F</div>
-    <h1>Faby</h1>
-    <p class="subtitle">Creadora en FLUX_AI</p>
+    <div class="avatar" id="avatar-letra">–</div>
+    <h1 id="nombre-usuario">Cargando...</h1>
+    <p class="subtitle">Creador/a en FLUX_AI</p>
 
     <div class="stats">
       <div class="stat-card">
@@ -121,11 +121,33 @@
 
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      async function cargarPerfil() {
-        // Total de imágenes generadas
+      async function cargarUsuario() {
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+        if (userError || !user) {
+          document.getElementById("nombre-usuario").textContent = "Invitado";
+          document.getElementById("avatar-letra").textContent = "?";
+          estado.textContent = "No hay sesión activa.";
+          return null;
+        }
+
+        const email = user.email || "Usuario";
+        const nombreMostrado = email.split("@")[0];
+
+        document.getElementById("nombre-usuario").textContent = nombreMostrado;
+        document.getElementById("avatar-letra").textContent = nombreMostrado.charAt(0).toUpperCase();
+
+        return user;
+      }
+
+      async function cargarPerfil(user) {
+        if (!user) return;
+
+        // Total de imágenes generadas por este usuario
         const { count, error: countError } = await supabase
           .from("generated_images")
-          .select("*", { count: "exact", head: true });
+          .select("*", { count: "exact", head: true })
+          .eq("user_id", user.id);
 
         if (countError) {
           estado.textContent = "Error al cargar estadísticas: " + countError.message;
@@ -134,10 +156,11 @@
 
         document.getElementById("total-imagenes").textContent = count ?? 0;
 
-        // Últimas 5 imágenes generadas
+        // Últimas 5 imágenes generadas por este usuario
         const { data, error } = await supabase
           .from("generated_images")
           .select("*")
+          .eq("user_id", user.id)
           .order("created_at", { ascending: false })
           .limit(5);
 
@@ -152,11 +175,11 @@
           return;
         }
 
-        // Días desde la primera imagen generada
-        const primera = data[data.length - 1];
+        // Días desde la primera imagen generada por este usuario
         const { data: primerRegistro } = await supabase
           .from("generated_images")
           .select("created_at")
+          .eq("user_id", user.id)
           .order("created_at", { ascending: true })
           .limit(1)
           .single();
@@ -175,7 +198,7 @@
         });
       }
 
-      cargarPerfil();
+      cargarUsuario().then(cargarPerfil);
 
       // Cerrar sesión
       const btnLogout = document.getElementById("btn-logout");
