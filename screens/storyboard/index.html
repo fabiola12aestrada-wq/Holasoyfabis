@@ -6,7 +6,6 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -106,31 +105,41 @@
             border-right: 1px solid rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         }
-        .bloom-purple {
-            box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
+        .bloom-purple { box-shadow: 0 0 15px rgba(188, 19, 254, 0.2); }
+        .bloom-cyan { box-shadow: 0 0 15px rgba(0, 244, 254, 0.2); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #353436; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #bc13fe; }
+        body { min-height: max(884px, 100dvh); }
+
+        .scene-rail-done { border-color: rgba(188, 19, 254, 0.2); }
+        .scene-rail-pending { border-color: rgba(255,255,255,0.05); }
+        .scene-dot-done { background: #bc13fe; box-shadow: 0 0 15px rgba(188, 19, 254, 0.2); }
+        .scene-dot-pending { background: #353436; border: 1px solid rgba(255,255,255,0.2); }
+
+        .spinner {
+            width: 28px; height: 28px; border-radius: 9999px;
+            border: 3px solid rgba(255,255,255,0.15);
+            border-top-color: #63f7ff;
+            animation: spin 0.8s linear infinite;
         }
-        .bloom-cyan {
-            box-shadow: 0 0 15px rgba(0, 244, 254, 0.2);
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .prompt-textarea {
+            width: 100%;
+            background: transparent;
+            color: inherit;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            resize: vertical;
+            outline: none;
+            border: none;
         }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050505;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #353436;
-            border-radius: 2px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #bc13fe;
-        }
+
+        .error-box { border-color: rgba(255,180,171,0.4); background: rgba(147,0,10,0.15); }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
   </head>
 <body class="bg-[#050505] text-on-background font-body-lg min-h-screen overflow-x-hidden">
 <!-- TopAppBar -->
@@ -144,126 +153,22 @@
 </div>
 </div>
 <div class="flex items-center gap-stack-md">
+<span id="model-badge" class="hidden md:block text-[10px] font-mono text-white/40 border border-white/10 rounded-full px-3 py-1">MODEL: —</span>
 <button class="p-2 text-white/70 hover:text-cyan-400 transition-colors">
-<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined">notifications</span>
 </button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-[#BC13FE]/50">
-<img alt="Profile" data-alt="A highly detailed 3D avatar of a professional creative director, sporting sleek glasses and a modern turtleneck. The lighting is dramatic with purple and cyan rim lights, creating a high-tech obsidian aesthetic that fits a futuristic AI command center theme. The background is a soft, blurred studio environment with tech-focused atmospheric depth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMK7vTkEpDkK8x5ulXbGo1L7moJlYF98nUBLfpmHYVwF3MevwbtfYelioPbrcEmtk7IJpEVoW1xnaQsn_tfochBfF7WzHJUWMETRrSq8Vb3vx80hqeVcgdhAe9gdOre8qRoL5oYe2MqayXafxuFDZ5h_ayTectLuoCNIHnphH3ix8Bnfgbbo-9h0xthSbZpof2T7m-a1NHbgHYqt77or-PORHA9eYXa0GFGZ8-12gUmZK3pyvOQf0PjRJ2El9QbMixbJaBxovwkSJ3"/>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-[#BC13FE]/50 bg-zinc-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-500 text-lg">person</span>
 </div>
 </div>
 </header>
 <!-- Main Content: Vertical Timeline -->
 <main class="pt-24 pb-32 px-margin-mobile max-w-5xl mx-auto flex flex-col gap-stack-lg">
-<!-- Scene 1 -->
-<div class="relative pl-8 border-l-2 border-[#BC13FE]/20 group">
-<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary-container bloom-purple ring-4 ring-[#050505]"></div>
-<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-lg group-hover:border-primary-container/30 transition-all">
-<!-- Script Section -->
-<div class="flex-1 flex flex-col gap-stack-sm">
-<div class="flex items-center justify-between">
-<span class="text-primary-container font-label-caps">SCENE 01 / EXTERIOR / CITY</span>
-<div class="flex gap-2">
-<span class="material-symbols-outlined text-white/30 text-sm cursor-pointer hover:text-white" data-icon="drag_indicator">drag_indicator</span>
-</div>
-</div>
-<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-body-sm font-body-sm focus:border-secondary-container focus:ring-1 focus:ring-secondary-container outline-none min-h-[100px] resize-none transition-all" placeholder="Enter your script here...">EL CIELO SE TORNA VIOLETA MIENTRAS LAS LUCES DE NEÓN DE LA MEGACIUDAD SE ENCIENDEN UNA A UNA. UN VEHÍCULO SILENCIOSO DESLIZA POR LA CALLE MOJADA.</textarea>
-<div class="bg-black/40 rounded p-3 border-l-2 border-secondary-container mt-stack-sm">
-<span class="text-[10px] text-secondary-container font-label-caps block mb-1">AI VISUAL PROMPT</span>
-<code class="text-secondary-fixed-dim font-mono text-xs leading-relaxed">hyper-realistic cinematic wide shot of a futuristic neo-tokyo street at dusk, wet asphalt reflecting purple and cyan neon signs, sleek black electric vehicle hovering 2 inches above ground, volumetric fog, 8k resolution, anamorphic lens.</code>
-</div>
-</div>
-<!-- Visual Reference -->
-<div class="w-full md:w-80 h-48 md:h-auto rounded-lg overflow-hidden relative group/image border border-white/5">
-<img class="w-full h-full object-cover" data-alt="A cinematic wide shot of a futuristic cyberpunk city at dusk. The sky is a deep electric purple, and the streets are illuminated by vibrant cyan and magenta neon signs. The ground is wet asphalt reflecting the neon glow. A sleek, black aerodynamic vehicle is captured mid-motion, gliding through the atmospheric fog. The visual style is sharp, high-contrast, and reminiscent of premium sci-fi cinema." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7oXFemcHXwII-HYVQ7aC3CKRwvNpknxKJBS7QaAeZRr_kMfdOtpf-zihW7Mj5gKpC0GNssDm14QCrFZ8typZXutLx7hhr2uQzBVaU3U6deEthRD3TbEA-1Ok1ILbbLo9CF5nQmarm_8Kpy5dteFx6Ph-upWMQukPHaXeucRFgCJq18FWmVczxIja7Jjem2-b--1Zj4SlAOnHkZujG00VYoweAGau0o61dOlsN1e5DkDTXl_wwXDgs7u2oxgqPTyr5LJMTTHOAP8Pg"/>
-<div class="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity flex items-center justify-center gap-4">
-<button class="w-10 h-10 rounded-full bg-primary-container text-white flex items-center justify-center bloom-purple active:scale-90 transition-transform">
-<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
-</button>
-<button class="w-10 h-10 rounded-full bg-surface-container-highest text-white flex items-center justify-center border border-white/20 active:scale-90 transition-transform">
-<span class="material-symbols-outlined" data-icon="edit">edit</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Scene Action Button -->
-<div class="flex justify-center mt-stack-md">
-<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-caps flex items-center gap-2 bloom-purple active:scale-95 transition-all">
-<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
-                    Generar Visuales
-                </button>
-</div>
-</div>
-<!-- Scene 2 -->
-<div class="relative pl-8 border-l-2 border-white/5 group">
-<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-surface-container-highest border border-white/20 ring-4 ring-[#050505]"></div>
-<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-lg group-hover:border-secondary-container/30 transition-all opacity-80 hover:opacity-100">
-<div class="flex-1 flex flex-col gap-stack-sm">
-<div class="flex items-center justify-between">
-<span class="text-white/40 font-label-caps">SCENE 02 / INTERIOR / APARTMENT</span>
-<div class="flex gap-2">
-<span class="material-symbols-outlined text-white/30 text-sm cursor-pointer hover:text-white" data-icon="drag_indicator">drag_indicator</span>
-</div>
-</div>
-<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-body-sm font-body-sm focus:border-secondary-container focus:ring-1 focus:ring-secondary-container outline-none min-h-[100px] resize-none transition-all" placeholder="Enter your script here...">UN HOMBRE OBSERVA LA CIUDAD DESDE SU VENTANA. SU ROSTRO ESTÁ PARCIALMENTE ILUMINADO POR EL RESPLANDOR DE UNA PANTALLA HOLOGRÁFICA.</textarea>
-<div class="bg-black/40 rounded p-3 border-l-2 border-white/20 mt-stack-sm">
-<span class="text-[10px] text-white/40 font-label-caps block mb-1">AI VISUAL PROMPT</span>
-<code class="text-white/60 font-mono text-xs leading-relaxed">close up portrait of a man, moody lighting, cyan holographic interface reflecting in his eyes, background blurred cityscape, high detail skin textures, unreal engine 5 render style.</code>
-</div>
-</div>
-<div class="w-full md:w-80 h-48 md:h-auto rounded-lg overflow-hidden bg-surface-container flex items-center justify-center border border-dashed border-white/10 group/empty">
-<div class="text-center flex flex-col items-center gap-2">
-<span class="material-symbols-outlined text-white/20 text-4xl" data-icon="image">image</span>
-<span class="text-white/20 font-label-caps text-[10px]">PREVIEW PENDING</span>
-</div>
-</div>
-</div>
-<div class="flex justify-center mt-stack-md">
-<button class="border border-secondary-container text-secondary-container px-6 py-2 rounded-full font-label-caps flex items-center gap-2 bloom-cyan active:scale-95 transition-all">
-<span class="material-symbols-outlined text-sm" data-icon="play_circle">play_circle</span>
-                    Generar Visuales
-                </button>
-</div>
-</div>
-<!-- Scene 3 -->
-<div class="relative pl-8 border-l-2 border-white/5 group">
-<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-surface-container-highest border border-white/20 ring-4 ring-[#050505]"></div>
-<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-lg group-hover:border-primary-container/30 transition-all">
-<div class="flex-1 flex flex-col gap-stack-sm">
-<div class="flex items-center justify-between">
-<span class="text-primary-container font-label-caps">SCENE 03 / EXTERIOR / ROOFTOP</span>
-<div class="flex gap-2">
-<span class="material-symbols-outlined text-white/30 text-sm cursor-pointer hover:text-white" data-icon="drag_indicator">drag_indicator</span>
-</div>
-</div>
-<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-body-sm font-body-sm focus:border-secondary-container focus:ring-1 focus:ring-secondary-container outline-none min-h-[100px] resize-none transition-all" placeholder="Enter your script here...">DOS FIGURAS EN CAPUCHADAS SE ENCUENTRAN BAJO LA LLUVIA CONSTANTE. EL INTERCAMBIO ES RÁPIDO.</textarea>
-<div class="bg-black/40 rounded p-3 border-l-2 border-secondary-container mt-stack-sm">
-<span class="text-[10px] text-secondary-container font-label-caps block mb-1">AI VISUAL PROMPT</span>
-<code class="text-secondary-fixed-dim font-mono text-xs leading-relaxed">low angle shot, two mysterious figures in tech-wear cloaks, heavy rain, dramatic backlighting from a drone hovering above, cinematic noir aesthetic, high grain, sharp contrast.</code>
-</div>
-</div>
-<div class="w-full md:w-80 h-48 md:h-auto rounded-lg overflow-hidden relative group/image border border-white/5">
-<img class="w-full h-full object-cover" data-alt="A dark and moody cinematic shot of two figures in futuristic tech-wear standing on a rainy rooftop. The scene is lit by a single bright spotlight from above, creating long shadows and highlighting the falling raindrops like diamonds. The aesthetic is industrial noir with deep obsidian tones and cold blue highlights. The atmosphere is tense and mysterious, captured with a grainy, filmic texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNsjRMwS4-CdouJieDR7y3PmweEIoEFNNUlQHaeEu7I9tFuizwYHezlO9ff7-LM2IGUt_BFfM0RPkwYYSfg-ifjPEkTZkn6xuSvhaSKVuA_v54zL_eYi0pECV6hIL07H0lByVmVC29gY_rU7tQzG3_6FLntNjmTMFAQl-SPlS18iIgbttyRT2dxB-reOvFAt7yGJX68xIO5dJxOS5Of8e-Qa4qa2Fopy5p800CBSncHK_nEu-OLDYpf0yGZGtJdWgCmoCjBkBmB1xn"/>
-<div class="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity flex items-center justify-center gap-4">
-<button class="w-10 h-10 rounded-full bg-primary-container text-white flex items-center justify-center bloom-purple active:scale-90 transition-transform">
-<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
-</button>
-<button class="w-10 h-10 rounded-full bg-surface-container-highest text-white flex items-center justify-center border border-white/20 active:scale-90 transition-transform">
-<span class="material-symbols-outlined" data-icon="edit">edit</span>
-</button>
-</div>
-</div>
-</div>
-<div class="flex justify-center mt-stack-md">
-<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-caps flex items-center gap-2 bloom-purple active:scale-95 transition-all">
-<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
-                    Generar Visuales
-                </button>
-</div>
-</div>
-<!-- Add New Scene Placeholder -->
-<button class="w-full py-8 border-2 border-dashed border-white/10 rounded-xl hover:border-secondary-container/50 hover:bg-secondary-container/5 transition-all group">
+<div id="scenes-container" class="flex flex-col gap-stack-lg"></div>
+<!-- Add New Scene -->
+<button id="add-scene-btn" class="w-full py-8 border-2 border-dashed border-white/10 rounded-xl hover:border-secondary-container/50 hover:bg-secondary-container/5 transition-all group">
 <div class="flex flex-col items-center gap-2">
-<span class="material-symbols-outlined text-white/20 group-hover:text-secondary-container transition-colors" data-icon="add_circle">add_circle</span>
+<span class="material-symbols-outlined text-white/20 group-hover:text-secondary-container transition-colors">add_circle</span>
 <span class="text-white/30 font-label-caps group-hover:text-white transition-colors">Añadir Nueva Escena</span>
 </div>
 </button>
@@ -271,20 +176,315 @@
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
 <div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
-<span class="material-symbols-outlined" data-icon="video_library">video_library</span>
+<span class="material-symbols-outlined">video_library</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
 </div>
 <div class="flex flex-col items-center justify-center text-[#BC13FE] drop-shadow-[0_0_8px_rgba(188,19,254,0.5)] active:scale-90 transition-transform duration-150 cursor-pointer">
-<span class="material-symbols-outlined" data-icon="add_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
 </div>
 <div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
-<span class="material-symbols-outlined" data-icon="folder_copy">folder_copy</span>
+<span class="material-symbols-outlined">folder_copy</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Assets</span>
 </div>
 <div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
-<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="material-symbols-outlined">account_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
 </div>
 </nav>
+
+<script>
+(function () {
+  // ---- Config heredada de la pantalla de Ajustes (config.html) ----
+  var STORAGE_KEY_CONFIG = 'fluxai_config_v1';
+  var STORAGE_KEY_SCENES = 'fluxai_storyboard_v1';
+
+  var DEFAULT_FALLBACK = [
+    'black-forest-labs/FLUX.1-schnell',
+    'stabilityai/stable-diffusion-xl-base-1.0',
+    'black-forest-labs/FLUX.1-dev',
+    'stabilityai/stable-diffusion-3.5-large'
+  ];
+
+  function loadAppConfig() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY_CONFIG);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) { return null; }
+  }
+
+  var appConfig = loadAppConfig();
+
+  var MODEL_MAP = {
+    'flux-schnell': 'black-forest-labs/FLUX.1-schnell',
+    'sdxl': 'stabilityai/stable-diffusion-xl-base-1.0',
+    'flux-dev': 'black-forest-labs/FLUX.1-dev',
+    'sd35': 'stabilityai/stable-diffusion-3.5-large'
+  };
+
+  function getFallbackOrder() {
+    if (!appConfig || !appConfig.model) return DEFAULT_FALLBACK;
+    var primary = MODEL_MAP[appConfig.model];
+    if (!primary) return DEFAULT_FALLBACK;
+    var rest = DEFAULT_FALLBACK.filter(function (m) { return m !== primary; });
+    return [primary].concat(rest);
+  }
+
+  var modelBadge = document.getElementById('model-badge');
+  modelBadge.textContent = 'MODEL: ' + getFallbackOrder()[0].split('/')[1];
+
+  // ---- Escenas ----
+  var DEFAULT_SCENES = [
+    {
+      id: 's1',
+      label: 'SCENE 01 / EXTERIOR / CITY',
+      script: 'EL CIELO SE TORNA VIOLETA MIENTRAS LAS LUCES DE NEÓN DE LA MEGACIUDAD SE ENCIENDEN UNA A UNA. UN VEHÍCULO SILENCIOSO DESLIZA POR LA CALLE MOJADA.',
+      prompt: 'hyper-realistic cinematic wide shot of a futuristic neo-tokyo street at dusk, wet asphalt reflecting purple and cyan neon signs, sleek black electric vehicle hovering 2 inches above ground, volumetric fog, 8k resolution, anamorphic lens.',
+      imageUrl: null,
+      status: 'idle',
+      error: null
+    },
+    {
+      id: 's2',
+      label: 'SCENE 02 / INTERIOR / APARTMENT',
+      script: 'UN HOMBRE OBSERVA LA CIUDAD DESDE SU VENTANA. SU ROSTRO ESTÁ PARCIALMENTE ILUMINADO POR EL RESPLANDOR DE UNA PANTALLA HOLOGRÁFICA.',
+      prompt: 'close up portrait of a man, moody lighting, cyan holographic interface reflecting in his eyes, background blurred cityscape, high detail skin textures, unreal engine 5 render style.',
+      imageUrl: null,
+      status: 'idle',
+      error: null
+    },
+    {
+      id: 's3',
+      label: 'SCENE 03 / EXTERIOR / ROOFTOP',
+      script: 'DOS FIGURAS ENCAPUCHADAS SE ENCUENTRAN BAJO LA LLUVIA CONSTANTE. EL INTERCAMBIO ES RÁPIDO.',
+      prompt: 'low angle shot, two mysterious figures in tech-wear cloaks, heavy rain, dramatic backlighting from a drone hovering above, cinematic noir aesthetic, high grain, sharp contrast.',
+      imageUrl: null,
+      status: 'idle',
+      error: null
+    }
+  ];
+
+  function loadScenes() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY_SCENES);
+      if (!raw) return DEFAULT_SCENES;
+      var parsed = JSON.parse(raw);
+      // Las imágenes son Object URLs de sesiones pasadas y ya no son válidas: se limpian.
+      parsed.forEach(function (s) { s.imageUrl = null; if (s.status === 'done') s.status = 'idle'; });
+      return parsed;
+    } catch (e) { return DEFAULT_SCENES; }
+  }
+
+  var scenes = loadScenes();
+  var sceneCounter = scenes.length;
+
+  function persistScenes() {
+    try {
+      var toSave = scenes.map(function (s) {
+        return { id: s.id, label: s.label, script: s.script, prompt: s.prompt, status: 'idle', error: null, imageUrl: null };
+      });
+      localStorage.setItem(STORAGE_KEY_SCENES, JSON.stringify(toSave));
+    } catch (e) { console.warn('No se pudo guardar el storyboard', e); }
+  }
+
+  var container = document.getElementById('scenes-container');
+
+  function sceneIndexLabel(i) {
+    return 'SCENE ' + String(i + 1).padStart(2, '0');
+  }
+
+  function render() {
+    container.innerHTML = '';
+    scenes.forEach(function (scene, idx) {
+      var railClass = scene.status === 'done' ? 'scene-rail-done' : 'scene-rail-pending';
+      var dotClass = scene.status === 'done' ? 'scene-dot-done' : 'scene-dot-pending';
+      var labelColor = scene.status === 'done' ? 'text-primary-container' : 'text-white/40';
+
+      var wrap = document.createElement('div');
+      wrap.className = 'relative pl-8 border-l-2 ' + railClass + ' group';
+      wrap.innerHTML =
+        '<div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full ' + dotClass + ' ring-4 ring-[#050505]"></div>' +
+        '<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-lg transition-all">' +
+          '<div class="flex-1 flex flex-col gap-stack-sm">' +
+            '<div class="flex items-center justify-between">' +
+              '<span class="' + labelColor + ' font-label-caps scene-label">' + scene.label + '</span>' +
+              '<div class="flex gap-2 items-center">' +
+                (scenes.length > 1 ? '<span class="material-symbols-outlined text-white/30 text-sm cursor-pointer hover:text-red-400 delete-scene-btn" title="Eliminar escena">delete</span>' : '') +
+              '</div>' +
+            '</div>' +
+            '<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-3 text-body-sm font-body-sm focus:border-secondary-container focus:ring-1 focus:ring-secondary-container outline-none min-h-[100px] resize-none transition-all script-input" placeholder="Escribe el guion de la escena...">' + scene.script + '</textarea>' +
+            '<div class="bg-black/40 rounded p-3 border-l-2 ' + (scene.status === 'done' ? 'border-secondary-container' : 'border-white/20') + ' mt-stack-sm">' +
+              '<div class="flex items-center justify-between mb-1">' +
+                '<span class="text-[10px] ' + (scene.status === 'done' ? 'text-secondary-container' : 'text-white/40') + ' font-label-caps">AI VISUAL PROMPT</span>' +
+                '<span class="material-symbols-outlined text-white/30 text-xs cursor-pointer hover:text-white toggle-prompt-btn" title="Editar prompt">edit</span>' +
+              '</div>' +
+              '<textarea class="prompt-textarea ' + (scene.status === 'done' ? 'text-secondary-fixed-dim' : 'text-white/60') + '" rows="3">' + scene.prompt + '</textarea>' +
+            '</div>' +
+            (scene.error ? '<div class="error-box border rounded-lg p-3 text-xs text-red-200 mt-stack-sm">' + scene.error + '</div>' : '') +
+          '</div>' +
+          '<div class="w-full md:w-80 h-48 md:h-auto rounded-lg overflow-hidden relative group/image border border-white/5 flex items-center justify-center bg-surface-container image-slot">' +
+            renderImageSlot(scene) +
+          '</div>' +
+        '</div>' +
+        '<div class="flex justify-center mt-stack-md">' +
+          '<button class="generate-btn px-6 py-2 rounded-full font-label-caps flex items-center gap-2 active:scale-95 transition-all ' +
+            (scene.status === 'done'
+              ? 'border border-secondary-container text-secondary-container bloom-cyan'
+              : 'bg-primary-container text-on-primary-container bloom-purple') + '"' +
+            (scene.status === 'loading' ? ' disabled' : '') + '>' +
+            '<span class="material-symbols-outlined text-sm">' + (scene.status === 'loading' ? 'hourglass_top' : (scene.status === 'done' ? 'refresh' : 'auto_awesome')) + '</span>' +
+            (scene.status === 'loading' ? 'Generando…' : (scene.status === 'done' ? 'Regenerar' : 'Generar Visuales')) +
+          '</button>' +
+        '</div>';
+
+      // ---- listeners ----
+      var scriptInput = wrap.querySelector('.script-input');
+      scriptInput.addEventListener('input', function () {
+        scene.script = scriptInput.value;
+        persistScenes();
+      });
+
+      var promptInput = wrap.querySelector('.prompt-textarea');
+      promptInput.addEventListener('input', function () {
+        scene.prompt = promptInput.value;
+        persistScenes();
+      });
+
+      var toggleBtn = wrap.querySelector('.toggle-prompt-btn');
+      toggleBtn.addEventListener('click', function () {
+        promptInput.focus();
+      });
+
+      var genBtn = wrap.querySelector('.generate-btn');
+      genBtn.addEventListener('click', function () {
+        generateVisual(scene);
+      });
+
+      var deleteBtn = wrap.querySelector('.delete-scene-btn');
+      if (deleteBtn) {
+        deleteBtn.addEventListener('click', function () {
+          scenes = scenes.filter(function (s) { return s.id !== scene.id; });
+          persistScenes();
+          render();
+        });
+      }
+
+      container.appendChild(wrap);
+    });
+
+    // Reetiquetar visualmente el orden (Scene 01, 02, 03...) sin tocar el texto libre después del "/"
+    container.querySelectorAll('.scene-label').forEach(function (el, i) {
+      var parts = el.textContent.split('/');
+      parts[0] = sceneIndexLabel(i) + ' ';
+      el.textContent = parts.join('/');
+    });
+  }
+
+  function renderImageSlot(scene) {
+    if (scene.status === 'loading') {
+      return '<div class="flex flex-col items-center gap-2"><div class="spinner"></div><span class="text-white/30 font-label-caps text-[10px]">GENERANDO…</span></div>';
+    }
+    if (scene.imageUrl) {
+      return '<img class="w-full h-full object-cover" src="' + scene.imageUrl + '"/>' +
+        '<div class="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity flex items-center justify-center gap-4">' +
+          '<span class="material-symbols-outlined text-white/70 text-sm">visibility</span>' +
+        '</div>';
+    }
+    return '<div class="text-center flex flex-col items-center gap-2">' +
+      '<span class="material-symbols-outlined text-white/20 text-4xl">image</span>' +
+      '<span class="text-white/20 font-label-caps text-[10px]">PREVIEW PENDING</span>' +
+    '</div>';
+  }
+
+  // ---- Generación real vía Hugging Face Inference API (sin API key) ----
+  function buildPrompt(scene) {
+    var p = scene.prompt.trim();
+    if (appConfig && appConfig.toggles && appConfig.toggles.promptEnhance) {
+      p += ', best quality, highly detailed, sharp focus';
+    }
+    return p;
+  }
+
+  function callHuggingFace(modelId, prompt) {
+    var body = { inputs: prompt, options: { wait_for_model: true } };
+    if (appConfig) {
+      body.parameters = {
+        num_inference_steps: appConfig.steps || 30,
+        guidance_scale: appConfig.guidance || 7.5
+      };
+    }
+    return fetch('https://api-inference.huggingface.co/models/' + modelId, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      if (!res.ok) {
+        return res.text().then(function (t) {
+          throw new Error('HTTP ' + res.status + ' (' + modelId + '): ' + t.slice(0, 200));
+        });
+      }
+      var contentType = res.headers.get('content-type') || '';
+      if (contentType.indexOf('application/json') !== -1) {
+        // A veces HF responde JSON con error o con "estimated_time" mientras carga el modelo
+        return res.json().then(function (data) {
+          throw new Error('Modelo no devolvió imagen (' + modelId + '): ' + JSON.stringify(data).slice(0, 200));
+        });
+      }
+      return res.blob();
+    });
+  }
+
+  function generateWithFallback(prompt, modelList, i) {
+    i = i || 0;
+    if (i >= modelList.length) {
+      return Promise.reject(new Error('Todos los modelos fallaron o no están disponibles sin token.'));
+    }
+    return callHuggingFace(modelList[i], prompt).catch(function (err) {
+      console.warn('Fallo con ' + modelList[i] + ', probando siguiente…', err.message);
+      return generateWithFallback(prompt, modelList, i + 1);
+    });
+  }
+
+  function generateVisual(scene) {
+    scene.status = 'loading';
+    scene.error = null;
+    render();
+
+    var prompt = buildPrompt(scene);
+    var modelList = getFallbackOrder();
+
+    generateWithFallback(prompt, modelList)
+      .then(function (blob) {
+        if (scene.imageUrl) URL.revokeObjectURL(scene.imageUrl);
+        scene.imageUrl = URL.createObjectURL(blob);
+        scene.status = 'done';
+        render();
+      })
+      .catch(function (err) {
+        scene.status = 'idle';
+        scene.error = 'No se pudo generar la imagen: ' + err.message + '. Puede ser límite de uso sin token, o el modelo requiere autenticación — intenta de nuevo en unos segundos.';
+        render();
+      });
+  }
+
+  // ---- Añadir nueva escena ----
+  document.getElementById('add-scene-btn').addEventListener('click', function () {
+    sceneCounter += 1;
+    scenes.push({
+      id: 's' + Date.now(),
+      label: sceneIndexLabel(scenes.length) + ' / NUEVA ESCENA',
+      script: '',
+      prompt: '',
+      imageUrl: null,
+      status: 'idle',
+      error: null
+    });
+    persistScenes();
+    render();
+  });
+
+  render();
+})();
+</script>
 </body></html>
