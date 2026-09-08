@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -133,7 +132,7 @@
 <header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.1)]">
 <div class="flex items-center gap-3">
 <div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-primary-container/30">
-<img alt="User Profile" class="w-full h-full object-cover" data-alt="A high-end cinematic profile portrait of a creative professional in a dark studio setting. The lighting is moody with subtle purple rim light, reflecting a sophisticated AI artist persona. The overall aesthetic is clean, modern, and high-fidelity, consistent with a premium digital dashboard environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9ROpF82hFffPZQL0-aBRqZdlveiPxKxkacuXYfv1IlZBgxhLttD_Zu73XhzhR3V0ciAjztGyIScnhCkqMm0E8UZefnIgZlS6kMhe-NGUN4tY1TgeIB_nO2b-JTzL0qP0uPQYf-Tp5iyJ3nGPVSIy36WpjK0pp1rvW5uGKQBtyitKa25uW_Ek6arMTAlhp-npROa5beWVrHn1l23WJ3CUlefKAn7lWSw8mxcfG7Gw_f-vcHg-UVL4bOOkpj3ZedOrYSF-c4fW0Pqdi"/>
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9ROpF82hFffPZQL0-aBRqZdlveiPxKxkacuXYfv1IlZBgxhLttD_Zu73XhzhR3V0ciAjztGyIScnhCkqMm0E8UZefnIgZlS6kMhe-NGUN4tY1TgeIB_nO2b-JTzL0qP0uPQYf-Tp5iyJ3nGPVSIy36WpjK0pp1rvW5uGKQBtyitKa25uW_Ek6arMTAlhp-npROa5beWVrHn1l23WJ3CUlefKAn7lWSw8mxcfG7Gw_f-vcHg-UVL4bOOkpj3ZedOrYSF-c4fW0Pqdi"/>
 </div>
 <span class="font-['Space_Grotesk'] tracking-tighter text-xl font-bold bg-gradient-to-r from-[#BC13FE] to-cyan-400 bg-clip-text text-transparent">FLUX_AI</span>
 </div>
@@ -148,7 +147,7 @@
 <h1 class="font-display-lg text-display-lg text-on-background mb-unit">Dashboard</h1>
 <p class="text-on-surface-variant font-body-sm">Bienvenido de nuevo, creador. Tienes 3 procesos activos.</p>
 </div>
-<button class="flex items-center justify-center gap-stack-sm px-6 py-3 rounded-xl bg-gradient-to-r from-[#BC13FE] to-[#00f4fe] text-white font-headline-md text-body-lg active:scale-95 transition-transform duration-200 shadow-[0_0_20px_rgba(188,19,254,0.3)]">
+<button id="btnCrearNuevo" class="flex items-center justify-center gap-stack-sm px-6 py-3 rounded-xl bg-gradient-to-r from-[#BC13FE] to-[#00f4fe] text-white font-headline-md text-body-lg active:scale-95 transition-transform duration-200 shadow-[0_0_20px_rgba(188,19,254,0.3)]">
 <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
 <span>Crear nuevo</span>
 </button>
@@ -162,11 +161,11 @@
                 </h2>
 <span class="text-label-caps font-label-caps text-secondary-container">3 ACTIVOS</span>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-stack-md">
+<div id="enProcesoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-stack-md">
 <!-- Progress Card 1 -->
 <div class="glass-card rounded-xl p-stack-md flex flex-col gap-stack-sm group hover:border-primary/50 transition-colors">
 <div class="relative aspect-video rounded-lg overflow-hidden bg-surface-container-lowest">
-<img class="w-full h-full object-cover opacity-60" data-alt="Abstract fluid 3D waves with neon cyan and deep violet light trails, captured in a high-shutter speed cinematic frame. The composition is sleek and futuristic, representing an AI-generated video in the middle of a complex rendering process. Dark obsidian background with vibrant digital refractions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw9Z_AbBQ9PhUP3tpYntM5tbMTKDIm40-Wzv96Xan3ZvjXusUNSeng-0gSDFpQRNCqg0PKh2Rk0eqxGir2wOD6-UYi7Vt3ofN-gqCYMSIo0lOMwVhRFXMcd5nMy8ylYE9dxPF3MoTWByv49l9DBTsJ6Zc5brwYGs51woOYamhbTrTH7cJoCy11a7knnilrQNWXtCNILA46OIcZHKwvrKN8iJOGV8vKEYTUgmk6jsPL5nz5xOdetl_fu1uwQ7b1sl6woyXmEmk8TivZ"/>
+<img class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw9Z_AbBQ9PhUP3tpYntM5tbMTKDIm40-Wzv96Xan3ZvjXusUNSeng-0gSDFpQRNCqg0PKh2Rk0eqxGir2wOD6-UYi7Vt3ofN-gqCYMSIo0lOMwVhRFXMcd5nMy8ylYE9dxPF3MoTWByv49l9DBTsJ6Zc5brwYGs51woOYamhbTrTH7cJoCy11a7knnilrQNWXtCNILA46OIcZHKwvrKN8iJOGV8vKEYTUgmk6jsPL5nz5xOdetl_fu1uwQ7b1sl6woyXmEmk8TivZ"/>
 <div class="absolute inset-0 flex items-center justify-center">
 <span class="text-display-lg font-headline-md text-white">75%</span>
 </div>
@@ -182,7 +181,7 @@
 <!-- Progress Card 2 -->
 <div class="glass-card rounded-xl p-stack-md flex flex-col gap-stack-sm group hover:border-primary/50 transition-colors">
 <div class="relative aspect-video rounded-lg overflow-hidden bg-surface-container-lowest">
-<img class="w-full h-full object-cover opacity-60" data-alt="Ethereal digital forest with bioluminescent plants and floating spores, rendered in a hyper-realistic cinematic style. Soft glowing particles fill the air, creating a dreamlike atmosphere. The lighting is dominated by electric blue and soft magenta, emphasizing a high-tech creative vision being processed by AI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9PiFe6L_yHPQC2xzgtcjrluTs_cnJlvlz2ErX5sGQUVnxZU-VSOx5XVN4GodGao2wTiGwI63AoIGJGSJsSRL5fWkRQaScsvlxSO1BcNBD4KZ1KsGfOy66Y1HPLKBHvt1wqKU2iyryr_7R9iA61yJRkd5PoDSiIOIN3yCmoEJHleNH85B8VPePsumCVjFhdAGu1TBBw0Q_z9jSSVUwit2yAGlMMGeo0JaC_5scwziqRhlaWC5mhGRZY2fp3Zv3gG7vIV3JkkF_IpPx"/>
+<img class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9PiFe6L_yHPQC2xzgtcjrluTs_cnJlvlz2ErX5sGQUVnxZU-VSOx5XVN4GodGao2wTiGwI63AoIGJGSJsSRL5fWkRQaScsvlxSO1BcNBD4KZ1KsGfOy66Y1HPLKBHvt1wqKU2iyryr_7R9iA61yJRkd5PoDSiIOIN3yCmoEJHleNH85B8VPePsumCVjFhdAGu1TBBw0Q_z9jSSVUwit2yAGlMMGeo0JaC_5scwziqRhlaWC5mhGRZY2fp3Zv3gG7vIV3JkkF_IpPx"/>
 <div class="absolute inset-0 flex items-center justify-center">
 <span class="text-display-lg font-headline-md text-white">32%</span>
 </div>
@@ -198,7 +197,7 @@
 <!-- Progress Card 3 -->
 <div class="glass-card rounded-xl p-stack-md flex flex-col gap-stack-sm group hover:border-primary/50 transition-colors">
 <div class="relative aspect-video rounded-lg overflow-hidden bg-surface-container-lowest">
-<img class="w-full h-full object-cover opacity-60" data-alt="Macro shot of intricate retro-futuristic circuitry glowing with internal golden and cyan light. The focus is sharp on the central processors while the edges blur into a cinematic bokeh. Representing deep learning computation, the image exudes a sense of complex AI architecture and high-speed data flow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOMFehpXYyxzfYq3fPr0mU2ivcfiGCxFi2k_WZiVUYV31mGQ8p-QpUftLy2rPQDlrJCKypf7rRFtjsWczQxFWp4ZGwQXBD9NRL4Y-8rb9edxAzhCJWkw5rxgnMc0ts5kXuzllq1sPyPtc2gn2b2qx6LVa6fD5fiGXlPbrJCkV3ilZk1zyJfC4j6WGNJpqQm85CNk2Wb7IiT-LLAmueD8wIWzUMRezH0bcyWS_KetWysoErEdruilO5wdsV4x4XUnVYnzPRybMBXpLW"/>
+<img class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOMFehpXYyxzfYq3fPr0mU2ivcfiGCxFi2k_WZiVUYV31mGQ8p-QpUftLy2rPQDlrJCKypf7rRFtjsWczQxFWp4ZGwQXBD9NRL4Y-8rb9edxAzhCJWkw5rxgnMc0ts5kXuzllq1sPyPtc2gn2b2qx6LVa6fD5fiGXlPbrJCkV3ilZk1zyJfC4j6WGNJpqQm85CNk2Wb7IiT-LLAmueD8wIWzUMRezH0bcyWS_KetWysoErEdruilO5wdsV4x4XUnVYnzPRybMBXpLW"/>
 <div class="absolute inset-0 flex items-center justify-center">
 <span class="text-display-lg font-headline-md text-white">91%</span>
 </div>
@@ -223,7 +222,7 @@
 <!-- Recent Item 1 -->
 <div class="flex flex-col gap-stack-sm cursor-pointer group">
 <div class="relative aspect-[3/4] rounded-xl overflow-hidden glass-card border-none group-hover:bloom-purple transition-all duration-300">
-<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Vast cosmic nebula with swirling clouds of dark matter and brilliant stars, rendered in a high-contrast cinematic style. Deep purples, rich blacks, and piercing white starlight create a sense of infinite scale and technological wonder. A perfect visual representation of the creative potential of AI video." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClk5mG2y6wwpiuaGTTfi-zp9_wW3AYo_VGr2ytOBpcCRF0PV_gxJY6qksKDsQ_Cp5q6Cz-TJyfCc-LJq5vBa-idlAOw54nLtk2bOzn0Zg-OOyPHLBvrxzglBx4sTzbMsx34elx4LAvInfhlO3D4fP_Pz2fu9YAI_eQDSRoARaaaWrlRLeqlx4YIpdWFZNQYnn8ef_LlfYXxAMpYjYokbb4ygcfgf7x1Q3A_gyM0-sgyGuqk5LX8o3mxe-7c1AaiVXYA7CPoQbREm1J"/>
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClk5mG2y6wwpiuaGTTfi-zp9_wW3AYo_VGr2ytOBpcCRF0PV_gxJY6qksKDsQ_Cp5q6Cz-TJyfCc-LJq5vBa-idlAOw54nLtk2bOzn0Zg-OOyPHLBvrxzglBx4sTzbMsx34elx4LAvInfhlO3D4fP_Pz2fu9YAI_eQDSRoARaaaWrlRLeqlx4YIpdWFZNQYnn8ef_LlfYXxAMpYjYokbb4ygcfgf7x1Q3A_gyM0-sgyGuqk5LX8o3mxe-7c1AaiVXYA7CPoQbREm1J"/>
 <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[10px] font-label-caps border border-white/10">00:15</div>
 </div>
 <div class="px-1">
@@ -234,7 +233,7 @@
 <!-- Recent Item 2 -->
 <div class="flex flex-col gap-stack-sm cursor-pointer group">
 <div class="relative aspect-[3/4] rounded-xl overflow-hidden glass-card border-none group-hover:bloom-purple transition-all duration-300">
-<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A minimalist architectural structure of glass and white concrete set against a perfectly clear twilight sky. The scene is illuminated by soft internal lights casting geometric shadows. The aesthetic is extremely clean, modern, and futuristic, mirroring the high-end UI design with sharp lines and glass surfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAah0a8YXABX4WrSGVtgx6MpkFHx98Uh7aygHwH-E25_adHPBKoVM_62pyd343i9MF1F3eZ6WGkJSsujyWPGwAhVJJ3aZHaNI0xAsBvMcLDXnB1AeXWvaEZTj37CvO5auWUWOH5dG6a8WbuBAc_BpbxJGEZFuuYmVcRYAYyIRs82NLhcX2rL9lgBCakFI8MiWWsOQjp_TTRuY5RWbaUAX9h5CtMFM5wpGu-EWdf9Nbo3c_Zc7N0Vx03FV3US6zwPZZ3fYPUEMqrwrc3"/>
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAah0a8YXABX4WrSGVtgx6MpkFHx98Uh7aygHwH-E25_adHPBKoVM_62pyd343i9MF1F3eZ6WGkJSsujyWPGwAhVJJ3aZHaNI0xAsBvMcLDXnB1AeXWvaEZTj37CvO5auWUWOH5dG6a8WbuBAc_BpbxJGEZFuuYmVcRYAYyIRs82NLhcX2rL9lgBCakFI8MiWWsOQjp_TTRuY5RWbaUAX9h5CtMFM5wpGu-EWdf9Nbo3c_Zc7N0Vx03FV3US6zwPZZ3fYPUEMqrwrc3"/>
 <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[10px] font-label-caps border border-white/10">00:24</div>
 </div>
 <div class="px-1">
@@ -245,7 +244,7 @@
 <!-- Recent Item 3 -->
 <div class="flex flex-col gap-stack-sm cursor-pointer group">
 <div class="relative aspect-[3/4] rounded-xl overflow-hidden glass-card border-none group-hover:bloom-purple transition-all duration-300">
-<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Close-up of a human eye with a digital iris overlay, featuring intricate holographic data patterns. The skin texture is hyper-detailed, and the lighting is cinematic and focused. The color palette is a mix of natural warm tones and sharp digital cyan, symbolizing the intersection of humanity and artificial intelligence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGalnGA39eOHQ7Vwgc0W6rRdjEvolNV22rnpvXoNdVm0-qYYyCuqoUFa49YMONAyztUS9VAC_AGwY7-UUM3w56WwDWiZIfHfsED-BFRsVC4PvQp2xkReT7Jwc9PbUUNGxuEbGQPuXANOCn8QMEViuwyi7HBv4HMAFw_Tp-T8p2lyUivXCi4uhlgzZlylW58DMy6Ovr0wday_VvkgTkagVqaxKLbBx1xFV1917tsp6m2EERiPaQ6gIpAO3uK1aH3CaDcx1KwV_7vXJ5"/>
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGalnGA39eOHQ7Vwgc0W6rRdjEvolNV22rnpvXoNdVm0-qYYyCuqoUFa49YMONAyztUS9VAC_AGwY7-UUM3w56WwDWiZIfHfsED-BFRsVC4PvQp2xkReT7Jwc9PbUUNGxuEbGQPuXANOCn8QMEViuwyi7HBv4HMAFw_Tp-T8p2lyUivXCi4uhlgzZlylW58DMy6Ovr0wday_VvkgTkagVqaxKLbBx1xFV1917tsp6m2EERiPaQ6gIpAO3uK1aH3CaDcx1KwV_7vXJ5"/>
 <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[10px] font-label-caps border border-white/10">00:08</div>
 </div>
 <div class="px-1">
@@ -256,7 +255,7 @@
 <!-- Recent Item 4 -->
 <div class="flex flex-col gap-stack-sm cursor-pointer group">
 <div class="relative aspect-[3/4] rounded-xl overflow-hidden glass-card border-none group-hover:bloom-purple transition-all duration-300">
-<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A stylized mountain peak under a vibrant synthwave sunset. The sky is filled with gradients of hot pink, deep purple, and neon orange, while the mountain is silhouetted in dark indigo. The overall mood is nostalgic yet technologically sharp, capturing a retro-futuristic aesthetic typical of high-end digital art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWeLT-pzydSqdWU6MLOLE1TKvKu5kT46ixufn9AiQTiyOwAeeidoMWHr3HllPWvHh73wB1XIigDpie98yDkkc4yrMNbYiOPb4q-gH7rqRzNhjLsvpA1OEoljXZN2V428s8HnsJi_j5Tqh2weFEron8OSVZvlikUmaeq-q1FleihZ_o9ILXuDO5leFkg-BA_-B8r_InkFr6LdFu6RQUHHWa3uYJfWXsBPaeaw6o9GrmLZXuq1Xks79z_hARDqR9nWaGnaS3hqdW3X1_"/>
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWeLT-pzydSqdWU6MLOLE1TKvKu5kT46ixufn9AiQTiyOwAeeidoMWHr3HllPWvHh73wB1XIigDpie98yDkkc4yrMNbYiOPb4q-gH7rqRzNhjLsvpA1OEoljXZN2V428s8HnsJi_j5Tqh2weFEron8OSVZvlikUmaeq-q1FleihZ_o9ILXuDO5leFkg-BA_-B8r_InkFr6LdFu6RQUHHWa3uYJfWXsBPaeaw6o9GrmLZXuq1Xks79z_hARDqR9nWaGnaS3hqdW3X1_"/>
 <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[10px] font-label-caps border border-white/10">00:32</div>
 </div>
 <div class="px-1">
@@ -273,7 +272,7 @@
 <span class="material-symbols-outlined" data-icon="video_library" style="font-variation-settings: 'FILL' 1;">video_library</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
 </div>
-<div class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
+<div id="navCreateBtn" class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150 cursor-pointer">
 <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
 </div>
@@ -286,4 +285,19 @@
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
 </div>
 </nav>
+
+<script>
+    (function () {
+      // URL del generador de imágenes
+      var GENERATOR_URL = 'https://holasoyfabis-rgppf55lg-fabys-projects-c9855716.vercel.app/screens/generador/index.html';
+
+      function goToGenerator() {
+        window.location.href = GENERATOR_URL;
+      }
+
+      // Ambos botones llevan directo al generador de imágenes
+      document.getElementById('btnCrearNuevo').addEventListener('click', goToGenerator);
+      document.getElementById('navCreateBtn').addEventListener('click', goToGenerator);
+    })();
+  </script>
 </body></html>
