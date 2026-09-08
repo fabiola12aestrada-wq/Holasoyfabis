@@ -1,1110 +1,495 @@
 <!DOCTYPE html>
-<html class="dark" lang="es">
-<head>
+<html class="dark" lang="es"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        "primary-fixed": "#f8d8ff",
-        "surface-container": "#201f20",
-        "surface-container-high": "#2a2a2b",
-        "on-secondary-fixed-variant": "#004f53",
-        "inverse-surface": "#e5e2e3",
-        "error": "#ffb4ab",
-        "outline": "#9d8ba0",
-        "surface-container-low": "#1c1b1c",
-        "secondary-fixed-dim": "#00dce5",
-        "on-tertiary-fixed-variant": "#474647",
-        "background": "#131314",
-        "on-background": "#e5e2e3",
-        "tertiary-container": "#777677",
-        "tertiary": "#c8c6c7",
-        "primary-container": "#bc13fe",
-        "on-secondary-fixed": "#002021",
-        "on-error": "#690005",
-        "surface-container-highest": "#353436",
-        "primary": "#ebb2ff",
-        "secondary": "#e6feff",
-        "surface": "#131314",
-        "on-primary-container": "#ffffff",
-        "on-secondary": "#003739",
-        "on-primary-fixed": "#320047",
-        "on-tertiary-fixed": "#1b1b1c",
-        "on-tertiary": "#303031",
-        "inverse-primary": "#9800d0",
-        "secondary-fixed": "#63f7ff",
-        "inverse-on-surface": "#313031",
-        "on-surface": "#e5e2e3",
-        "primary-fixed-dim": "#ebb2ff",
-        "on-error-container": "#ffdad6",
-        "on-primary": "#520072",
-        "error-container": "#93000a",
-        "on-surface-variant": "#d4c0d7",
-        "on-tertiary-container": "#ffffff",
-        "secondary-container": "#00f4fe",
-        "surface-variant": "#353436",
-        "tertiary-fixed": "#e5e2e3",
-        "on-secondary-container": "#006c71",
-        "surface-bright": "#3a393a",
-        "on-primary-fixed-variant": "#74009f",
-        "tertiary-fixed-dim": "#c8c6c7",
-        "surface-tint": "#ebb2ff",
-        "surface-container-lowest": "#0e0e0f",
-        "outline-variant": "#504254
-      },
-      borderRadius: {
-        "DEFAULT": "0.25rem",
-        "lg": "0.5rem",
-        "xl": "0.75rem",
-        "full": "9999px"
-      },
-      spacing: {
-        "unit": "4px",
-        "stack-md": "16px",
-        "gutter": "16px",
-        "margin-mobile": "20px",
-        "stack-sm": "8px",
-        "stack-lg": "32px"
-      },
-      fontFamily: {
-        "body-lg": ["Inter"],
-        "body-sm": ["Inter"],
-        "headline-md": ["Space Grotesk"],
-        "display-lg": ["Space Grotesk"],
-        "label-caps": ["Space Grotesk"]
-      },
-      fontSize: {
-        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}]
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#f8d8ff",
+                    "surface-container": "#201f20",
+                    "surface-container-high": "#2a2a2b",
+                    "on-secondary-fixed-variant": "#004f53",
+                    "inverse-surface": "#e5e2e3",
+                    "error": "#ffb4ab",
+                    "outline": "#9d8ba0",
+                    "surface-container-low": "#1c1b1c",
+                    "secondary-fixed-dim": "#00dce5",
+                    "on-tertiary-fixed-variant": "#474647",
+                    "background": "#131314",
+                    "on-background": "#e5e2e3",
+                    "tertiary-container": "#777677",
+                    "tertiary": "#c8c6c7",
+                    "primary-container": "#bc13fe",
+                    "on-secondary-fixed": "#002021",
+                    "on-error": "#690005",
+                    "surface-container-highest": "#353436",
+                    "primary": "#ebb2ff",
+                    "secondary": "#e6feff",
+                    "surface": "#131314",
+                    "on-primary-container": "#ffffff",
+                    "on-secondary": "#003739",
+                    "on-primary-fixed": "#320047",
+                    "on-tertiary-fixed": "#1b1b1c",
+                    "surface-dim": "#131314",
+                    "on-tertiary": "#303031",
+                    "inverse-primary": "#9800d0",
+                    "secondary-fixed": "#63f7ff",
+                    "inverse-on-surface": "#313031",
+                    "on-surface": "#e5e2e3",
+                    "primary-fixed-dim": "#ebb2ff",
+                    "on-error-container": "#ffdad6",
+                    "on-primary": "#520072",
+                    "error-container": "#93000a",
+                    "on-surface-variant": "#d4c0d7",
+                    "on-tertiary-container": "#ffffff",
+                    "secondary-container": "#00f4fe",
+                    "surface-variant": "#353436",
+                    "tertiary-fixed": "#e5e2e3",
+                    "on-secondary-container": "#006c71",
+                    "surface-bright": "#3a393a",
+                    "on-primary-fixed-variant": "#74009f",
+                    "tertiary-fixed-dim": "#c8c6c7",
+                    "surface-tint": "#ebb2ff",
+                    "surface-container-lowest": "#0e0e0f",
+                    "outline-variant": "#504254"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "stack-md": "16px",
+                    "gutter": "16px",
+                    "margin-mobile": "20px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Space Grotesk"],
+                    "display-lg": ["Space Grotesk"],
+                    "label-caps": ["Space Grotesk"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}]
+            }
+          },
+        },
       }
-    }
-  }
-}
-</script>
-
+    </script>
 <style>
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(26, 26, 27, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-pulse { box-shadow: 0 0 15px rgba(0, 244, 254, 0.4); }
+        body { min-height: max(884px, 100dvh); }
 
-.glass-panel {
-  background: rgba(26, 26, 27, 0.8);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
+        .scene-thumb {
+            width: 64px; height: 64px; border-radius: 10px; overflow: hidden;
+            flex-shrink: 0; position: relative; background: #0e0e0f;
+            border: 2px solid transparent;
+        }
+        .scene-thumb.done { border-color: #00f4fe; }
+        .scene-thumb.pending { border-color: rgba(255,255,255,0.1); }
+        .scene-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .scene-thumb .thumb-status {
+            position: absolute; bottom: 2px; right: 2px;
+            width: 16px; height: 16px; border-radius: 9999px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px;
+        }
+        .thumb-status.done { background: #00f4fe; color: #003739; }
+        .thumb-status.pending { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); }
 
-.neon-pulse {
-  box-shadow: 0 0 15px rgba(0, 244, 254, 0.4);
-}
-
-body {
-  min-height: max(884px, 100dvh);
-}
-
-.scene-thumb {
-  width: 64px;
-  height: 64px;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
-  position: relative;
-  background: #0e0e0f;
-  border: 2px solid transparent;
-}
-
-.scene-thumb.done {
-  border-color: #00f4fe;
-}
-
-.scene-thumb.pending {
-  border-color: rgba(255,255,255,0.1);
-}
-
-.scene-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.scene-thumb .thumb-status {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 16px;
-  height: 16px;
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-}
-
-.thumb-status.done {
-  background: #00f4fe;
-  color: #003739;
-}
-
-.thumb-status.pending {
-  background: rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.5);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-#estado-render {
-  text-align: center;
-  font-size: 13px;
-  color: rgba(255,255,255,0.5);
-  margin-top: 8px;
-}
-
-#estado-render.error {
-  color: #ffb4ab;
-}
-</style>
-</head>
-
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        #estado-render { text-align: center; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 8px; }
+        #estado-render.error { color: #ffb4ab; }
+    </style>
+  </head>
 <body class="bg-surface-dim text-on-surface font-body-lg min-h-screen flex flex-col">
-
+<!-- TopAppBar -->
 <header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.1)]">
-
-  <div class="flex items-center gap-stack-md">
-    <span class="text-xl font-bold bg-gradient-to-r from-[#BC13FE] to-cyan-400 bg-clip-text text-transparent font-headline-md tracking-tighter">
-      FLUX_AI
-    </span>
-  </div>
-
-  <div class="flex items-center gap-gutter">
-    <button class="text-white/70 hover:text-cyan-400 transition-colors active:scale-95 duration-200">
-      <span class="material-symbols-outlined">notifications</span>
-    </button>
-
-    <div class="w-8 h-8 rounded-full border border-primary-container overflow-hidden flex items-center justify-center bg-zinc-800">
-      <span class="material-symbols-outlined text-zinc-500 text-lg">person</span>
-    </div>
-  </div>
-
+<div class="flex items-center gap-stack-md">
+<span class="text-xl font-bold bg-gradient-to-r from-[#BC13FE] to-cyan-400 bg-clip-text text-transparent font-headline-md tracking-tighter">FLUX_AI</span>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="text-white/70 hover:text-cyan-400 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full border border-primary-container overflow-hidden flex items-center justify-center bg-zinc-800">
+<span class="material-symbols-outlined text-zinc-500 text-lg">person</span>
+</div>
+</div>
 </header>
-
+<!-- Main Content -->
 <main class="flex-1 mt-16 mb-20 px-margin-mobile pt-stack-lg max-w-4xl mx-auto w-full">
 
-  <section class="mb-stack-lg">
-    <div class="relative glass-panel rounded-xl overflow-hidden shadow-2xl p-stack-md">
+<!-- Preview: filmstrip de escenas en orden + video final -->
+<section class="mb-stack-lg">
+<div class="relative glass-panel rounded-xl overflow-hidden shadow-2xl p-stack-md">
+<div class="flex items-center justify-between mb-stack-md">
+<div class="relative w-16 h-16 flex-shrink-0">
+<svg class="w-16 h-16 -rotate-90" viewbox="0 0 64 64">
+<circle cx="32" cy="32" fill="none" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6"></circle>
+<circle cx="32" cy="32" fill="none" id="progress-ring" r="28" stroke="#00f4fe" stroke-dasharray="176" stroke-dashoffset="176" stroke-linecap="round" stroke-width="6"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span id="progress-percent" class="text-secondary-container font-headline-md text-sm">0%</span>
+</div>
+</div>
+<div class="flex-1 ml-stack-md">
+<p id="render-title" class="text-label-caps font-label-caps text-secondary-fixed tracking-widest">CARGANDO STORYBOARD...</p>
+<p id="render-subtitle" class="text-body-sm text-white/40 mt-1">—</p>
+</div>
+</div>
+<!-- Filmstrip de miniaturas en orden -->
+<div id="filmstrip" class="flex gap-2 overflow-x-auto pb-1 mb-stack-md"></div>
+<!-- Preview del video final (aparece cuando está listo) -->
+<video id="video-preview" class="w-full rounded-lg hidden" controls="" loop=""></video>
+</div>
+</section>
 
-      <div class="flex items-center justify-between mb-stack-md">
+<!-- Lista de escenas con estado real -->
+<section class="flex flex-col gap-stack-sm mb-stack-lg" id="scene-status-list"></section>
 
-        <div class="relative w-16 h-16 flex-shrink-0">
+<p id="estado-render"></p>
 
-          <svg class="w-16 h-16 -rotate-90" viewbox="0 0 64 64">
-
-            <circle
-              cx="32"
-              cy="32"
-              fill="none"
-              r="28"
-              stroke="rgba(255,255,255,0.1)"
-              stroke-width="6">
-            </circle>
-
-            <circle
-              cx="32"
-              cy="32"
-              fill="none"
-              id="progress-ring"
-              r="28"
-              stroke="#00f4fe"
-              stroke-dasharray="176"
-              stroke-dashoffset="176"
-              stroke-linecap="round"
-              stroke-width="6">
-            </circle>
-
-          </svg>
-
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span id="progress-percent" class="text-secondary-container font-headline-md text-sm">
-              0%
-            </span>
-          </div>
-
-        </div>
-
-        <div class="flex-1 ml-stack-md">
-          <p
-            id="render-title"
-            class="text-label-caps font-label-caps text-secondary-fixed tracking-widest">
-            CARGANDO STORYBOARD...
-          </p>
-
-          <p
-            id="render-subtitle"
-            class="text-body-sm text-white/40 mt-1">
-            —
-          </p>
-        </div>
-
-      </div>
-
-      <div
-        id="filmstrip"
-        class="flex gap-2 overflow-x-auto pb-1 mb-stack-md">
-      </div>
-
-      <video
-        id="video-preview"
-        class="w-full rounded-lg hidden"
-        controls
-        loop>
-      </video>
-
-    </div>
-  </section>
-
-  <section
-    class="flex flex-col gap-stack-sm mb-stack-lg"
-    id="scene-status-list">
-  </section>
-
-  <p id="estado-render"></p>
-
-  <section class="flex flex-col sm:flex-row gap-stack-md mt-stack-md">
-
-    <button
-      id="btn-download"
-      class="flex-1 py-4 px-stack-lg rounded-xl bg-primary-container text-on-primary-container font-headline-md flex items-center justify-center gap-stack-sm"
-      disabled>
-
-      <span class="material-symbols-outlined">download</span>
-      <span>Descargar Video</span>
-
-    </button>
-
-    <button
-      id="btn-share"
-      class="flex-1 py-4 px-stack-lg rounded-xl glass-panel border border-secondary-container/50 text-secondary-container font-headline-md flex items-center justify-center gap-stack-sm hover:bg-secondary-container/10 transition-all"
-      disabled>
-
-      <span class="material-symbols-outlined">share</span>
-      <span>Compartir</span>
-
-    </button>
-
-  </section>
+<!-- Actions -->
+<section class="flex flex-col sm:flex-row gap-stack-md mt-stack-md">
+<button id="btn-download" class="flex-1 py-4 px-stack-lg rounded-xl bg-primary-container text-on-primary-container font-headline-md flex items-center justify-center gap-stack-sm" disabled="">
+<span class="material-symbols-outlined">download</span>
+<span>Descargar Video</span>
+</button>
+<button id="btn-share" class="flex-1 py-4 px-stack-lg rounded-xl glass-panel border border-secondary-container/50 text-secondary-container font-headline-md flex items-center justify-center gap-stack-sm hover:bg-secondary-container/10 transition-all" disabled="">
+<span class="material-symbols-outlined">share</span>
+<span>Compartir</span>
+</button>
+</section>
 
 </main>
-
+<!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
-
-  <a
-    class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors"
-    href="../inicio/index.html">
-
-    <span class="material-symbols-outlined">video_library</span>
-
-    <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">
-      Projects
-    </span>
-
-  </a>
-
-  <a
-    class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors"
-    href="../storyboard/index.html">
-
-    <span
-      class="material-symbols-outlined"
-      style="font-variation-settings: 'FILL' 1;">
-      add_circle
-    </span>
-
-    <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">
-      Create
-    </span>
-
-  </a>
-
-  <a
-    class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors"
-    href="../activos/index.html">
-
-    <span class="material-symbols-outlined">folder_copy</span>
-
-    <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">
-      Assets
-    </span>
-
-  </a>
-
-  <a
-    class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors"
-    href="../perfil/index.html">
-
-    <span class="material-symbols-outlined">account_circle</span>
-
-    <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">
-      Profile
-    </span>
-
-  </a>
-
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="../inicio/index.html">
+<span class="material-symbols-outlined">video_library</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="../storyboard/index.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="../activos/index.html">
+<span class="material-symbols-outlined">folder_copy</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Assets</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 transition-colors" href="../perfil/index.html">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
+</a>
 </nav>
 
-<!-- CAMBIO 1: @Supabase -> @supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 (function () {
-
-  const SUPABASE_URL =
-    "https://ddyqisycapjtziiqytji.supabase.co";
-
-  const SUPABASE_ANON_KEY =
-    "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
+  const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
 
   let sbClient = null;
-
   try {
-
-    sbClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
-
+    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   } catch (e) {
-
-    console.error(
-      "No se pudo inicializar Supabase:",
-      e
-    );
-
+    console.error("No se pudo inicializar Supabase:", e);
   }
 
-  const filmstrip =
-    document.getElementById("filmstrip");
+  const filmstrip = document.getElementById("filmstrip");
+  const sceneList = document.getElementById("scene-status-list");
+  const estado = document.getElementById("estado-render");
+  const renderTitle = document.getElementById("render-title");
+  const renderSubtitle = document.getElementById("render-subtitle");
+  const progressRing = document.getElementById("progress-ring");
+  const progressPercent = document.getElementById("progress-percent");
+  const btnDownload = document.getElementById("btn-download");
+  const btnShare = document.getElementById("btn-share");
 
-  const sceneList =
-    document.getElementById("scene-status-list");
-
-  const estado =
-    document.getElementById("estado-render");
-
-  const renderTitle =
-    document.getElementById("render-title");
-
-  const renderSubtitle =
-    document.getElementById("render-subtitle");
-
-  const progressRing =
-    document.getElementById("progress-ring");
-
-  const progressPercent =
-    document.getElementById("progress-percent");
-
-  const btnDownload =
-    document.getElementById("btn-download");
-
-  const btnShare =
-    document.getElementById("btn-share");
-
-  const videoPreview =
-    document.getElementById("video-preview");
-
-  const RING_CIRCUMFERENCE = 176;
+  const RING_CIRCUMFERENCE = 176; // 2 * PI * 28, redondeado
 
   let scenes = [];
-
-  let finalBlob = null;
+  let finalBlob = null; // el archivo final ya ensamblado (se genera al completar)
 
   function setProgress(percent) {
-
-    const offset =
-      RING_CIRCUMFERENCE -
-      (RING_CIRCUMFERENCE * percent) / 100;
-
-    progressRing.style.strokeDashoffset =
-      offset;
-
-    progressPercent.textContent =
-      percent + "%";
+    const offset = RING_CIRCUMFERENCE - (RING_CIRCUMFERENCE * percent) / 100;
+    progressRing.style.strokeDashoffset = offset;
+    progressPercent.textContent = percent + "%";
   }
 
   function renderFilmstrip() {
-
-    filmstrip.innerHTML =
-      scenes.map(function (s, i) {
-
-        const isDone =
-          !!s.image_url;
-
-        const cls =
-          isDone ? "done" : "pending";
-
-        const img =
-          isDone
-
-            ? '<img src="' +
-              s.image_url +
-              '" alt="Escena ' +
-              (i + 1) +
-              '"/>'
-
-            : '<div class="w-full h-full flex items-center justify-center text-white/20">' +
-              '<span class="material-symbols-outlined text-lg">image</span>' +
-              '</div>';
-
-        return (
-
-          '<div class="scene-thumb ' +
-          cls +
-          '">' +
-
-            img +
-
-            '<div class="thumb-status ' +
-            cls +
-            '">' +
-
-              '<span class="material-symbols-outlined" style="font-size:12px;">' +
-
-                (
-                  isDone
-                    ? "check"
-                    : "hourglass_empty"
-                ) +
-
-              '</span>' +
-
-            '</div>' +
-
-          '</div>'
-
-        );
-
-      }).join("");
+    filmstrip.innerHTML = scenes.map(function (s, i) {
+      const isDone = !!s.image_url;
+      const cls = isDone ? "done" : "pending";
+      const img = isDone
+        ? '<img src="' + s.image_url + '" alt="Escena ' + (i + 1) + '"/>'
+        : '<div class="w-full h-full flex items-center justify-center text-white/20"><span class="material-symbols-outlined text-lg">image</span></div>';
+      return (
+        '<div class="scene-thumb ' + cls + '">' + img +
+          '<div class="thumb-status ' + cls + '">' +
+            '<span class="material-symbols-outlined" style="font-size:12px;">' + (isDone ? 'check' : 'hourglass_empty') + '</span>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join("");
   }
 
   function renderSceneList() {
-
-    sceneList.innerHTML =
-      scenes.map(function (s, i) {
-
-        const isDone =
-          !!s.image_url;
-
-        const borderColor =
-          isDone
-            ? "border-secondary-container"
-            : "border-white/10";
-
-        const iconColor =
-          isDone
-            ? "text-secondary-container bg-secondary-container/10"
-            : "text-white/40 bg-white/5";
-
-        const icon =
-          isDone
-            ? "check_circle"
-            : "hourglass_top";
-
-        const statusText =
-          isDone
-            ? "Generada"
-            : "Pendiente";
-
-        const statusColor =
-          isDone
-            ? "text-secondary-container"
-            : "text-white/40";
-
-        return (
-
-          '<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 ' +
-          borderColor +
-          '">' +
-
-            '<div class="flex items-center gap-stack-md">' +
-
-              '<div class="w-10 h-10 rounded-full ' +
-              iconColor +
-              ' flex items-center justify-center">' +
-
-                '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">' +
-                icon +
-                '</span>' +
-
-              '</div>' +
-
-              '<div>' +
-
-                '<h3 class="font-headline-md text-body-lg text-white">' +
-                "Escena " +
-                (i + 1) +
-                '</h3>' +
-
-                '<p class="font-body-sm text-body-sm text-white/40">' +
-                (
-                  s.label ||
-                  s.script ||
-                  "Sin descripción"
-                ) +
-                '</p>' +
-
-              '</div>' +
-
+    sceneList.innerHTML = scenes.map(function (s, i) {
+      const isDone = !!s.image_url;
+      const borderColor = isDone ? "border-secondary-container" : "border-white/10";
+      const iconColor = isDone ? "text-secondary-container bg-secondary-container/10" : "text-white/40 bg-white/5";
+      const icon = isDone ? "check_circle" : "hourglass_top";
+      const statusText = isDone ? "Generada" : "Pendiente";
+      const statusColor = isDone ? "text-secondary-container" : "text-white/40";
+      return (
+        '<div class="glass-panel p-stack-md rounded-xl flex items-center justify-between border-l-4 ' + borderColor + '">' +
+          '<div class="flex items-center gap-stack-md">' +
+            '<div class="w-10 h-10 rounded-full ' + iconColor + ' flex items-center justify-center">' +
+              '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">' + icon + '</span>' +
             '</div>' +
-
-            '<span class="' +
-            statusColor +
-            ' text-xs font-label-caps">' +
-
-              statusText +
-
-            '</span>' +
-
-          '</div>'
-
-        );
-
-      }).join("");
+            '<div>' +
+              '<h3 class="font-headline-md text-body-lg text-white">Escena ' + (i + 1) + '</h3>' +
+              '<p class="font-body-sm text-body-sm text-white/40">' + (s.label || s.script || "Sin descripción") + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<span class="' + statusColor + ' text-xs font-label-caps">' + statusText + '</span>' +
+        '</div>'
+      );
+    }).join("");
   }
 
   function imageToImageElement(url) {
-
     return new Promise(function (resolve, reject) {
-
-      const img =
-        new Image();
-
-      img.crossOrigin =
-        "anonymous";
-
-      img.onload =
-        function () {
-          resolve(img);
-        };
-
-      img.onerror =
-        function () {
-          reject(
-            new Error(
-              "No se pudo cargar una imagen para el render: " +
-              url
-            )
-          );
-        };
-
-      img.src =
-        url;
-
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = function () { resolve(img); };
+      img.onerror = function () { reject(new Error("No se pudo cargar una imagen para el render: " + url)); };
+      img.src = url;
     });
-
   }
 
   function sleep(ms) {
-
-    return new Promise(
-      function (resolve) {
-        setTimeout(resolve, ms);
-      }
-    );
-
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
   }
 
-  function dibujarContain(
-    ctx,
-    img,
-    canvasW,
-    canvasH
-  ) {
-
-    ctx.fillStyle =
-      "#000";
-
-    ctx.fillRect(
-      0,
-      0,
-      canvasW,
-      canvasH
-    );
-
-    const escala =
-      Math.min(
-        canvasW / img.width,
-        canvasH / img.height
-      );
-
-    const w =
-      img.width * escala;
-
-    const h =
-      img.height * escala;
-
-    const x =
-      (canvasW - w) / 2;
-
-    const y =
-      (canvasH - h) / 2;
-
-    ctx.drawImage(
-      img,
-      x,
-      y,
-      w,
-      h
-    );
+  // Dibuja una imagen "contain" (con barras negras) dentro del canvas destino
+  function dibujarContain(ctx, img, canvasW, canvasH) {
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvasW, canvasH);
+    const escala = Math.min(canvasW / img.width, canvasH / img.height);
+    const w = img.width * escala;
+    const h = img.height * escala;
+    const x = (canvasW - w) / 2;
+    const y = (canvasH - h) / 2;
+    ctx.drawImage(img, x, y, w, h);
   }
 
   var SEGUNDOS_POR_ESCENA = 2.5;
-
   var FPS = 30;
 
   function pickMimeType() {
-
     var candidatos = [
       "video/webm;codecs=vp9",
       "video/webm;codecs=vp8",
-      "video/webm"
+      "video/webm",
     ];
-
-    for (
-      var i = 0;
-      i < candidatos.length;
-      i++
-    ) {
-
-      if (
-        window.MediaRecorder &&
-        MediaRecorder.isTypeSupported(
-          candidatos[i]
-        )
-      ) {
-
+    for (var i = 0; i < candidatos.length; i++) {
+      if (window.MediaRecorder && MediaRecorder.isTypeSupported(candidatos[i])) {
         return candidatos[i];
-
       }
-
     }
-
     return null;
   }
 
-  async function assembleFinalVideo(
-    scenesConImagen
-  ) {
-
+  // Ensambla las imágenes de las escenas (en orden) en un VIDEO real,
+  // grabando un <canvas> con MediaRecorder — esto es "el archivo renderizado".
+  async function assembleFinalVideo(scenesConImagen) {
     if (!window.MediaRecorder) {
-
-      throw new Error(
-        "Tu navegador no soporta grabación de video (MediaRecorder). Probá con Chrome o Edge."
-      );
-
+      throw new Error("Tu navegador no soporta grabación de video (MediaRecorder). Probá con Chrome o Edge.");
     }
-
-    var mimeType =
-      pickMimeType();
-
+    var mimeType = pickMimeType();
     if (!mimeType) {
-
-      throw new Error(
-        "Tu navegador no soporta ningún formato de video compatible."
-      );
-
+      throw new Error("Tu navegador no soporta ningún formato de video compatible.");
     }
 
-    const images =
-      await Promise.all(
-        scenesConImagen.map(
-          function (s) {
-            return imageToImageElement(
-              s.image_url
-            );
-          }
-        )
-      );
+    const images = await Promise.all(scenesConImagen.map(function (s) { return imageToImageElement(s.image_url); }));
 
-    const canvas =
-      document.createElement(
-        "canvas"
-      );
-
+    const canvas = document.createElement("canvas");
     canvas.width = 1280;
-
     canvas.height = 720;
+    const ctx = canvas.getContext("2d");
 
-    const ctx =
-      canvas.getContext("2d");
+    // Frame inicial antes de arrancar a grabar
+    dibujarContain(ctx, images[0], canvas.width, canvas.height);
 
-    dibujarContain(
-      ctx,
-      images[0],
-      canvas.width,
-      canvas.height
-    );
-
-    const stream =
-      canvas.captureStream(FPS);
-
-    const recorder =
-      new MediaRecorder(
-        stream,
-        {
-          mimeType: mimeType
-        }
-      );
-
+    const stream = canvas.captureStream(FPS);
+    const recorder = new MediaRecorder(stream, { mimeType: mimeType });
     const chunks = [];
+    recorder.ondataavailable = function (e) {
+      if (e.data && e.data.size > 0) chunks.push(e.data);
+    };
 
-    recorder.ondataavailable =
-      function (e) {
-
-        if (
-          e.data &&
-          e.data.size > 0
-        ) {
-
-          chunks.push(e.data);
-
-        }
-
-      };
-
-    const grabacionTerminada =
-      new Promise(
-        function (resolve) {
-
-          recorder.onstop =
-            resolve;
-
-        }
-      );
+    const grabacionTerminada = new Promise(function (resolve) {
+      recorder.onstop = resolve;
+    });
 
     recorder.start();
 
-    for (
-      var i = 0;
-      i < images.length;
-      i++
-    ) {
-
-      dibujarContain(
-        ctx,
-        images[i],
-        canvas.width,
-        canvas.height
-      );
-
-      await sleep(
-        SEGUNDOS_POR_ESCENA * 1000
-      );
-
+    for (var i = 0; i < images.length; i++) {
+      dibujarContain(ctx, images[i], canvas.width, canvas.height);
+      await sleep(SEGUNDOS_POR_ESCENA * 1000);
     }
 
     recorder.stop();
-
     await grabacionTerminada;
 
-    return new Blob(
-      chunks,
-      {
-        type: mimeType
-      }
-    );
+    return new Blob(chunks, { type: mimeType });
   }
 
-  /* ==========================
-     DESCARGAR VIDEO
-     ========================== */
+  const videoPreview = document.getElementById("video-preview");
 
-  btnDownload.addEventListener(
-    "click",
-    function () {
+  btnDownload.addEventListener("click", function () {
+    if (!finalBlob) return;
+    const url = URL.createObjectURL(finalBlob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "storyboard-flux-ai.webm";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
 
-      if (!finalBlob) return;
-
-      const url =
-        URL.createObjectURL(
-          finalBlob
-        );
-
-      const a =
-        document.createElement(
-          "a"
-        );
-
-      a.href =
-        url;
-
-      a.download =
-        "storyboard-flux-ai.webm";
-
-      document.body.appendChild(
-        a
-      );
-
-      a.click();
-
-      a.remove();
-
-      URL.revokeObjectURL(
-        url
-      );
-
-    }
-  );
-
-  /* ==========================
-     COMPARTIR VIDEO
-     ========================== */
-
-  btnShare.addEventListener(
-    "click",
-    async function () {
-
-      if (!finalBlob) return;
-
-      const file =
-        new File(
-          [finalBlob],
-          "storyboard-flux-ai.webm",
-          {
-            type: finalBlob.type
-          }
-        );
-
-      if (
-        navigator.canShare &&
-        navigator.canShare({
-          files: [file]
-        })
-      ) {
-
-        try {
-
-          await navigator.share({
-
-            files: [file],
-
-            title:
-              "Mi Storyboard — FLUX_AI",
-
-            text:
-              "Mirá el video que armé con FLUX_AI"
-
-          });
-
-        } catch (e) {
-
-          // El usuario canceló el menú de compartir.
-          // No mostramos error.
-
-        }
-
-      } else {
-
-        estado.textContent =
-          "Tu navegador no soporta compartir archivos directamente. Usá 'Descargar Video' y compartilo manualmente.";
-
-        estado.className = "";
-
-      }
-
-    }
-  );
-
-  /* ==========================
-     CARGAR Y RENDERIZAR
-     ========================== */
-
-  async function cargarYRenderizar() {
-
-    if (!sbClient) {
-
-      estado.textContent =
-        "No se pudo conectar con el servicio.";
-
-      estado.className =
-        "error";
-
+  btnShare.addEventListener("click", async function () {
+    if (!finalBlob) {
+      estado.textContent = "El video todavía no está listo.";
+      estado.className = "error";
       return;
+    }
 
+    const file = new File([finalBlob], "storyboard-flux-ai.webm", { type: finalBlob.type });
+
+    console.log("Intentando compartir:", { type: file.type, size: file.size, canShareApi: !!navigator.canShare });
+
+    if (!navigator.canShare) {
+      estado.textContent = "Tu navegador no soporta compartir archivos. Usá 'Descargar' y compartilo manualmente.";
+      estado.className = "";
+      return;
+    }
+
+    if (!navigator.canShare({ files: [file] })) {
+      console.warn("navigator.canShare devolvió false para este archivo (tipo:", file.type, ")");
+      estado.textContent = "Este navegador no puede compartir archivos .webm directamente. Usá 'Descargar' y compartilo manualmente (por ejemplo desde WhatsApp o Drive).";
+      estado.className = "";
+      return;
     }
 
     try {
-
-      const {
-        data,
-        error
-      } =
-        await sbClient
-          .from("scenes")
-          .select("*")
-          .order(
-            "position",
-            {
-              ascending: true
-            }
-          );
-
-      if (error)
-        throw error;
-
-      scenes =
-        data || [];
-
-      if (
-        scenes.length === 0
-      ) {
-
-        renderTitle.textContent =
-          "SIN ESCENAS TODAVÍA";
-
-        renderSubtitle.textContent =
-          "Andá al Storyboard para crear tu primera escena.";
-
-        estado.textContent =
-          "";
-
+      await navigator.share({
+        files: [file],
+        title: "Mi Storyboard — FLUX_AI",
+        text: "Mirá el video que armé con FLUX_AI",
+      });
+      estado.textContent = "";
+    } catch (e) {
+      if (e && e.name === "AbortError") {
+        // el usuario cerró el menú de compartir sin elegir nada; no es un error real
         return;
-
       }
+      console.error("Error al compartir:", e);
+      estado.textContent = "No se pudo compartir: " + (e && e.message ? e.message : "error desconocido") + ". Probá 'Descargar' y compartilo manualmente.";
+      estado.className = "error";
+    }
+  });
 
-      const total =
-        scenes.length;
-
-      const done =
-        scenes.filter(
-          function (s) {
-            return !!s.image_url;
-          }
-        ).length;
-
-      const percent =
-        Math.round(
-          (done / total) * 100
-        );
-
-      setProgress(
-        percent
-      );
-
-      renderFilmstrip();
-
-      renderSceneList();
-
-      if (
-        done < total
-      ) {
-
-        renderTitle.textContent =
-          "ENSAMBLANDO STORYBOARD...";
-
-        renderSubtitle.textContent =
-          done +
-          " de " +
-          total +
-          " escenas generadas";
-
-        btnDownload.disabled =
-          true;
-
-        btnShare.disabled =
-          true;
-
-      } else {
-
-        renderTitle.textContent =
-          "¡STORYBOARD COMPLETO!";
-
-        renderSubtitle.textContent =
-          total +
-          " de " +
-          total +
-          " escenas listas";
-
-        estado.textContent =
-          "Renderizando video… (esto tarda unos segundos, no cierres la pestaña)";
-
-        try {
-
-          const scenesConImagen =
-            scenes.filter(
-              function (s) {
-                return !!s.image_url;
-              }
-            );
-
-          finalBlob =
-            await assembleFinalVideo(
-              scenesConImagen
-            );
-
-          videoPreview.src =
-            URL.createObjectURL(
-              finalBlob
-            );
-
-          videoPreview.classList.remove(
-            "hidden"
-          );
-
-          estado.textContent =
-            "";
-
-          /* ==========================
-             BOTONES HABILITADOS
-             ========================== */
-
-          btnDownload.disabled =
-            false;
-
-          btnShare.disabled =
-            false;
-
-        } catch (renderErr) {
-
-          estado.textContent =
-            "No se pudo renderizar el video: " +
-            renderErr.message;
-
-          estado.className =
-            "error";
-
-        }
-
-      }
-
-    } catch (err) {
-
-      estado.textContent =
-        "Error al cargar el storyboard: " +
-        err.message;
-
-      estado.className =
-        "error";
-
+  async function cargarYRenderizar() {
+    if (!sbClient) {
+      estado.textContent = "No se pudo conectar con el servicio.";
+      estado.className = "error";
+      return;
     }
 
+    try {
+      const { data, error } = await sbClient
+        .from("scenes")
+        .select("*")
+        .order("position", { ascending: true });
+
+      if (error) throw error;
+
+      scenes = data || [];
+
+      if (scenes.length === 0) {
+        renderTitle.textContent = "SIN ESCENAS TODAVÍA";
+        renderSubtitle.textContent = "Andá al Storyboard para crear tu primera escena.";
+        estado.textContent = "";
+        return;
+      }
+
+      const total = scenes.length;
+      const done = scenes.filter(function (s) { return !!s.image_url; }).length;
+      const percent = Math.round((done / total) * 100);
+
+      setProgress(percent);
+      renderFilmstrip();
+      renderSceneList();
+
+      if (done < total) {
+        renderTitle.textContent = "ENSAMBLANDO STORYBOARD...";
+        renderSubtitle.textContent = done + " de " + total + " escenas generadas";
+        btnDownload.disabled = true;
+        btnShare.disabled = true;
+      } else {
+        renderTitle.textContent = "¡STORYBOARD COMPLETO!";
+        renderSubtitle.textContent = total + " de " + total + " escenas listas";
+        estado.textContent = "Renderizando video… (esto tarda unos segundos, no cierres la pestaña)";
+
+        try {
+          const scenesConImagen = scenes.filter(function (s) { return !!s.image_url; });
+          finalBlob = await assembleFinalVideo(scenesConImagen);
+
+          videoPreview.src = URL.createObjectURL(finalBlob);
+          videoPreview.classList.remove("hidden");
+
+          estado.textContent = "";
+          btnDownload.disabled = false;
+          btnShare.disabled = false;
+        } catch (renderErr) {
+          estado.textContent = "No se pudo renderizar el video: " + renderErr.message;
+          estado.className = "error";
+        }
+      }
+    } catch (err) {
+      estado.textContent = "Error al cargar el storyboard: " + err.message;
+      estado.className = "error";
+    }
   }
 
   cargarYRenderizar();
-
 })();
 </script>
-
-</body>
-</html>
+</body></html>
