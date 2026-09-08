@@ -142,7 +142,12 @@
     <a href="../../index.html" class="btn-volver">← Volver al Menú</a>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     const promptInput = document.getElementById("prompt-input");
     const btnGenerar = document.getElementById("btn-generar");
     const btnGenerarText = document.getElementById("btn-generar-text");
@@ -167,10 +172,12 @@
       if (placeholderText) placeholderText.textContent = "Generando tu imagen...";
 
       try {
+        const { data: { user } } = await supabase.auth.getUser();
+
         const response = await fetch("/api/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt }),
+          body: JSON.stringify({ prompt, user_id: user ? user.id : null }),
         });
 
         const data = await response.json();
