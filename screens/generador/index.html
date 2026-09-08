@@ -144,12 +144,13 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+  (function () {
     const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
 
-    let supabase = null;
+    let sbClient = null;
     try {
-      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     } catch (e) {
       console.error("No se pudo inicializar Supabase:", e);
     }
@@ -179,8 +180,8 @@
 
       try {
         let userId = null;
-        if (supabase) {
-          const { data } = await supabase.auth.getUser();
+        if (sbClient) {
+          const { data } = await sbClient.auth.getUser();
           userId = data && data.user ? data.user.id : null;
         }
 
@@ -211,6 +212,7 @@
     }
 
     btnGenerar.addEventListener("click", generarImagen);
+  })();
   </script>
 </body>
 </html>
