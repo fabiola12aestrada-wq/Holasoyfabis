@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { prompt } = req.body || {};
+    const { prompt, user_id } = req.body || {};
     const HF_TOKEN = process.env.HF_API_TOKEN;
 
     if (!HF_TOKEN) {
@@ -47,10 +47,11 @@ export default async function handler(req, res) {
 
     const publicUrl = publicUrlData.publicUrl;
 
-    // --- Guardar en la tabla ---
+    // --- Guardar en la tabla (incluyendo quién la generó) ---
     await supabase.from("generated_images").insert({
       prompt: prompt,
       image_url: publicUrl,
+      user_id: user_id || null,
     });
 
     // --- Devolver la imagen en base64 para mostrarla de inmediato ---
