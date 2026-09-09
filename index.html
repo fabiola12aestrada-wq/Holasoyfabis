@@ -4,19 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Yopfaby App — FLUX_AI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
   <style>
     :root {
-      --bg: #131314;
-      --surface: #1c1b1c;
-      --surface-elevated: #201f20;
-      --border: #353436;
-      --primary: #bc13fe;
-      --primary-glow: #ebb2ff;
-      --text: #e5e2e3;
-      --text-dim: #d4c0d7;
-      --cyan: #00f4fe;
+      --bg: #44113E;
+      --surface: #6A1452;
+      --surface-elevated: #6A1452;
+      --border: rgba(255,73,193,0.28);
+      --primary: #FF49C1;
+      --primary-glow: #FFB3AE;
+      --text: #FFFFFF;
+      --text-dim: rgba(255,255,255,0.6);
+      --cyan: #FFF7AD;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,7 +24,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Nunito', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -40,7 +40,7 @@
     }
 
     .logo {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-size: 1.8rem;
       font-weight: 700;
       color: var(--primary-glow);
@@ -54,7 +54,7 @@
     .logo span { color: var(--primary); }
 
     h1 {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-size: 1.1rem;
       color: var(--text-dim);
       margin-bottom: 1.5rem;
@@ -83,7 +83,7 @@
       text-decoration: none;
       padding: 0.85rem 1.2rem;
       border-radius: 12px;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-size: 0.95rem;
       font-weight: 500;
       border: 1px solid var(--border);
@@ -101,7 +101,7 @@
       color: #fff;
       border-color: var(--primary);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(188, 19, 254, 0.3);
+      box-shadow: 0 4px 12px rgba(255, 73, 193, 0.35);
     }
 
     nav a:hover .material-icons {
@@ -172,29 +172,3 @@
 
 </body>
 </html>
-<body> <div class="container">
-    <div class="logo">
-        <span class="material-icons">palette</span> FLUX<span>_GEN</span>
-    </div>
-    <h1>Generador de Imágenes IA</h1>
-
-    <!-- 1. AQUÍ EL USUARIO ESCRIBE EL PROMPT -->
-    <div class="prompt-container">
-        <textarea id="promptInput" placeholder="Describe la imagen que quieres crear... (Ej: Un gato astronauta en Marte, estilo cyberpunk)"></textarea>
-        
-        <button id="btnGenerar" onclick="enviarPrompt()">
-            <span class="material-icons">auto_awesome</span> Generar Imagen
-        </button>
-    </div>
-
-    <!-- 2. AQUÍ SE MUESTRA EL RESULTADO -->
-    <div class="resultado-container">
-        <div id="loader" class="loader" style="display: none;">Generando tu arte...</div>
-        <img id="resultadoIA" src="" alt="Tu imagen aparecerá aquí" style="display: none;" />
-    </div>
-    
-    <br>
-    <a href="../../index.html" class="btn-volver">
-        <span class="material-icons">arrow_back</span> Volver al Menú
-    </a>
-</div>
