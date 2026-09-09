@@ -126,92 +126,42 @@
       min-height: max(884px, 100dvh);
     }
   </style>
-  <script src="../../assets/sidebar.js" defer></script>
-</head>
+  </head>
 <body class="bg-background text-on-background font-body-lg min-h-screen pb-24">
 <!-- TopAppBar -->
 <header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(255,73,193,0.1)]">
 <div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-primary-container/30">
-<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9ROpF82hFffPZQL0-aBRqZdlveiPxKxkacuXYfv1IlZBgxhLttD_Zu73XhzhR3V0ciAjztGyIScnhCkqMm0E8UZefnIgZlS6kMhe-NGUN4tY1TgeIB_nO2b-JTzL0qP0uPQYf-Tp5iyJ3nGPVSIy36WpjK0pp1rvW5uGKQBtyitKa25uW_Ek6arMTAlhp-npROa5beWVrHn1l23WJ3CUlefKAn7lWSw8mxcfG7Gw_f-vcHg-UVL4bOOkpj3ZedOrYSF-c4fW0Pqdi"/>
-</div>
+<span id="flux-menu-mount"></span>
 <span class="font-['Space_Grotesk'] tracking-tighter text-xl font-bold bg-gradient-to-r from-[#FF49C1] to-[#FFF7AD] bg-clip-text text-transparent">FLUX_AI</span>
 </div>
 <div class="flex items-center gap-stack-md">
 <span class="material-symbols-outlined text-white/70 hover:text-[#FFF7AD] transition-colors cursor-pointer" data-icon="notifications">notifications</span>
+<div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-primary-container/30">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9ROpF82hFffPZQL0-aBRqZdlveiPxKxkacuXYfv1IlZBgxhLttD_Zu73XhzhR3V0ciAjztGyIScnhCkqMm0E8UZefnIgZlS6kMhe-NGUN4tY1TgeIB_nO2b-JTzL0qP0uPQYf-Tp5iyJ3nGPVSIy36WpjK0pp1rvW5uGKQBtyitKa25uW_Ek6arMTAlhp-npROa5beWVrHn1l23WJ3CUlefKAn7lWSw8mxcfG7Gw_f-vcHg-UVL4bOOkpj3ZedOrYSF-c4fW0Pqdi"/>
+</div>
 </div>
 </header>
-<main class="pt-24 px-margin-mobile max-w-7xl mx-auto">
+<main class="pt-24 pb-28 px-margin-mobile max-w-7xl mx-auto">
 <!-- Hero Action Section -->
 <section class="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-stack-md">
 <div>
 <h1 class="font-display-lg text-display-lg text-on-background mb-unit">Dashboard</h1>
-<p class="text-on-surface-variant font-body-sm">Bienvenido de nuevo, creador. Tienes 3 procesos activos.</p>
+<p class="text-on-surface-variant font-body-sm">Bienvenido de nuevo, creador. ¿Qué quieres crear hoy?</p>
 </div>
 <button id="btnCrearNuevo" class="flex items-center justify-center gap-stack-sm px-6 py-3 rounded-xl bg-gradient-to-r from-[#FF49C1] to-[#FFF7AD] text-white font-headline-md text-body-lg active:scale-95 transition-transform duration-200 shadow-[0_0_20px_rgba(255,73,193,0.3)]">
 <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
 <span>Crear nuevo</span>
 </button>
 </section>
-<!-- En Proceso Section -->
-<section class="mb-stack-lg">
+<!-- En Proceso Section (datos reales del storyboard) -->
+<section id="enProcesoSection" class="mb-stack-lg hidden">
 <div class="flex items-center justify-between mb-stack-md">
 <h2 class="font-headline-md text-headline-md flex items-center gap-2">
 <span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
-                    En Proceso
-                </h2>
-<span class="text-label-caps font-label-caps text-secondary-container">3 ACTIVOS</span>
+<span id="enProcesoTitulo">En Proceso</span>
+</h2>
 </div>
-<div id="enProcesoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-stack-md">
-<!-- Progress Card 1 -->
-<div class="glass-card rounded-xl p-stack-md flex flex-col gap-stack-sm group hover:border-primary/50 transition-colors">
-<div class="relative aspect-video rounded-lg overflow-hidden bg-surface-container-lowest">
-<img class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw9Z_AbBQ9PhUP3tpYntM5tbMTKDIm40-Wzv96Xan3ZvjXusUNSeng-0gSDFpQRNCqg0PKh2Rk0eqxGir2wOD6-UYi7Vt3ofN-gqCYMSIo0lOMwVhRFXMcd5nMy8ylYE9dxPF3MoTWByv49l9DBTsJ6Zc5brwYGs51woOYamhbTrTH7cJoCy11a7knnilrQNWXtCNILA46OIcZHKwvrKN8iJOGV8vKEYTUgmk6jsPL5nz5xOdetl_fu1uwQ7b1sl6woyXmEmk8TivZ"/>
-<div class="absolute inset-0 flex items-center justify-center">
-<span class="text-display-lg font-headline-md text-white">75%</span>
-</div>
-</div>
-<div class="flex flex-col gap-1">
-<span class="text-label-caps font-label-caps text-secondary-container">REDUCING NOISE...</span>
-<h3 class="font-headline-md text-body-lg truncate">Cyberpunk Cityscape Gen_04</h3>
-<div class="w-full h-1 bg-white/10 rounded-full mt-2 overflow-hidden">
-<div class="h-full bg-secondary-container progress-pulse w-[75%] rounded-full shadow-[0_0_8px_rgba(255,247,173,0.5)]"></div>
-</div>
-</div>
-</div>
-<!-- Progress Card 2 -->
-<div class="glass-card rounded-xl p-stack-md flex flex-col gap-stack-sm group hover:border-primary/50 transition-colors">
-<div class="relative aspect-video rounded-lg overflow-hidden bg-surface-container-lowest">
-<img class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9PiFe6L_yHPQC2xzgtcjrluTs_cnJlvlz2ErX5sGQUVnxZU-VSOx5XVN4GodGao2wTiGwI63AoIGJGSJsSRL5fWkRQaScsvlxSO1BcNBD4KZ1KsGfOy66Y1HPLKBHvt1wqKU2iyryr_7R9iA61yJRkd5PoDSiIOIN3yCmoEJHleNH85B8VPePsumCVjFhdAGu1TBBw0Q_z9jSSVUwit2yAGlMMGeo0JaC_5scwziqRhlaWC5mhGRZY2fp3Zv3gG7vIV3JkkF_IpPx"/>
-<div class="absolute inset-0 flex items-center justify-center">
-<span class="text-display-lg font-headline-md text-white">32%</span>
-</div>
-</div>
-<div class="flex flex-col gap-1">
-<span class="text-label-caps font-label-caps text-secondary-container">UPSCALE IN PROGRESS</span>
-<h3 class="font-headline-md text-body-lg truncate">Bioluminescent Forest</h3>
-<div class="w-full h-1 bg-white/10 rounded-full mt-2 overflow-hidden">
-<div class="h-full bg-secondary-container progress-pulse w-[32%] rounded-full shadow-[0_0_8px_rgba(255,247,173,0.5)]"></div>
-</div>
-</div>
-</div>
-<!-- Progress Card 3 -->
-<div class="glass-card rounded-xl p-stack-md flex flex-col gap-stack-sm group hover:border-primary/50 transition-colors">
-<div class="relative aspect-video rounded-lg overflow-hidden bg-surface-container-lowest">
-<img class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOMFehpXYyxzfYq3fPr0mU2ivcfiGCxFi2k_WZiVUYV31mGQ8p-QpUftLy2rPQDlrJCKypf7rRFtjsWczQxFWp4ZGwQXBD9NRL4Y-8rb9edxAzhCJWkw5rxgnMc0ts5kXuzllq1sPyPtc2gn2b2qx6LVa6fD5fiGXlPbrJCkV3ilZk1zyJfC4j6WGNJpqQm85CNk2Wb7IiT-LLAmueD8wIWzUMRezH0bcyWS_KetWysoErEdruilO5wdsV4x4XUnVYnzPRybMBXpLW"/>
-<div class="absolute inset-0 flex items-center justify-center">
-<span class="text-display-lg font-headline-md text-white">91%</span>
-</div>
-</div>
-<div class="flex flex-col gap-1">
-<span class="text-label-caps font-label-caps text-secondary-container">FINALIZING EXPORT</span>
-<h3 class="font-headline-md text-body-lg truncate">Neural Architecture Study</h3>
-<div class="w-full h-1 bg-white/10 rounded-full mt-2 overflow-hidden">
-<div class="h-full bg-secondary-container progress-pulse w-[91%] rounded-full shadow-[0_0_8px_rgba(255,247,173,0.5)]"></div>
-</div>
-</div>
-</div>
-</div>
+<div id="enProcesoContenido"></div>
 </section>
 <!-- Recientes Section -->
 <section>
@@ -264,41 +214,100 @@
 <p class="text-on-surface-variant text-[12px] font-body-sm">Hace 2 días</p>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 </main>
+
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
-<div class="flex flex-col items-center justify-center text-[#FF49C1] drop-shadow-[0_0_8px_rgba(255,73,193,0.5)] active:scale-90 transition-transform duration-150 cursor-pointer">
+<a href="../inicio/index.html" class="flex flex-col items-center justify-center text-[#FF49C1] drop-shadow-[0_0_8px_rgba(255,73,193,0.5)] active:scale-90 transition-transform duration-150 no-underline">
 <span class="material-symbols-outlined" data-icon="video_library" style="font-variation-settings: 'FILL' 1;">video_library</span>
-<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
-</div>
-<div id="navCreateBtn" class="flex flex-col items-center justify-center text-white/40 hover:text-[#FFF7AD] active:scale-90 transition-transform duration-150 cursor-pointer">
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Inicio</span>
+</a>
+<a id="navCreateBtn" href="../generador/index.html" class="flex flex-col items-center justify-center text-white/40 hover:text-[#FFF7AD] active:scale-90 transition-transform duration-150 no-underline">
 <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
-<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
-</div>
-<div class="flex flex-col items-center justify-center text-white/40 hover:text-[#FFF7AD] active:scale-90 transition-transform duration-150 cursor-pointer">
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Crear</span>
+</a>
+<a href="../activos/index.html" class="flex flex-col items-center justify-center text-white/40 hover:text-[#FFF7AD] active:scale-90 transition-transform duration-150 no-underline">
 <span class="material-symbols-outlined" data-icon="folder_copy">folder_copy</span>
-<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Assets</span>
-</div>
-<div class="flex flex-col items-center justify-center text-white/40 hover:text-[#FFF7AD] active:scale-90 transition-transform duration-150 cursor-pointer">
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Activos</span>
+</a>
+<a href="../perfil/index.html" class="flex flex-col items-center justify-center text-white/40 hover:text-[#FFF7AD] active:scale-90 transition-transform duration-150 no-underline">
 <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
-<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
-</div>
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Perfil</span>
+</a>
 </nav>
 
+<script src="../../assets/sidebar.js" defer></script>
+
 <script>
-    (function () {
-      // URL del generador de imágenes
-      var GENERATOR_URL = '../generador/index.html';
+    // El botón "Crear nuevo" del encabezado también lleva al generador
+    document.getElementById('btnCrearNuevo').addEventListener('click', function () {
+      window.location.href = '../generador/index.html';
+    });
+  </script>
 
-      function goToGenerator() {
-        window.location.href = GENERATOR_URL;
+  <script type="module">
+    // ---- Progreso real del Storyboard (misma tabla "scenes" que usan Storyboard/Renderizado) ----
+    const seccion = document.getElementById('enProcesoSection');
+    const contenido = document.getElementById('enProcesoContenido');
+    const titulo = document.getElementById('enProcesoTitulo');
+
+    function mostrarTarjeta(html) {
+      seccion.classList.remove('hidden');
+      contenido.innerHTML = html;
+    }
+
+    async function cargarProgreso() {
+      try {
+        const cfgRes = await fetch('/api/config');
+        const cfg = await cfgRes.json();
+        if (!cfg.supabaseUrl || !cfg.supabaseAnonKey) return;
+
+        const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+        const supabase = createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+
+        const { data, error } = await supabase.from('scenes').select('*').order('position', { ascending: true });
+        if (error || !data || data.length === 0) return; // sin escenas todavía: no mostramos la sección
+
+        const total = data.length;
+        const hechas = data.filter(function (s) { return !!s.image_url; }).length;
+        const porcentaje = Math.round((hechas / total) * 100);
+
+        if (hechas < total) {
+          titulo.textContent = 'En Proceso';
+          mostrarTarjeta(
+            '<a href="../renderizado/index.html" class="glass-card rounded-xl p-stack-md flex items-center gap-stack-md group hover:border-primary/50 transition-colors no-underline">' +
+              '<div class="relative w-16 h-16 flex items-center justify-center flex-shrink-0">' +
+                '<span class="font-headline-md text-body-lg text-secondary-container">' + porcentaje + '%</span>' +
+              '</div>' +
+              '<div class="flex flex-col gap-1">' +
+                '<span class="text-label-caps font-label-caps text-secondary-container">ENSAMBLANDO STORYBOARD...</span>' +
+                '<h3 class="font-headline-md text-body-lg">' + hechas + ' de ' + total + ' escenas generadas</h3>' +
+                '<div class="w-40 h-1 bg-white/10 rounded-full mt-1 overflow-hidden">' +
+                  '<div class="h-full bg-secondary-container rounded-full" style="width:' + porcentaje + '%"></div>' +
+                '</div>' +
+              '</div>' +
+            '</a>'
+          );
+        } else {
+          titulo.textContent = 'Listo';
+          mostrarTarjeta(
+            '<a href="../renderizado/index.html" class="glass-card rounded-xl p-stack-md flex items-center gap-stack-md group hover:border-primary/50 transition-colors no-underline">' +
+              '<div class="w-16 h-16 rounded-full bg-secondary-container/20 flex items-center justify-center flex-shrink-0">' +
+                '<span class="material-symbols-outlined text-secondary-container">check_circle</span>' +
+              '</div>' +
+              '<div class="flex flex-col gap-1">' +
+                '<span class="text-label-caps font-label-caps text-secondary-container">STORYBOARD COMPLETO</span>' +
+                '<h3 class="font-headline-md text-body-lg">' + total + ' de ' + total + ' escenas listas — ver video</h3>' +
+              '</div>' +
+            '</a>'
+          );
+        }
+      } catch (e) {
+        // si algo falla, simplemente no mostramos la sección (sin romper el dashboard)
       }
+    }
 
-      // Ambos botones llevan directo al generador de imágenes
-      document.getElementById('btnCrearNuevo').addEventListener('click', goToGenerator);
-      document.getElementById('navCreateBtn').addEventListener('click', goToGenerator);
-    })();
+    cargarProgreso();
   </script>
 </body></html>
