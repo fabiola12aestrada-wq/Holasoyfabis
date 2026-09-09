@@ -41,7 +41,6 @@
     { icon: "render", label: "Renderizado", href: base + "screens/renderizado/index.html" },
     { icon: "storyboard", label: "Storyboard", href: base + "screens/storyboard/index.html" },
     { icon: "inventory", label: "Activos", href: base + "screens/activos/index.html" },
-    { icon: "gallery", label: "Galería", href: base + "screens/galería/index.html" },
     { icon: "profile", label: "Perfil", href: base + "screens/perfil/index.html" },
     { icon: "settings", label: "Configuración", href: base + "screens/configuración/index.html" }
   ];
