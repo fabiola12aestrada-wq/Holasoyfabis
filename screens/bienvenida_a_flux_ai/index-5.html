@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>FLUX_AI | Transform Reality</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -14,15 +14,15 @@
         }
         .neural-grid {
             background-image: 
-                linear-gradient(to right, rgba(188, 19, 254, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(188, 19, 254, 0.05) 1px, transparent 1px);
+                linear-gradient(to right, rgba(255,73,193,0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,73,193,0.05) 1px, transparent 1px);
             background-size: 40px 40px;
         }
         .glow-cyan {
             filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.4));
         }
         .glow-purple {
-            filter: drop-shadow(0 0 15px rgba(188, 19, 254, 0.6));
+            filter: drop-shadow(0 0 15px rgba(255,73,193,0.6));
         }
     </style>
 <script id="tailwind-config">
@@ -32,52 +32,52 @@
             extend: {
               "colors": {
                       "on-error": "#690005",
-                      "surface-container": "#201f20",
-                      "on-secondary": "#003739",
-                      "tertiary-fixed": "#e5e2e3",
-                      "surface-container-highest": "#353436",
-                      "on-tertiary-fixed-variant": "#474647",
-                      "on-primary-fixed-variant": "#74009f",
-                      "primary-fixed": "#f8d8ff",
-                      "surface-container-high": "#2a2a2b",
-                      "surface": "#131314",
-                      "on-primary": "#520072",
-                      "secondary": "#e6feff",
+                      "surface-container": "#551A4D",
+                      "on-secondary": "#44113E",
+                      "tertiary-fixed": "#F0DCED",
+                      "surface-container-highest": "#7C2464",
+                      "on-tertiary-fixed-variant": "#5C3A56",
+                      "on-primary-fixed-variant": "#7A1A63",
+                      "primary-fixed": "#FFE3F5",
+                      "surface-container-high": "#6A1452",
+                      "surface": "#44113E",
+                      "on-primary": "#5C0F4E",
+                      "secondary": "#FFF7AD",
                       "on-primary-container": "#ffffff",
-                      "inverse-primary": "#9800d0",
+                      "inverse-primary": "#C72E96",
                       "on-tertiary-container": "#ffffff",
-                      "outline-variant": "#504254",
-                      "on-secondary-fixed-variant": "#004f53",
-                      "primary": "#ebb2ff",
-                      "on-secondary-fixed": "#002021",
-                      "on-tertiary": "#303031",
+                      "outline-variant": "#6A1452",
+                      "on-secondary-fixed-variant": "#44113E",
+                      "primary": "#FFB3AE",
+                      "on-secondary-fixed": "#44113E",
+                      "on-tertiary": "#2A0A26",
                       "on-error-container": "#ffdad6",
-                      "on-background": "#e5e2e3",
-                      "outline": "#9d8ba0",
-                      "surface-tint": "#ebb2ff",
-                      "surface-container-lowest": "#0e0e0f",
-                      "background": "#131314",
-                      "on-primary-fixed": "#320047",
-                      "tertiary": "#c8c6c7",
-                      "on-surface": "#e5e2e3",
-                      "primary-fixed-dim": "#ebb2ff",
-                      "tertiary-container": "#777677",
+                      "on-background": "#FFFFFF",
+                      "outline": "#A5698F",
+                      "surface-tint": "#FF49C1",
+                      "surface-container-lowest": "#2E0B29",
+                      "background": "#44113E",
+                      "on-primary-fixed": "#5C0F4E",
+                      "tertiary": "#D8BFD3",
+                      "on-surface": "#FFFFFF",
+                      "primary-fixed-dim": "#FFB3AE",
+                      "tertiary-container": "#6A1452",
                       "error-container": "#93000a",
-                      "secondary-fixed": "#63f7ff",
-                      "on-tertiary-fixed": "#1b1b1c",
+                      "secondary-fixed": "#FFF7AD",
+                      "on-tertiary-fixed": "#2A0A26",
                       "error": "#ffb4ab",
-                      "secondary-container": "#00f4fe",
-                      "primary-container": "#bc13fe",
-                      "inverse-surface": "#e5e2e3",
-                      "secondary-fixed-dim": "#00dce5",
-                      "inverse-on-surface": "#313031",
-                      "on-secondary-container": "#006c71",
-                      "surface-container-low": "#1c1b1c",
-                      "surface-bright": "#3a393a",
-                      "on-surface-variant": "#d4c0d7",
-                      "tertiary-fixed-dim": "#c8c6c7",
-                      "surface-variant": "#353436",
-                      "surface-dim": "#131314"
+                      "secondary-container": "#FFF7AD",
+                      "primary-container": "#FF49C1",
+                      "inverse-surface": "#FFE3F5",
+                      "secondary-fixed-dim": "#F5E97A",
+                      "inverse-on-surface": "#3A0D35",
+                      "on-secondary-container": "#44113E",
+                      "surface-container-low": "#3A0D35",
+                      "surface-bright": "#8A2B70",
+                      "on-surface-variant": "#D9B8D1",
+                      "tertiary-fixed-dim": "#D8BFD3",
+                      "surface-variant": "#6A1452",
+                      "surface-dim": "#3A0D35"
               },
               "borderRadius": {
                       "DEFAULT": "0.25rem",
@@ -94,18 +94,18 @@
                       "stack-md": "16px"
               },
               "fontFamily": {
-                      "label-caps": ["Space Grotesk"],
-                      "body-sm": ["Inter"],
-                      "body-lg": ["Inter"],
-                      "headline-md": ["Space Grotesk"],
-                      "display-lg": ["Space Grotesk"]
+                      "label-caps": ["Nunito"],
+                      "body-sm": ["Nunito"],
+                      "body-lg": ["Nunito"],
+                      "headline-md": ["Nunito"],
+                      "display-lg": ["Nunito"]
               },
               "fontSize": {
-                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
-                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                      "label-caps": ["Nunito"],
+                      "body-sm": ["Nunito"],
+                      "body-lg": ["Nunito"],
+                      "headline-md": ["Nunito"],
+                      "display-lg": ["Nunito"]
               }
             },
           },
@@ -141,7 +141,7 @@
 <span class="material-symbols-outlined text-5xl text-primary glow-purple" data-weight="fill">filter_drama</span>
 </div>
 </div>
-<h1 class="font-display-lg text-display-lg text-white tracking-widest drop-shadow-[0_0_15px_rgba(188,19,254,0.8)]">
+<h1 class="font-display-lg text-display-lg text-white tracking-widest drop-shadow-[0_0_15px_rgba(255,73,193,0.8)]">
                 FLUX_AI
             </h1>
 <p class="mt-stack-sm font-label-caps text-label-caps text-secondary-fixed-dim uppercase tracking-[0.3em] glow-cyan">
@@ -151,7 +151,7 @@
 <!-- Action Section -->
 <div class="w-full max-w-sm space-y-stack-md mt-stack-lg">
 <!-- Primary CTA -->
-<button class="w-full h-14 bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-headline-md text-headline-md rounded-lg shadow-[0_0_30px_rgba(188,19,254,0.4)] active:scale-95 transition-all duration-200 flex items-center justify-center gap-stack-sm">
+<button class="w-full h-14 bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-headline-md text-headline-md rounded-lg shadow-[0_0_30px_rgba(255,73,193,0.4)] active:scale-95 transition-all duration-200 flex items-center justify-center gap-stack-sm">
                 Get Started
                 <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
 </button>
