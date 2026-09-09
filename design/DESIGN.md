@@ -1,3 +1,4 @@
+[DESIGN.md](https://github.com/user-attachments/files/31984952/DESIGN.md)
 [DESIGN.md](https://github.com/user-attachments/files/31981281/DESIGN.md)
 ---
 name: Obsidian Flux
