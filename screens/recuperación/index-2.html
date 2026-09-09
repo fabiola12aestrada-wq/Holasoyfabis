@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Neural Key Recovery | FLUX_AI</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -14,53 +14,53 @@
             theme: {
                 extend: {
                     "colors": {
-                        "surface-bright": "#3a393a",
-                        "secondary-fixed": "#63f7ff",
-                        "inverse-primary": "#9800d0",
-                        "surface-variant": "#353436",
-                        "on-background": "#e5e2e3",
-                        "on-secondary-container": "#006c71",
-                        "on-primary": "#520072",
-                        "on-secondary-fixed": "#002021",
+                        "surface-bright": "#8A2B70",
+                        "secondary-fixed": "#FFF7AD",
+                        "inverse-primary": "#C72E96",
+                        "surface-variant": "#6A1452",
+                        "on-background": "#FFFFFF",
+                        "on-secondary-container": "#44113E",
+                        "on-primary": "#5C0F4E",
+                        "on-secondary-fixed": "#44113E",
                         "on-error-container": "#ffdad6",
-                        "surface-container-lowest": "#0e0e0f",
+                        "surface-container-lowest": "#2E0B29",
                         "on-primary-container": "#ffffff",
-                        "tertiary-fixed-dim": "#c8c6c7",
-                        "on-tertiary-fixed-variant": "#474647",
-                        "surface-container": "#201f20",
-                        "on-tertiary-fixed": "#1b1b1c",
-                        "tertiary": "#c8c6c7",
-                        "on-tertiary": "#303031",
-                        "primary": "#ebb2ff",
-                        "surface-container-low": "#1c1b1c",
-                        "on-primary-fixed": "#320047",
-                        "primary-fixed": "#f8d8ff",
-                        "outline": "#9d8ba0",
-                        "on-secondary-fixed-variant": "#004f53",
-                        "secondary-container": "#00f4fe",
-                        "on-secondary": "#003739",
-                        "inverse-surface": "#e5e2e3",
-                        "background": "#131314",
-                        "surface-container-high": "#2a2a2b",
+                        "tertiary-fixed-dim": "#D8BFD3",
+                        "on-tertiary-fixed-variant": "#5C3A56",
+                        "surface-container": "#551A4D",
+                        "on-tertiary-fixed": "#2A0A26",
+                        "tertiary": "#D8BFD3",
+                        "on-tertiary": "#2A0A26",
+                        "primary": "#FFB3AE",
+                        "surface-container-low": "#3A0D35",
+                        "on-primary-fixed": "#5C0F4E",
+                        "primary-fixed": "#FFE3F5",
+                        "outline": "#A5698F",
+                        "on-secondary-fixed-variant": "#44113E",
+                        "secondary-container": "#FFF7AD",
+                        "on-secondary": "#44113E",
+                        "inverse-surface": "#FFE3F5",
+                        "background": "#44113E",
+                        "surface-container-high": "#6A1452",
                         "error-container": "#93000a",
-                        "secondary-fixed-dim": "#00dce5",
-                        "surface-dim": "#131314",
-                        "on-surface-variant": "#d4c0d7",
-                        "surface": "#131314",
-                        "inverse-on-surface": "#313031",
-                        "primary-fixed-dim": "#ebb2ff",
+                        "secondary-fixed-dim": "#F5E97A",
+                        "surface-dim": "#3A0D35",
+                        "on-surface-variant": "#D9B8D1",
+                        "surface": "#44113E",
+                        "inverse-on-surface": "#3A0D35",
+                        "primary-fixed-dim": "#FFB3AE",
                         "error": "#ffb4ab",
-                        "on-surface": "#e5e2e3",
-                        "tertiary-fixed": "#e5e2e3",
+                        "on-surface": "#FFFFFF",
+                        "tertiary-fixed": "#F0DCED",
                         "on-tertiary-container": "#ffffff",
-                        "secondary": "#e6feff",
-                        "on-primary-fixed-variant": "#74009f",
+                        "secondary": "#FFF7AD",
+                        "on-primary-fixed-variant": "#7A1A63",
                         "on-error": "#690005",
-                        "outline-variant": "#504254",
-                        "surface-tint": "#ebb2ff",
-                        "primary-container": "#bc13fe",
-                        "surface-container-highest": "#353436",
-                        "tertiary-container": "#777677"
+                        "outline-variant": "#6A1452",
+                        "surface-tint": "#FF49C1",
+                        "primary-container": "#FF49C1",
+                        "surface-container-highest": "#7C2464",
+                        "tertiary-container": "#6A1452"
                     },
                     "borderRadius": {
                         "DEFAULT": "0.25rem",
@@ -77,18 +77,18 @@
                         "unit": "4px"
                     },
                     "fontFamily": {
-                        "display-lg": ["Space Grotesk"],
-                        "body-sm": ["Inter"],
-                        "label-caps": ["Space Grotesk"],
-                        "body-lg": ["Inter"],
-                        "headline-md": ["Space Grotesk"]
+                        "display-lg": ["Nunito"],
+                        "body-sm": ["Nunito"],
+                        "label-caps": ["Nunito"],
+                        "body-lg": ["Nunito"],
+                        "headline-md": ["Nunito"]
                     },
                     "fontSize": {
-                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                        "display-lg": ["Nunito"],
+                        "body-sm": ["Nunito"],
+                        "label-caps": ["Nunito"],
+                        "body-lg": ["Nunito"],
+                        "headline-md": ["Nunito"]
                     }
                 }
             }
@@ -104,7 +104,7 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         }
         .neon-glow {
-            box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
+            box-shadow: 0 0 15px rgba(255,73,193,0.4);
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
@@ -120,11 +120,11 @@
 <!-- TopAppBar Component (from JSON structure) -->
 <header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
 <div class="flex items-center gap-stack-sm">
-<span class="material-symbols-outlined text-fuchsia-600" data-icon="hub">hub</span>
-<span class="text-xl font-bold tracking-tighter text-fuchsia-500 drop-shadow-[0_0_8px_rgba(188,19,254,0.6)] font-display-lg">FLUX_AI</span>
+<span class="material-symbols-outlined text-[#FF49C1]" data-icon="hub">hub</span>
+<span class="text-xl font-bold tracking-tighter text-[#FF49C1] drop-shadow-[0_0_8px_rgba(255,73,193,0.6)] font-display-lg">FLUX_AI</span>
 </div>
 <div class="flex items-center gap-4">
-<button class="text-stone-500 hover:text-cyan-400 transition-colors duration-300 active:scale-95 duration-200">
+<button class="text-stone-500 hover:text-[#FFF7AD] transition-colors duration-300 active:scale-95 duration-200">
 <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
 </button>
 </div>
@@ -171,7 +171,7 @@
 </div>
 <!-- Navigation Link -->
 <div class="text-center pt-stack-md">
-<a class="inline-flex items-center gap-2 font-label-caps text-on-surface-variant hover:text-cyan-400 transition-colors group" href="#">
+<a class="inline-flex items-center gap-2 font-label-caps text-on-surface-variant hover:text-[#FFF7AD] transition-colors group" href="#">
 <span class="material-symbols-outlined text-body-sm group-hover:-translate-x-1 transition-transform" data-icon="arrow_back">arrow_back</span>
                     Back to Login
                 </a>
