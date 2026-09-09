@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>FLUX_AI Workflow</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -18,10 +18,10 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .glow-cyan {
-            box-shadow: 0 0 15px rgba(0, 244, 254, 0.2);
+            box-shadow: 0 0 15px rgba(255,247,173,0.2);
         }
         .glow-purple {
-            box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
+            box-shadow: 0 0 15px rgba(255,73,193,0.2);
         }
         .inner-glow {
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
@@ -33,53 +33,53 @@
           theme: {
             extend: {
               "colors": {
-                      "on-primary-fixed": "#320047",
-                      "surface-bright": "#3a393a",
-                      "surface-tint": "#ebb2ff",
-                      "on-tertiary": "#303031",
-                      "primary-container": "#bc13fe",
-                      "secondary-fixed": "#63f7ff",
-                      "tertiary": "#c8c6c7",
-                      "surface-container-high": "#2a2a2b",
-                      "on-secondary-container": "#006c71",
-                      "tertiary-fixed-dim": "#c8c6c7",
-                      "surface-variant": "#353436",
+                      "on-primary-fixed": "#5C0F4E",
+                      "surface-bright": "#8A2B70",
+                      "surface-tint": "#FF49C1",
+                      "on-tertiary": "#2A0A26",
+                      "primary-container": "#FF49C1",
+                      "secondary-fixed": "#FFF7AD",
+                      "tertiary": "#D8BFD3",
+                      "surface-container-high": "#6A1452",
+                      "on-secondary-container": "#44113E",
+                      "tertiary-fixed-dim": "#D8BFD3",
+                      "surface-variant": "#6A1452",
                       "on-tertiary-container": "#ffffff",
                       "error-container": "#93000a",
-                      "inverse-primary": "#9800d0",
-                      "secondary-fixed-dim": "#00dce5",
+                      "inverse-primary": "#C72E96",
+                      "secondary-fixed-dim": "#F5E97A",
                       "on-error-container": "#ffdad6",
-                      "surface-container-highest": "#353436",
-                      "on-tertiary-fixed-variant": "#474647",
+                      "surface-container-highest": "#7C2464",
+                      "on-tertiary-fixed-variant": "#5C3A56",
                       "on-error": "#690005",
-                      "on-primary-fixed-variant": "#74009f",
-                      "on-background": "#e5e2e3",
-                      "primary": "#ebb2ff",
-                      "secondary-container": "#00f4fe",
-                      "background": "#131314",
-                      "inverse-surface": "#e5e2e3",
-                      "tertiary-fixed": "#e5e2e3",
-                      "inverse-on-surface": "#313031",
-                      "on-tertiary-fixed": "#1b1b1c",
-                      "outline-variant": "#504254",
-                      "on-secondary-fixed": "#002021",
-                      "surface-dim": "#131314",
-                      "surface-container": "#201f20",
+                      "on-primary-fixed-variant": "#7A1A63",
+                      "on-background": "#FFFFFF",
+                      "primary": "#FFB3AE",
+                      "secondary-container": "#FFF7AD",
+                      "background": "#44113E",
+                      "inverse-surface": "#FFE3F5",
+                      "tertiary-fixed": "#F0DCED",
+                      "inverse-on-surface": "#3A0D35",
+                      "on-tertiary-fixed": "#2A0A26",
+                      "outline-variant": "#6A1452",
+                      "on-secondary-fixed": "#44113E",
+                      "surface-dim": "#3A0D35",
+                      "surface-container": "#551A4D",
                       "error": "#ffb4ab",
-                      "primary-fixed": "#f8d8ff",
-                      "on-surface": "#e5e2e3",
+                      "primary-fixed": "#FFE3F5",
+                      "on-surface": "#FFFFFF",
                       "on-primary-container": "#ffffff",
-                      "surface-container-low": "#1c1b1c",
-                      "surface": "#131314",
-                      "tertiary-container": "#777677",
-                      "surface-container-lowest": "#0e0e0f",
-                      "on-primary": "#520072",
-                      "outline": "#9d8ba0",
-                      "on-surface-variant": "#d4c0d7",
-                      "on-secondary-fixed-variant": "#004f53",
-                      "secondary": "#e6feff",
-                      "primary-fixed-dim": "#ebb2ff",
-                      "on-secondary": "#003739"
+                      "surface-container-low": "#3A0D35",
+                      "surface": "#44113E",
+                      "tertiary-container": "#6A1452",
+                      "surface-container-lowest": "#2E0B29",
+                      "on-primary": "#5C0F4E",
+                      "outline": "#A5698F",
+                      "on-surface-variant": "#D9B8D1",
+                      "on-secondary-fixed-variant": "#44113E",
+                      "secondary": "#FFF7AD",
+                      "primary-fixed-dim": "#FFB3AE",
+                      "on-secondary": "#44113E"
               },
               "borderRadius": {
                       "DEFAULT": "0.25rem",
@@ -96,18 +96,18 @@
                       "stack-md": "16px"
               },
               "fontFamily": {
-                      "label-caps": ["Space Grotesk"],
-                      "headline-md": ["Space Grotesk"],
-                      "body-sm": ["Inter"],
-                      "body-lg": ["Inter"],
-                      "display-lg": ["Space Grotesk"]
+                      "label-caps": ["Nunito"],
+                      "headline-md": ["Nunito"],
+                      "body-sm": ["Nunito"],
+                      "body-lg": ["Nunito"],
+                      "display-lg": ["Nunito"]
               },
               "fontSize": {
-                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
-                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                      "label-caps": ["Nunito"],
+                      "headline-md": ["Nunito"],
+                      "body-sm": ["Nunito"],
+                      "body-lg": ["Nunito"],
+                      "display-lg": ["Nunito"]
               }
             },
           },
@@ -121,13 +121,13 @@
   </head>
 <body class="bg-background text-on-background font-body-lg overflow-x-hidden pb-24">
 <!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.1)]">
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-5 h-16 bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_15px_rgba(255,73,193,0.1)]">
 <div class="flex items-center gap-stack-sm">
-<span class="material-symbols-outlined text-[#BC13FE]" data-icon="user_profile_avatar">account_circle</span>
-<span class="font-display-lg text-xl font-bold bg-gradient-to-r from-[#BC13FE] to-cyan-400 bg-clip-text text-transparent font-['Space_Grotesk'] tracking-tighter">FLUX_AI</span>
+<span class="material-symbols-outlined text-[#FF49C1]" data-icon="user_profile_avatar">account_circle</span>
+<span class="font-display-lg text-xl font-bold bg-gradient-to-r from-[#FF49C1] to-[#FFF7AD] bg-clip-text text-transparent font-['Space_Grotesk'] tracking-tighter">FLUX_AI</span>
 </div>
 <div class="flex items-center">
-<span class="material-symbols-outlined text-white/70 hover:text-cyan-400 transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-white/70 hover:text-[#FFF7AD] transition-colors" data-icon="notifications">notifications</span>
 </div>
 </header>
 <main class="mt-20 px-margin-mobile max-w-5xl mx-auto">
@@ -163,10 +163,10 @@
 <!-- Interactive Workflow Steps -->
 <div class="space-y-stack-md relative">
 <!-- Connector Line -->
-<div class="absolute left-6 top-8 bottom-8 w-[1px] bg-gradient-to-b from-[#BC13FE] to-cyan-400 hidden md:block opacity-20"></div>
+<div class="absolute left-6 top-8 bottom-8 w-[1px] bg-gradient-to-b from-[#FF49C1] to-[#FFF7AD] hidden md:block opacity-20"></div>
 <!-- Step 1: Ingesta -->
-<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center relative z-10 hover:border-[#BC13FE]/50 transition-colors">
-<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-[#BC13FE] text-[#BC13FE] shrink-0">
+<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center relative z-10 hover:border-[#FF49C1]/50 transition-colors">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-[#FF49C1] text-[#FF49C1] shrink-0">
 <span class="font-headline-md text-lg">01</span>
 </div>
 <div class="flex-1">
@@ -174,12 +174,12 @@
 <p class="text-on-surface-variant text-body-sm">Carga de documentos PDF o texto plano mediante OCR avanzado y análisis semántico para la extracción de núcleos narrativos.</p>
 </div>
 <div class="flex gap-stack-sm shrink-0">
-<div class="px-stack-md py-stack-sm bg-surface-container-high rounded-full border border-white/5 text-[10px] font-label-caps text-[#BC13FE]">PDF_PARSE_ACTIVE</div>
+<div class="px-stack-md py-stack-sm bg-surface-container-high rounded-full border border-white/5 text-[10px] font-label-caps text-[#FF49C1]">PDF_PARSE_ACTIVE</div>
 </div>
 </div>
 <!-- Step 2: Procesamiento -->
-<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center relative z-10 hover:border-cyan-400/50 transition-colors">
-<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-cyan-400 text-cyan-400 shrink-0">
+<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center relative z-10 hover:border-[#FFF7AD]/50 transition-colors">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-[#FFF7AD] text-[#FFF7AD] shrink-0">
 <span class="font-headline-md text-lg">02</span>
 </div>
 <div class="flex-1">
@@ -187,12 +187,12 @@
 <p class="text-on-surface-variant text-body-sm">Conversión de la estructura narrativa en prompts técnicos multimodales. Optimización de guiones mediante LLMs de última generación.</p>
 </div>
 <div class="w-24 h-1 bg-surface-container-high rounded-full overflow-hidden shrink-0">
-<div class="h-full bg-cyan-400 w-2/3 glow-cyan"></div>
+<div class="h-full bg-[#FFF7AD] w-2/3 glow-cyan"></div>
 </div>
 </div>
 <!-- Step 3: Generación -->
-<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center relative z-10 hover:border-[#BC13FE]/50 transition-colors">
-<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-[#BC13FE] text-[#BC13FE] shrink-0">
+<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center relative z-10 hover:border-[#FF49C1]/50 transition-colors">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-[#FF49C1] text-[#FF49C1] shrink-0">
 <span class="font-headline-md text-lg">03</span>
 </div>
 <div class="flex-1">
@@ -209,15 +209,15 @@
 </div>
 </div>
 <!-- Step 4: Render -->
-<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center relative z-10 hover:border-cyan-400/50 transition-colors">
-<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-cyan-400 text-cyan-400 shrink-0">
+<div class="glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-stack-md items-start md:items-center relative z-10 hover:border-[#FFF7AD]/50 transition-colors">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-[#FFF7AD] text-[#FFF7AD] shrink-0">
 <span class="font-headline-md text-lg">04</span>
 </div>
 <div class="flex-1">
 <h4 class="font-headline-md text-white mb-1">Renderizado Final</h4>
 <p class="text-on-surface-variant text-body-sm">Composición de capas en tiempo real y exportación en resolución 4K HDR con corrección de color automatizada.</p>
 </div>
-<button class="bg-[#BC13FE] text-white font-label-caps text-[10px] px-stack-lg py-stack-sm rounded-lg active:scale-90 transition-transform">
+<button class="bg-[#FF49C1] text-white font-label-caps text-[10px] px-stack-lg py-stack-sm rounded-lg active:scale-90 transition-transform">
                     RE-RENDER
                 </button>
 </div>
@@ -229,7 +229,7 @@
 <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60"></div>
 <div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
 <div>
-<span class="font-label-caps text-[10px] text-cyan-400 px-2 py-1 bg-black/40 rounded backdrop-blur-md mb-2 inline-block">PREVIEW_MODE: ACTIVE</span>
+<span class="font-label-caps text-[10px] text-[#FFF7AD] px-2 py-1 bg-black/40 rounded backdrop-blur-md mb-2 inline-block">PREVIEW_MODE: ACTIVE</span>
 <h2 class="font-headline-md text-white">Project_Genesis_v2</h2>
 </div>
 <button class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all">
@@ -241,19 +241,19 @@
 </main>
 <!-- BottomNavBar -->
 <nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#1A1A1B]/80 backdrop-blur-2xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-2xl">
-<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-[#FFF7AD] active:scale-90 transition-transform duration-150" href="#">
 <span class="material-symbols-outlined" data-icon="video_library">video_library</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Projects</span>
 </a>
-<a class="flex flex-col items-center justify-center text-[#BC13FE] drop-shadow-[0_0_8px_rgba(188,19,254,0.5)] active:scale-90 transition-transform duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-[#FF49C1] drop-shadow-[0_0_8px_rgba(255,73,193,0.5)] active:scale-90 transition-transform duration-150" href="#">
 <span class="material-symbols-outlined" data-icon="add_circle" style="font-variation-settings: 'FILL' 1;">add_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Create</span>
 </a>
-<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-[#FFF7AD] active:scale-90 transition-transform duration-150" href="#">
 <span class="material-symbols-outlined" data-icon="folder_copy">folder_copy</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Assets</span>
 </a>
-<a class="flex flex-col items-center justify-center text-white/40 hover:text-cyan-400 active:scale-90 transition-transform duration-150" href="#">
+<a class="flex flex-col items-center justify-center text-white/40 hover:text-[#FFF7AD] active:scale-90 transition-transform duration-150" href="#">
 <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
 <span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest mt-1">Profile</span>
 </a>
