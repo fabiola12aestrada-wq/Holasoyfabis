@@ -1,3 +1,4 @@
+[README.md](https://github.com/user-attachments/files/31981842/README.md)
 # Yopfaby App — FLUX_AI
 
 Prototipo de interfaz para una app de generación de imágenes con IA. 
