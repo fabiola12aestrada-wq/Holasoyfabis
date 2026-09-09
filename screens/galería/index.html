@@ -2,102 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Galería — FLUX_AI</title>
-  <style>
-    :root {
-      --bg: #44113E;
-      --surface-elevated: #6A1452;
-      --border: rgba(255,73,193,0.28);
-      --primary: #FF49C1;
-      --primary-glow: #FFB3AE;
-      --text: #FFFFFF;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: var(--bg); color: var(--text);
-      font-family: 'Nunito', sans-serif;
-      display: flex; flex-direction: column; align-items: center;
-      min-height: 100vh; padding: 2rem 1rem;
-    }
-    h1 { font-size: 1.4rem; color: var(--primary-glow); margin-bottom: 1.5rem; text-align: center; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      width: 100%;
-      max-width: 500px;
-    }
-    .card {
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .card img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover; }
-    .card p {
-      font-size: 0.7rem; padding: 0.5rem;
-      color: var(--text); opacity: 0.8;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    #estado { margin-top: 2rem; opacity: 0.6; font-size: 0.9rem; text-align: center; }
-    .btn-volver {
-      display: inline-block; margin-top: 2rem; color: var(--text);
-      text-decoration: none; font-size: 0.9rem;
-    }
-  </style>
-<script src="../../assets/sidebar.js" defer></script>
+  <meta http-equiv="refresh" content="0; url=../activos/index.html" />
+  <title>Redirigiendo…</title>
+  <script>window.location.replace("../activos/index.html");</script>
 </head>
 <body>
-  <h1> Galería de Imágenes</h1>
-  <div id="galeria" class="grid"></div>
-  <p id="estado">Cargando imágenes...</p>
-  <a href="../inicio/index.html" class="btn-volver">← Volver al Inicio</a>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const estado = document.getElementById("estado");
-
-    try {
-      const SUPABASE_URL = "https://ddyqisycapjtziiqytji.supabase.co";
-      const SUPABASE_ANON_KEY = "sb_publishable_vP5c7xHOl4MwIHRCTkFC0w_DOut5s96";
-
-      if (!window.supabase) {
-        estado.textContent = "Error: no cargó la librería de Supabase (revisa tu conexión o el CDN).";
-      } else {
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        supabase
-          .from("generated_images")
-          .select("*")
-          .order("created_at", { ascending: false })
-          .then(({ data, error }) => {
-            if (error) {
-              estado.textContent = "Error de Supabase: " + error.message;
-              return;
-            }
-
-            if (!data || data.length === 0) {
-              estado.textContent = "Aún no hay imágenes generadas.";
-              return;
-            }
-
-            estado.style.display = "none";
-            const galeria = document.getElementById("galeria");
-            data.forEach(item => {
-              const card = document.createElement("div");
-              card.className = "card";
-              card.innerHTML = `<img src="${item.image_url}" alt="${item.prompt}" /><p>${item.prompt}</p>`;
-              galeria.appendChild(card);
-            });
-          })
-          .catch(err => {
-            estado.textContent = "Error inesperado: " + err.message;
-          });
-      }
-    } catch (err) {
-      estado.textContent = "Error al iniciar: " + err.message;
-    }
-  </script>
+  <p>Esta pantalla se movió. Redirigiendo a <a href="../activos/index.html">Activos</a>…</p>
 </body>
 </html>
