@@ -6,6 +6,54 @@
 import { InferenceClient } from "@huggingface/inference";
 import { createClient } from "@supabase/supabase-js";
 
+// Traduce y enriquece el prompt (que puede venir en español y ser corto)
+// a un prompt en inglés, detallado y fiel, usando Gemini.
+// Si algo falla (sin API key, error de red, etc.) devuelve el prompt
+// original tal cual, para que la generación de imagen nunca se rompa
+// por este paso extra.
+async function enhancePrompt(originalPrompt) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) return originalPrompt;
+
+  try {
+    const systemPrompt =
+      "You rewrite short user requests into a single, detailed English prompt " +
+      "for an AI image generator (FLUX/Stable Diffusion style). " +
+      "Preserve every subject, object, attribute and action the user mentioned — " +
+      "do not drop or simplify any of them, and do not add unrelated elements. " +
+      "Translate to English if needed. Add concrete visual detail (composition, " +
+      "lighting, style) only to support what was asked, never to replace it. " +
+      "Respond with ONLY the final prompt text, nothing else — no quotes, no labels.";
+
+    const geminiRes = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ role: "user", parts: [{ text: originalPrompt }] }],
+        }),
+      }
+    );
+
+    if (!geminiRes.ok) return originalPrompt;
+
+    const data = await geminiRes.json();
+    const content = ((data.candidates || [])[0] || {}).content;
+    const enhanced = content && content.parts
+      ? content.parts.map((p) => p.text || "").join("").trim()
+      : "";
+
+    return enhanced || originalPrompt;
+  } catch (e) {
+    return originalPrompt;
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método no permitido" });
@@ -29,12 +77,14 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY no están configurados en Vercel." });
     }
 
+    const finalPrompt = await enhancePrompt(prompt);
+
     const client = new InferenceClient(HF_TOKEN);
 
     const imageBlob = await client.textToImage({
       provider: "auto",
-      model: "black-forest-labs/FLUX.1-schnell",
-      inputs: prompt,
+      model: "black-forest-labs/FLUX.1-dev",
+      inputs: finalPrompt,
     });
 
     const buffer = Buffer.from(await imageBlob.arrayBuffer());
@@ -58,6 +108,9 @@ export default async function handler(req, res) {
     const publicUrl = publicUrlData.publicUrl;
 
     // --- Guardar en la tabla generated_images (no en scenes) ---
+    // Se guarda el prompt ORIGINAL del usuario (lo que escribió), no el
+    // prompt ya traducido/enriquecido, para que la galería siga mostrando
+    // lo que él pidió.
     await supabase.from("generated_images").insert({
       prompt: prompt,
       image_url: publicUrl,
@@ -71,3 +124,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: error.message, cause: detail });
   }
 }
+
