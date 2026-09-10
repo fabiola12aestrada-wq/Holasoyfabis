@@ -165,7 +165,7 @@
 <!-- Filmstrip de miniaturas en orden -->
 <div id="filmstrip" class="flex gap-2 overflow-x-auto pb-1 mb-stack-md"></div>
 <!-- Preview del video final (aparece cuando está listo) -->
-<video id="video-preview" class="w-full rounded-lg hidden" controls="" loop=""></video>
+<video id="video-preview" class="w-full h-full object-cover rounded-lg hidden" controls="" loop=""></video>
 </div>
 </section>
 
@@ -298,23 +298,57 @@
     return new Promise(function (resolve) { setTimeout(resolve, ms); });
   }
 
-  // Dibuja una imagen "contain" (con barras negras) dentro del canvas destino
-  function dibujarContain(ctx, img, canvasW, canvasH) {
+  // Dibuja una imagen tipo "cover" (recorta el sobrante, sin bordes vacíos
+  // ni deformar), con un leve zoom dinámico (efecto Ken Burns) según qué
+  // tan avanzada está la escena (progreso de 0 a 1).
+  function dibujarCoverConKenBurns(ctx, img, canvasW, canvasH, progreso) {
+    const ZOOM_INICIAL = 1.0;
+    const ZOOM_FINAL = 1.08;
+    const escalaKenBurns = ZOOM_INICIAL + (ZOOM_FINAL - ZOOM_INICIAL) * progreso;
+
+    const escalaBase = Math.max(canvasW / img.width, canvasH / img.height);
+    const w = img.width * escalaBase * escalaKenBurns;
+    const h = img.height * escalaBase * escalaKenBurns;
+
+    // leve desplazamiento horizontal (pan) mientras hace zoom, para que se
+    // sienta como una toma de cámara continua en vez de un zoom centrado seco
+    const deriva = (progreso - 0.5) * (w - canvasW) * 0.2;
+    const x = (canvasW - w) / 2 - deriva;
+    const y = (canvasH - h) / 2;
+
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, canvasW, canvasH);
-    const escala = Math.min(canvasW / img.width, canvasH / img.height);
-    const w = img.width * escala;
-    const h = img.height * escala;
-    const x = (canvasW - w) / 2;
-    const y = (canvasH - h) / 2;
     ctx.drawImage(img, x, y, w, h);
   }
 
   var SEGUNDOS_POR_ESCENA = 2.5;
+  var DURACION_TRANSICION = 0.6; // segundos de crossfade al final de cada escena (excepto la última)
   var FPS = 30;
-  var VIDEO_WIDTH = 1280;
-  var VIDEO_HEIGHT = 720;
+  var VIDEO_WIDTH = 1920;
+  var VIDEO_HEIGHT = 1080;
   var BITRATE = 8000000; // 8 Mbps
+
+  // Dibuja el fotograma correspondiente al instante `tSegundos` del video
+  // completo — incluye el Ken Burns de la escena activa y, si corresponde,
+  // el crossfade hacia la siguiente escena.
+  function dibujarFotogramaEnTiempo(ctx, images, width, height, tSegundos) {
+    const dur = SEGUNDOS_POR_ESCENA;
+    const idx = Math.min(images.length - 1, Math.floor(tSegundos / dur));
+    const tLocal = (tSegundos - idx * dur) / dur; // 0..1 dentro de esta escena
+
+    const inicioTransicion = 1 - (DURACION_TRANSICION / dur);
+    const haySiguiente = idx < images.length - 1;
+
+    dibujarCoverConKenBurns(ctx, images[idx], width, height, tLocal);
+
+    if (haySiguiente && tLocal >= inicioTransicion) {
+      const alpha = (tLocal - inicioTransicion) / (1 - inicioTransicion);
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, Math.max(0, alpha));
+      dibujarCoverConKenBurns(ctx, images[idx + 1], width, height, 0);
+      ctx.restore();
+    }
+  }
 
   function pickMimeType() {
     var candidatos = [
@@ -369,18 +403,19 @@
     encoder.configure({ codec: codecElegido, width: VIDEO_WIDTH, height: VIDEO_HEIGHT, bitrate: BITRATE, framerate: FPS });
 
     const frameDurationUs = Math.round(1000000 / FPS);
-    const framesPorEscena = Math.round(SEGUNDOS_POR_ESCENA * FPS);
+    const totalSegundos = images.length * SEGUNDOS_POR_ESCENA;
+    const totalFrames = Math.round(totalSegundos * FPS);
     var timestampUs = 0;
 
-    for (var e = 0; e < images.length; e++) {
-      dibujarContain(ctx, images[e], canvas.width, canvas.height);
-      for (var f = 0; f < framesPorEscena; f++) {
-        const frame = new VideoFrame(canvas, { timestamp: timestampUs, duration: frameDurationUs });
-        const esKeyFrame = (timestampUs / frameDurationUs) % (FPS * 2) === 0;
-        encoder.encode(frame, { keyFrame: esKeyFrame });
-        frame.close();
-        timestampUs += frameDurationUs;
-      }
+    for (var f = 0; f < totalFrames; f++) {
+      const tSegundos = f / FPS;
+      dibujarFotogramaEnTiempo(ctx, images, canvas.width, canvas.height, tSegundos);
+
+      const frame = new VideoFrame(canvas, { timestamp: timestampUs, duration: frameDurationUs });
+      const esKeyFrame = (timestampUs / frameDurationUs) % (FPS * 2) === 0;
+      encoder.encode(frame, { keyFrame: esKeyFrame });
+      frame.close();
+      timestampUs += frameDurationUs;
     }
 
     await encoder.flush();
@@ -392,6 +427,9 @@
   }
 
   // Método de respaldo: graba un <canvas> con MediaRecorder (salida .webm).
+  // Dibuja continuamente vía requestAnimationFrame para que el Ken Burns y
+  // el crossfade se vean fluidos en la grabación (no solo un frame estático
+  // por escena).
   async function assembleFinalVideoMediaRecorder(images) {
     if (!window.MediaRecorder) {
       throw new Error("Tu navegador no soporta grabación de video (MediaRecorder). Probá con Chrome o Edge.");
@@ -406,8 +444,7 @@
     canvas.height = VIDEO_HEIGHT;
     const ctx = canvas.getContext("2d");
 
-    // Frame inicial antes de arrancar a grabar
-    dibujarContain(ctx, images[0], canvas.width, canvas.height);
+    dibujarFotogramaEnTiempo(ctx, images, canvas.width, canvas.height, 0);
 
     const stream = canvas.captureStream(FPS);
     const recorder = new MediaRecorder(stream, { mimeType: mimeType, videoBitsPerSecond: BITRATE });
@@ -422,10 +459,19 @@
 
     recorder.start();
 
-    for (var i = 0; i < images.length; i++) {
-      dibujarContain(ctx, images[i], canvas.width, canvas.height);
-      await sleep(SEGUNDOS_POR_ESCENA * 1000);
-    }
+    const totalMs = images.length * SEGUNDOS_POR_ESCENA * 1000;
+    const inicio = performance.now();
+
+    await new Promise(function (resolve) {
+      function draw(ahora) {
+        const transcurridoMs = ahora - inicio;
+        const tSegundos = transcurridoMs / 1000;
+        dibujarFotogramaEnTiempo(ctx, images, canvas.width, canvas.height, tSegundos);
+        if (transcurridoMs >= totalMs) return resolve();
+        requestAnimationFrame(draw);
+      }
+      requestAnimationFrame(draw);
+    });
 
     recorder.stop();
     await grabacionTerminada;
@@ -449,6 +495,7 @@
 
     return assembleFinalVideoMediaRecorder(images);
   }
+
 
   const videoPreview = document.getElementById("video-preview");
 
