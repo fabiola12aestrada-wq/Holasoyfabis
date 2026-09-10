@@ -4,7 +4,8 @@
 //
 // Flujo: recibe { modelId, prompt, sceneId, label, script } ->
 // intenta generar la imagen probando una lista de modelos de Inference
-// Providers -> si TODOS fallan, cae a un modo "mock" que elige una imagen
+// Providers -> si TODOS fallan, intenta Pollinations.ai (API gratuita sin
+// key) -> si eso también falla, cae a un modo "mock" que elige una imagen
 // de ejemplo según palabras clave del prompt -> sube la imagen (real o
 // mock) a Supabase Storage -> guarda/actualiza la fila de la escena en la
 // tabla `scenes` -> devuelve la URL pública + si fue mock o no.
@@ -51,7 +52,25 @@ function pickMockImageUrl(prompt) {
 }
 
 // ---------------------------------------------------------------------------
-// 3. Intenta generar la imagen probando modelos en orden.
+// 3.5. Pollinations.ai — API gratuita sin key, se intenta si TODOS los
+//      modelos de Hugging Face fallan, antes de caer al modo mock.
+// ---------------------------------------------------------------------------
+async function tryPollinations(prompt) {
+  const encodedPrompt = encodeURIComponent(prompt);
+  const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true`;
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error('Pollinations respondió con estado ' + response.status);
+  }
+  const arrayBuffer = await response.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  const contentType = response.headers.get('content-type') || 'image/jpeg';
+  return { buffer, contentType, modelUsed: 'pollinations.ai' };
+}
+
+// ---------------------------------------------------------------------------
+// 4. Intenta generar la imagen probando modelos en orden.
 //    Devuelve { buffer, contentType, modelUsed } o lanza si todos fallan.
 // ---------------------------------------------------------------------------
 async function tryGenerateWithFallback(hf, requestedModelId, prompt) {
@@ -120,39 +139,47 @@ export default async function handler(req, res) {
     buffer = result.buffer;
     contentType = result.contentType;
     modelUsed = result.modelUsed;
-  } catch (err) {
-    // --- Todos los modelos reales fallaron: caemos a modo mock ---
-    isMock = true;
-    mockReason = err.message;
-
-    const mockImageUrl = pickMockImageUrl(prompt);
-
+  } catch (hfErr) {
+    // --- Todos los modelos de Hugging Face fallaron: probar Pollinations.ai ---
     try {
-      const { error: dbError } = await supabase
-        .from('scenes')
-        .upsert({
-          id: sceneId,
-          label: label || null,
-          script: script || null,
-          prompt: prompt,
-          image_url: mockImageUrl,
-          status: 'mock',
-          updated_at: new Date().toISOString(),
-        });
+      const result = await tryPollinations(prompt);
+      buffer = result.buffer;
+      contentType = result.contentType;
+      modelUsed = result.modelUsed;
+    } catch (pollinationsErr) {
+      // --- Pollinations también falló: caemos a modo mock ---
+      isMock = true;
+      mockReason = hfErr.message + ' | Pollinations: ' + pollinationsErr.message;
 
-      if (dbError) {
-        return res.status(500).json({ error: 'Error guardando escena mock en Supabase: ' + dbError.message });
+      const mockImageUrl = pickMockImageUrl(prompt);
+
+      try {
+        const { error: dbError } = await supabase
+          .from('scenes')
+          .upsert({
+            id: sceneId,
+            label: label || null,
+            script: script || null,
+            prompt: prompt,
+            image_url: mockImageUrl,
+            status: 'mock',
+            updated_at: new Date().toISOString(),
+          });
+
+        if (dbError) {
+          return res.status(500).json({ error: 'Error guardando escena mock en Supabase: ' + dbError.message });
+        }
+      } catch (dbErr) {
+        return res.status(500).json({ error: 'Error inesperado guardando escena mock: ' + dbErr.message });
       }
-    } catch (dbErr) {
-      return res.status(500).json({ error: 'Error inesperado guardando escena mock: ' + dbErr.message });
-    }
 
-    return res.status(200).json({
-      imageUrl: mockImageUrl,
-      isMock: true,
-      message: 'Generación de ejemplo (servicio en mantenimiento)',
-      debugReason: mockReason,
-    });
+      return res.status(200).json({
+        imageUrl: mockImageUrl,
+        isMock: true,
+        message: 'Generación de ejemplo (servicio en mantenimiento)',
+        debugReason: mockReason,
+      });
+    }
   }
 
   // --- Generación real exitosa: subir a Supabase Storage como antes ---
