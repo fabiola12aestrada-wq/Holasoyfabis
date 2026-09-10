@@ -461,7 +461,10 @@
       return '<div class="flex flex-col items-center gap-2"><div class="spinner"></div><span class="text-white/30 font-label-caps text-[10px]">GENERANDO…</span></div>';
     }
     if (scene.imageUrl) {
-      return '<img class="w-full h-full object-cover" src="' + scene.imageUrl + '"/>' +
+      var mockBadge = scene.isMock
+        ? '<div class="absolute top-1 left-1 bg-black/70 text-white/80 text-[9px] font-label-caps px-1.5 py-0.5 rounded" title="' + (scene.mockMessage || 'Vista previa de ejemplo') + '">VISTA PREVIA</div>'
+        : '';
+      return mockBadge + '<img class="w-full h-full object-cover" src="' + scene.imageUrl + '"/>' +
         '<div class="absolute inset-0 bg-black/60 opacity-0 group-hover/image:opacity-100 transition-opacity flex items-center justify-center gap-4">' +
           '<span class="material-symbols-outlined text-white/70 text-sm">visibility</span>' +
         '</div>';
@@ -499,7 +502,9 @@
           throw new Error('HTTP ' + res.status + ' (' + modelId + '): ' + msg);
         });
       }
-      return res.json().then(function (data) { return data.imageUrl; });
+      return res.json().then(function (data) {
+        return { imageUrl: data.imageUrl, isMock: !!data.isMock, mockMessage: data.message || null };
+      });
     });
   }
 
@@ -523,8 +528,10 @@
     var modelList = getFallbackOrder();
 
     generateWithFallback(prompt, modelList, scene)
-      .then(function (imageUrl) {
-        scene.imageUrl = imageUrl;
+      .then(function (result) {
+        scene.imageUrl = result.imageUrl;
+        scene.isMock = result.isMock;
+        scene.mockMessage = result.mockMessage;
         scene.status = 'done';
         render();
       })
