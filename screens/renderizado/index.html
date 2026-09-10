@@ -165,7 +165,7 @@
 <!-- Filmstrip de miniaturas en orden -->
 <div id="filmstrip" class="flex gap-2 overflow-x-auto pb-1 mb-stack-md"></div>
 <!-- Preview del video final (aparece cuando está listo) -->
-<video id="video-preview" class="w-full rounded-lg hidden" controls="" loop=""></video>
+<video id="video-preview" class="w-full h-full object-cover rounded-lg hidden" controls="" loop=""></video>
 </div>
 </section>
 
@@ -234,6 +234,7 @@
 
   let scenes = [];
   let finalBlob = null; // el archivo final ya ensamblado (se genera al completar)
+  let finalExtension = "webm"; // "mp4" si se usó WebCodecs, "webm" si fue MediaRecorder
 
   function setProgress(percent) {
     const offset = RING_CIRCUMFERENCE - (RING_CIRCUMFERENCE * percent) / 100;
@@ -297,20 +298,57 @@
     return new Promise(function (resolve) { setTimeout(resolve, ms); });
   }
 
-  // Dibuja una imagen "contain" (con barras negras) dentro del canvas destino
-  function dibujarContain(ctx, img, canvasW, canvasH) {
+  // Dibuja una imagen tipo "cover" (recorta el sobrante, sin bordes vacíos
+  // ni deformar), con un leve zoom dinámico (efecto Ken Burns) según qué
+  // tan avanzada está la escena (progreso de 0 a 1).
+  function dibujarCoverConKenBurns(ctx, img, canvasW, canvasH, progreso) {
+    const ZOOM_INICIAL = 1.0;
+    const ZOOM_FINAL = 1.08;
+    const escalaKenBurns = ZOOM_INICIAL + (ZOOM_FINAL - ZOOM_INICIAL) * progreso;
+
+    const escalaBase = Math.max(canvasW / img.width, canvasH / img.height);
+    const w = img.width * escalaBase * escalaKenBurns;
+    const h = img.height * escalaBase * escalaKenBurns;
+
+    // leve desplazamiento horizontal (pan) mientras hace zoom, para que se
+    // sienta como una toma de cámara continua en vez de un zoom centrado seco
+    const deriva = (progreso - 0.5) * (w - canvasW) * 0.2;
+    const x = (canvasW - w) / 2 - deriva;
+    const y = (canvasH - h) / 2;
+
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, canvasW, canvasH);
-    const escala = Math.min(canvasW / img.width, canvasH / img.height);
-    const w = img.width * escala;
-    const h = img.height * escala;
-    const x = (canvasW - w) / 2;
-    const y = (canvasH - h) / 2;
     ctx.drawImage(img, x, y, w, h);
   }
 
   var SEGUNDOS_POR_ESCENA = 2.5;
+  var DURACION_TRANSICION = 0.6; // segundos de crossfade al final de cada escena (excepto la última)
   var FPS = 30;
+  var VIDEO_WIDTH = 1920;
+  var VIDEO_HEIGHT = 1080;
+  var BITRATE = 8000000; // 8 Mbps
+
+  // Dibuja el fotograma correspondiente al instante `tSegundos` del video
+  // completo — incluye el Ken Burns de la escena activa y, si corresponde,
+  // el crossfade hacia la siguiente escena.
+  function dibujarFotogramaEnTiempo(ctx, images, width, height, tSegundos) {
+    const dur = SEGUNDOS_POR_ESCENA;
+    const idx = Math.min(images.length - 1, Math.floor(tSegundos / dur));
+    const tLocal = (tSegundos - idx * dur) / dur; // 0..1 dentro de esta escena
+
+    const inicioTransicion = 1 - (DURACION_TRANSICION / dur);
+    const haySiguiente = idx < images.length - 1;
+
+    dibujarCoverConKenBurns(ctx, images[idx], width, height, tLocal);
+
+    if (haySiguiente && tLocal >= inicioTransicion) {
+      const alpha = (tLocal - inicioTransicion) / (1 - inicioTransicion);
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, Math.max(0, alpha));
+      dibujarCoverConKenBurns(ctx, images[idx + 1], width, height, 0);
+      ctx.restore();
+    }
+  }
 
   function pickMimeType() {
     var candidatos = [
@@ -326,9 +364,73 @@
     return null;
   }
 
-  // Ensambla las imágenes de las escenas (en orden) en un VIDEO real,
-  // grabando un <canvas> con MediaRecorder — esto es "el archivo renderizado".
-  async function assembleFinalVideo(scenesConImagen) {
+  function isWebCodecsSupported() {
+    return typeof VideoEncoder !== "undefined" && typeof VideoFrame !== "undefined";
+  }
+
+  // Intenta ensamblar el video con WebCodecs + mp4-muxer (mejor fidelidad de
+  // color y sincronización estricta de tiempos, salida .mp4).
+  async function assembleFinalVideoWebCodecs(images) {
+    const muxerModule = await import("https://cdn.jsdelivr.net/npm/mp4-muxer@5/build/mp4-muxer.mjs");
+    const Muxer = muxerModule.Muxer;
+    const ArrayBufferTarget = muxerModule.ArrayBufferTarget;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = VIDEO_WIDTH;
+    canvas.height = VIDEO_HEIGHT;
+    const ctx = canvas.getContext("2d");
+
+    const codecCandidatos = ["avc1.640028", "avc1.4d0028", "avc1.42001f"];
+    var codecElegido = null;
+    for (var i = 0; i < codecCandidatos.length; i++) {
+      const soporte = await VideoEncoder.isConfigSupported({
+        codec: codecCandidatos[i], width: VIDEO_WIDTH, height: VIDEO_HEIGHT, bitrate: BITRATE, framerate: FPS
+      });
+      if (soporte.supported) { codecElegido = codecCandidatos[i]; break; }
+    }
+    if (!codecElegido) throw new Error("Ningún códec H.264 soportado para estas dimensiones.");
+
+    const muxer = new Muxer({
+      target: new ArrayBufferTarget(),
+      video: { codec: "avc", width: VIDEO_WIDTH, height: VIDEO_HEIGHT },
+      fastStart: "in-memory",
+    });
+
+    const encoder = new VideoEncoder({
+      output: function (chunk, meta) { muxer.addVideoChunk(chunk, meta); },
+      error: function (e) { throw e; },
+    });
+    encoder.configure({ codec: codecElegido, width: VIDEO_WIDTH, height: VIDEO_HEIGHT, bitrate: BITRATE, framerate: FPS });
+
+    const frameDurationUs = Math.round(1000000 / FPS);
+    const totalSegundos = images.length * SEGUNDOS_POR_ESCENA;
+    const totalFrames = Math.round(totalSegundos * FPS);
+    var timestampUs = 0;
+
+    for (var f = 0; f < totalFrames; f++) {
+      const tSegundos = f / FPS;
+      dibujarFotogramaEnTiempo(ctx, images, canvas.width, canvas.height, tSegundos);
+
+      const frame = new VideoFrame(canvas, { timestamp: timestampUs, duration: frameDurationUs });
+      const esKeyFrame = (timestampUs / frameDurationUs) % (FPS * 2) === 0;
+      encoder.encode(frame, { keyFrame: esKeyFrame });
+      frame.close();
+      timestampUs += frameDurationUs;
+    }
+
+    await encoder.flush();
+    encoder.close();
+    muxer.finalize();
+
+    const buffer = muxer.target.buffer;
+    return { blob: new Blob([buffer], { type: "video/mp4" }), extension: "mp4" };
+  }
+
+  // Método de respaldo: graba un <canvas> con MediaRecorder (salida .webm).
+  // Dibuja continuamente vía requestAnimationFrame para que el Ken Burns y
+  // el crossfade se vean fluidos en la grabación (no solo un frame estático
+  // por escena).
+  async function assembleFinalVideoMediaRecorder(images) {
     if (!window.MediaRecorder) {
       throw new Error("Tu navegador no soporta grabación de video (MediaRecorder). Probá con Chrome o Edge.");
     }
@@ -337,18 +439,15 @@
       throw new Error("Tu navegador no soporta ningún formato de video compatible.");
     }
 
-    const images = await Promise.all(scenesConImagen.map(function (s) { return imageToImageElement(s.image_url); }));
-
     const canvas = document.createElement("canvas");
-    canvas.width = 1280;
-    canvas.height = 720;
+    canvas.width = VIDEO_WIDTH;
+    canvas.height = VIDEO_HEIGHT;
     const ctx = canvas.getContext("2d");
 
-    // Frame inicial antes de arrancar a grabar
-    dibujarContain(ctx, images[0], canvas.width, canvas.height);
+    dibujarFotogramaEnTiempo(ctx, images, canvas.width, canvas.height, 0);
 
     const stream = canvas.captureStream(FPS);
-    const recorder = new MediaRecorder(stream, { mimeType: mimeType });
+    const recorder = new MediaRecorder(stream, { mimeType: mimeType, videoBitsPerSecond: BITRATE });
     const chunks = [];
     recorder.ondataavailable = function (e) {
       if (e.data && e.data.size > 0) chunks.push(e.data);
@@ -360,16 +459,43 @@
 
     recorder.start();
 
-    for (var i = 0; i < images.length; i++) {
-      dibujarContain(ctx, images[i], canvas.width, canvas.height);
-      await sleep(SEGUNDOS_POR_ESCENA * 1000);
-    }
+    const totalMs = images.length * SEGUNDOS_POR_ESCENA * 1000;
+    const inicio = performance.now();
+
+    await new Promise(function (resolve) {
+      function draw(ahora) {
+        const transcurridoMs = ahora - inicio;
+        const tSegundos = transcurridoMs / 1000;
+        dibujarFotogramaEnTiempo(ctx, images, canvas.width, canvas.height, tSegundos);
+        if (transcurridoMs >= totalMs) return resolve();
+        requestAnimationFrame(draw);
+      }
+      requestAnimationFrame(draw);
+    });
 
     recorder.stop();
     await grabacionTerminada;
 
-    return new Blob(chunks, { type: mimeType });
+    return { blob: new Blob(chunks, { type: mimeType }), extension: "webm" };
   }
+
+  // Ensambla las imágenes de las escenas (en orden) en un VIDEO real.
+  // Intenta primero WebCodecs (mejor fidelidad, .mp4); si no está soportado
+  // o falla en tiempo de ejecución, cae automáticamente a MediaRecorder (.webm).
+  async function assembleFinalVideo(scenesConImagen) {
+    const images = await Promise.all(scenesConImagen.map(function (s) { return imageToImageElement(s.image_url); }));
+
+    if (isWebCodecsSupported()) {
+      try {
+        return await assembleFinalVideoWebCodecs(images);
+      } catch (err) {
+        console.warn("WebCodecs falló, usando MediaRecorder como respaldo:", err.message);
+      }
+    }
+
+    return assembleFinalVideoMediaRecorder(images);
+  }
+
 
   const videoPreview = document.getElementById("video-preview");
 
@@ -378,7 +504,7 @@
     const url = URL.createObjectURL(finalBlob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "storyboard-flux-ai.webm";
+    a.download = "storyboard-flux-ai." + finalExtension;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -392,7 +518,7 @@
       return;
     }
 
-    const file = new File([finalBlob], "storyboard-flux-ai.webm", { type: finalBlob.type });
+    const file = new File([finalBlob], "storyboard-flux-ai." + finalExtension, { type: finalBlob.type });
 
     console.log("Intentando compartir:", { type: file.type, size: file.size, canShareApi: !!navigator.canShare });
 
@@ -471,7 +597,9 @@
 
         try {
           const scenesConImagen = scenes.filter(function (s) { return !!s.image_url; });
-          finalBlob = await assembleFinalVideo(scenesConImagen);
+          const resultado = await assembleFinalVideo(scenesConImagen);
+          finalBlob = resultado.blob;
+          finalExtension = resultado.extension;
 
           videoPreview.src = URL.createObjectURL(finalBlob);
           videoPreview.classList.remove("hidden");
