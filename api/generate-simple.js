@@ -54,6 +54,46 @@ async function enhancePrompt(originalPrompt) {
   }
 }
 
+// Intenta generar con RunPod (SDXL Turbo). Devuelve un Buffer PNG.
+// Ajustar `data.output` según el formato real que devuelva tu worker
+// (podés confirmarlo probando el endpoint desde el dashboard de RunPod).
+async function generateWithRunPod(prompt) {
+  const endpointId = process.env.RUNPOD_ENDPOINT_ID;
+  const apiKey = process.env.RUNPOD_API_KEY;
+  if (!endpointId || !apiKey) {
+    throw new Error("RUNPOD_ENDPOINT_ID o RUNPOD_API_KEY no configurados");
+  }
+
+  const response = await fetch(
+    `https://api.runpod.ai/v2/${endpointId}/runsync`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({ input: { prompt } }),
+    }
+  );
+
+  const data = await response.json();
+  if (data.status !== "COMPLETED" || !data.output) {
+    throw new Error("RunPod: " + (data.error || data.status || "sin output"));
+  }
+
+  // Soporta las formas más comunes de output de workers de SDXL en RunPod
+  const base64 =
+    typeof data.output === "string"
+      ? data.output
+      : data.output.image || (Array.isArray(data.output) ? data.output[0] : null);
+
+  if (!base64) {
+    throw new Error("RunPod: no se pudo leer la imagen del output");
+  }
+
+  return Buffer.from(base64, "base64");
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Método no permitido" });
@@ -66,11 +106,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "prompt es requerido" });
     }
 
-    const HF_TOKEN = process.env.HF_TOKEN;
-    if (!HF_TOKEN) {
-      return res.status(500).json({ error: "HF_TOKEN no está configurado en las variables de entorno de Vercel." });
-    }
-
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!supabaseUrl || !supabaseServiceKey) {
@@ -79,15 +114,28 @@ export default async function handler(req, res) {
 
     const finalPrompt = await enhancePrompt(prompt);
 
-    const client = new InferenceClient(HF_TOKEN);
+    let buffer;
+    let modelUsed = "runpod-sdxl-turbo";
 
-    const imageBlob = await client.textToImage({
-      provider: "auto",
-      model: "black-forest-labs/FLUX.1-dev",
-      inputs: finalPrompt,
-    });
+    try {
+      buffer = await generateWithRunPod(finalPrompt);
+    } catch (runpodErr) {
+      console.error("RunPod falló, probando Hugging Face:", runpodErr.message);
 
-    const buffer = Buffer.from(await imageBlob.arrayBuffer());
+      const HF_TOKEN = process.env.HF_TOKEN;
+      if (!HF_TOKEN) {
+        return res.status(500).json({ error: "RunPod falló y HF_TOKEN no está configurado: " + runpodErr.message });
+      }
+
+      const client = new InferenceClient(HF_TOKEN);
+      const imageBlob = await client.textToImage({
+        provider: "auto",
+        model: "black-forest-labs/FLUX.1-dev",
+        inputs: finalPrompt,
+      });
+      buffer = Buffer.from(await imageBlob.arrayBuffer());
+      modelUsed = "black-forest-labs/FLUX.1-dev (fallback HF)";
+    }
 
     // --- Subir a Supabase Storage (bucket separado del de escenas) ---
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
@@ -117,7 +165,7 @@ export default async function handler(req, res) {
       user_id: user_id || null,
     });
 
-    return res.status(200).json({ imageUrl: publicUrl });
+    return res.status(200).json({ imageUrl: publicUrl, modelUsed });
 
   } catch (error) {
     const detail = error && error.cause ? (error.cause.message || String(error.cause)) : null;
